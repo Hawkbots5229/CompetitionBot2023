@@ -115,22 +115,37 @@ public class DriveSubsystem extends SubsystemBase {
     // Note: SparkMax relateive encoders are inverted with motors. No action needed here.
   }
 
-    /** Resets the drive encoders to currently read a position of 0. */
-    public void resetEncoders() {
+  /** Resets the drive encoders to currently read a position of 0. */
+  public void resetEncoders() {
 
-      // TODO: setPosition of m_frontLeftEncoder, m_rearLeftEncoder, m_frontRightEncoder, and m_rearRightEncoder to zero
+    // TODO: setPosition of m_frontLeftEncoder, m_rearLeftEncoder, m_frontRightEncoder, and m_rearRightEncoder to zero
 
-    }
-  
-    /** Stops all drive motors */
-    public void stopMotors() {
+  }
 
-      // TODO: stopMotor for m_frontLeft, m_rearLeft, m_frontRight, and m_rearRight
+  /**
+   * Drives the robot at given left and right speeds. Speeds range from [-1, 1] and the linear
+   * speeds have no effect on the angular speed.
+   *
+   * @param leftSpeed - The robot's left side speed along the X axis [-1.0..1.0]. Forward is positive.
+   * @param rightSpeed - The robot's right side speed along the X axis [-1.0..1.0]. Forward is positive.
+   */
+  @SuppressWarnings("ParameterName")
+  public void drive(double ySpeed, double xSpeed) {
+    
+    m_drive.setSafetyEnabled(true);
+    
+    // TODO: create tankDrive for m_drive
+  }
 
-    }
+  /** Stops all drive motors */
+  public void stopMotors() {
 
-      /**
-   * Sets the max output of the drive. Useful for scaling the drive to drive more slowly.
+    // TODO: stopMotor for m_frontLeft, m_rearLeft, m_frontRight, and m_rearRight
+
+  }
+
+  /**
+   * * Sets the max output of the drive. Useful for scaling the drive to drive more slowly.
    *
    * @param maxOutput the maximum output to which the drive will be constrained
    */
@@ -158,7 +173,7 @@ public class DriveSubsystem extends SubsystemBase {
 
   }
 
-    /**
+  /**
    * Returns the turn rate of the robot.
    *
    * @return The yaw of the robot, in degrees
