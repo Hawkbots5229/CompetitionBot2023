@@ -58,7 +58,7 @@ public class DriveSubsystem extends SubsystemBase {
   public DriveSubsystem() {
 
     initMotors();
-    initEncoders()
+    initEncoders();
 
     m_drive = new DifferentialDrive(m_left, m_right);
     m_drive.setExpiration(0.1);
