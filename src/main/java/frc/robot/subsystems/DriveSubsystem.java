@@ -21,36 +21,39 @@ public class DriveSubsystem extends SubsystemBase {
   private final CANSparkMax m_frontLeft = 
     new CANSparkMax(DriveConstants.kFrontLeftMotorPort, MotorType.kBrushless);
   // The rear-left-side drive motor
-  // TODO create m_rearLeft
+  private final CANSparkMax m_rearLeft =
+    new CANSparkMax(DriveConstants.kRearLeftMotorPort, MotorType.kBrushless);
   // The front-right-side drive motor
-  // TODO create m_frontRight
+  private final CANSparkMax m_frontRight =
+    new CANSparkMax(DriveConstants.kFrontRightMotorPort, MotorType.kBrushless);
   // The rear-right-side drive motor
-  // TODO create m_rearRight
+  private final CANSparkMax m_rearRight =
+    new CANSparkMax(DriveConstants.kRearRightMotorPort, MotorType.kBrushless);
 
   // The front-left-side drive encoder
   private final RelativeEncoder m_frontLeftEncoder = m_frontLeft.getEncoder();
   // The rear-left-side drive encoder
-  // TODO: create m_rearLeftEncoder
+  private final RelativeEncoder m_rearLeftEncoder = m_rearLeft.getEncoder();
   // The front-right-side drive encoder
-  // TODO: create m_frontRightEncoder
+  private final RelativeEncoder m_frontRightEncoder = m_frontRight.getEncoder();
   // The rear-right-side drive encoder
-  // TODO: create m_rearRightEncoder
+  private final RelativeEncoder m_rearRightEncoder = m_rearRight.getEncoder();
 
   // Front left motor velocity PID controller
   private final SparkMaxPIDController m_frontLeftVelPIDController = m_frontLeft.getPIDController();
   // Rear left motor velocity PID controller
-  // TODO: create m_rearLeftVelPIDController
+  private final SparkMaxPIDController m_rearLeftVelPIDController = m_rearLeft.getPIDController();
   // Front right motor velocity PID controller
-  // TODO: create m_frontRightVelPIDController
+  private final SparkMaxPIDController m_frontRightVelPIDController = m_frontRight.getPIDController();
   // Rear right motor velocity PID controller
-  // TODO: create m_rearRightVelPIDController
+  private final SparkMaxPIDController m_rearRightVelPIDController = m_rearRight.getPIDController();
 
   // Kauailabs navX-MXP motion processor
   private final AHRS m_gyro = 
       new AHRS(SPI.Port.kMXP);
 
   private final MotorControllerGroup m_left = new MotorControllerGroup(m_frontLeft, m_rearLeft);
-  // TODO: create MotorControllerGroup m_right
+  private final MotorControllerGroup m_right = new MotorControllerGroup(m_frontRight, m_rearRight);
 
   private final DifferentialDrive m_drive;
 
@@ -79,36 +82,44 @@ public class DriveSubsystem extends SubsystemBase {
     // TODO: Check if motors need to be inverted or if it is done in DifferentialDrive
     
     m_frontLeft.restoreFactoryDefaults();
-    // TODO: restoreFactoryDefaults for m_rearLeft, m_frontRight, and m_rearRight
+    m_rearLeft.restoreFactoryDefaults();
+    m_frontRight.restoreFactoryDefaults();
+    m_rearRight.restoreFactoryDefaults();
     
     m_frontLeft.setIdleMode(DriveConstants.kIdleMode);
-    // TODO: create DriveConstants.kIdleMode in Constants.java
-    // TODO: setIdleMode for m_rearLeft, m_frontRight, and m_rearRight
+    m_rearLeft.setIdleMode(DriveConstants.kIdleMode);
+    m_frontRight.setIdleMode(DriveConstants.kIdleMode);
+    m_rearRight.setIdleMode(DriveConstants.kIdleMode);
     
     m_frontLeft.setOpenLoopRampRate(DriveConstants.kOpenLoopRampRate);
-    // TODO: create DriveConstants.kOpenLoopRampRate in Constants.java
-    // TODO: setOpenLoopRampRate for m_rearLeft, m_frontRight, and m_rearRight
+    m_rearLeft.setOpenLoopRampRate(DriveConstants.kOpenLoopRampRate);
+    m_frontRight.setOpenLoopRampRate(DriveConstants.kOpenLoopRampRate);
+    m_rearRight.setOpenLoopRampRate(DriveConstants.kOpenLoopRampRate);
     
     m_frontLeft.setClosedLoopRampRate(DriveConstants.kClosedLoopRampRate);
-    // TODO: create DriveConstants.kClosedLoopRampRate in Constants.java
-    // TODO: setClosedLoopRampRate for m_rearLeft, m_frontRight, and m_rearRight
+    m_rearLeft.setClosedLoopRampRate(DriveConstants.kClosedLoopRampRate);
+    m_frontRight.setClosedLoopRampRate(DriveConstants.kClosedLoopRampRate);
+    m_rearRight.setClosedLoopRampRate(DriveConstants.kClosedLoopRampRate);
     
     m_frontLeft.setSmartCurrentLimit(DriveConstants.kCurrentLimit);
-    // TODO: create DriveConstants.kCurrentLimit in Constants.java
-    // TODO: setSmartCurrentLimit for m_rearLeft, m_frontRight, and m_rearRight
+    m_rearLeft.setSmartCurrentLimit(DriveConstants.kCurrentLimit);
+    m_frontRight.setSmartCurrentLimit(DriveConstants.kCurrentLimit);
+    m_rearRight.setSmartCurrentLimit(DriveConstants.kCurrentLimit);
   }
 
   private void initEncoders() {
 
     // Converts revolutions to meters
     m_frontLeftEncoder.setPositionConversionFactor(DriveConstants.kEncoderRevToMeters);
-    // TODO: create DriveConstants.kEncoderRevToMeters in Constants.java
-    // TODO: setPositionConversionFactor for m_rearLeft, m_frontRight, and m_rearRight
+    m_rearLeftEncoder.setPositionConversionFactor(DriveConstants.kEncoderRevToMeters);
+    m_frontRightEncoder.setPositionConversionFactor(DriveConstants.kEncoderRevToMeters);
+    m_rearRightEncoder.setPositionConversionFactor(DriveConstants.kEncoderRevToMeters);
 
     // Converts RPM to meters per second
     m_frontLeftEncoder.setVelocityConversionFactor(DriveConstants.kEncoderRpmToMetersPerSecond);
-    // TODO: create DriveConstants.kEncoderRpmToMetersPerSecond in Constants.java
-    // TODO: setVelocityConversionFactor for m_rearLeft, m_frontRight, and m_rearRight
+    m_rearLeftEncoder.setVelocityConversionFactor(DriveConstants.kEncoderRpmToMetersPerSecond);
+    m_frontRightEncoder.setVelocityConversionFactor(DriveConstants.kEncoderRpmToMetersPerSecond);
+    m_rearRightEncoder.setVelocityConversionFactor(DriveConstants.kEncoderRpmToMetersPerSecond);
     
     resetEncoders();
 
@@ -134,7 +145,7 @@ public class DriveSubsystem extends SubsystemBase {
     
     m_drive.setSafetyEnabled(true);
     
-    // TODO: create tankDrive for m_drive
+    public void tankDrive(double leftSpeed, double rightSpeed)
   }
 
   /** Stops all drive motors */
