@@ -5,11 +5,17 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.Autos;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
+
+import frc.robot.commands.AutonomousDefault;
+
+import frc.robot.subsystems.DriveSubsystem;
+
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 /**
@@ -20,16 +26,40 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  private final DriveSubsystem s_robotDrive = new DriveSubsystem();
+  // TODO: create s_robotArm, s_robotElevator, and s_robotIntake
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandXboxController m_driverController =
-      new CommandXboxController(OperatorConstants.kDriverControllerPort);
+  private final CommandPS4Controller j_driverController =
+      new CommandPS4Controller(OperatorConstants.kDriverControllerPort);
+  // TODO: create j_mechController with kMechControllerPort
+
+  // Create SmartDashboard chooser for autonomous routines
+  private final SendableChooser<Command> sc_autonSelect = new SendableChooser<>();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+
+    CameraServer.startAutomaticCapture("Usb Camera 0", 0);
+    CameraServer.startAutomaticCapture("Usb Camera 1", 1);
+
     // Configure the trigger bindings
     configureBindings();
+
+    // Setup SmartDashboard Auton options
+    sc_autonSelect.setDefaultOption("Basic Auto", new AutonomousDefault(s_robotDrive));
+    //sc_autonSelect.addOption("Auto 2", new Autonomous2(s_robotDrive, s_robotArm, s_robotElevator, s_robotIntake));
+    SmartDashboard.putData(sc_autonSelect);
+
+    // Configure default commands
+    // Set the default drive command to split-stick tank drive
+    s_robotDrive.setDefaultCommand(
+        new RunCommand(
+            () ->
+                s_robotDrive.drive(
+                    j_driverController.getLeftY(),                   
+                    j_driverController.getRightY()),
+            s_robotDrive));
   }
 
   /**
@@ -42,13 +72,9 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    new Trigger(m_exampleSubsystem::exampleCondition)
-        .onTrue(new ExampleCommand(m_exampleSubsystem));
 
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
-    // cancelling on release.
-    m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+    // TODO: Schedule Commands
+
   }
 
   /**
@@ -57,7 +83,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An example command will be run in autonomous
-    return Autos.exampleAuto(m_exampleSubsystem);
+    
+    return sc_autonSelect.getSelected();
   }
 }

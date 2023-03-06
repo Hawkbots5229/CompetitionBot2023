@@ -10,7 +10,10 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import frc.robot.Constants.DriveConstants;
@@ -49,11 +52,13 @@ public class DriveSubsystem extends SubsystemBase {
   private final SparkMaxPIDController m_rearRightVelPIDController = m_rearRight.getPIDController();
 
   // Kauailabs navX-MXP motion processor
-  private final AHRS m_gyro = 
+  private final AHRS g_navX = 
       new AHRS(SPI.Port.kMXP);
 
-  private final MotorControllerGroup m_left = new MotorControllerGroup(m_frontLeft, m_rearLeft);
-  private final MotorControllerGroup m_right = new MotorControllerGroup(m_frontRight, m_rearRight);
+  private final MotorControllerGroup mcg_left = new MotorControllerGroup(m_frontLeft, m_rearLeft);
+  private final MotorControllerGroup mcg_right = new MotorControllerGroup(m_frontRight, m_rearRight);
+  private final Solenoid ds_shifterLeft = new Solenoid(PneumaticsModuleType.REVPH, 1);
+  private final Solenoid ds_shifterRight = new Solenoid(PneumaticsModuleType.REVPH, 2);
 
   private final DifferentialDrive m_drive;
 
@@ -63,7 +68,7 @@ public class DriveSubsystem extends SubsystemBase {
     initMotors();
     initEncoders();
 
-    m_drive = new DifferentialDrive(m_left, m_right);
+    m_drive = new DifferentialDrive(mcg_left, mcg_right);
     m_drive.setExpiration(0.1);
   }
 
@@ -141,11 +146,11 @@ public class DriveSubsystem extends SubsystemBase {
    * @param rightSpeed - The robot's right side speed along the X axis [-1.0..1.0]. Forward is positive.
    */
   @SuppressWarnings("ParameterName")
-  public void drive(double ySpeed, double xSpeed) {
+  public void drive(double leftSpeed, double rightSpeed) {
     
     m_drive.setSafetyEnabled(true);
     
-    public void tankDrive(double leftSpeed, double rightSpeed)
+    m_drive.tankDrive(leftSpeed, rightSpeed);
   }
 
   /** Stops all drive motors */
@@ -173,6 +178,20 @@ public class DriveSubsystem extends SubsystemBase {
 
   }
 
+  /** Shifts gearbox into high */
+  public void highGear() {
+
+    // TODO: set ds_shifterLeft and ds_shifterRight
+
+  }
+
+  /** Shifts gearbox into low */
+  public void LowGear() {
+
+    // TODO: set ds_shifterLeft and ds_shifterRight
+
+  }
+
   /**
    * Returns the turn rate of the robot.
    *
@@ -181,6 +200,8 @@ public class DriveSubsystem extends SubsystemBase {
   public double getTurnRate() {
 
     // TODO: getRate of m_gyro
+
+    return 0;
 
   }
 
@@ -192,6 +213,8 @@ public class DriveSubsystem extends SubsystemBase {
   public double getAngle() {
 
     // TODO: getAngle of m_gyro
+
+    return 0;
 
   }
 }

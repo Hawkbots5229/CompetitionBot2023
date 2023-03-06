@@ -21,15 +21,16 @@ public final class Constants {
 
   public static class DriveConstants {
     public static final int kFrontLeftMotorPort = 1;
-    public static final int kCurrentLimit = 0;
-    public static final double kClosedLoopRampRate = 0;
-    public static final double kOpenLoopRampRate = 0;
-    public static final IdleMode kIdleMode = null;
+    public static final int kRearLeftMotorPort = 2;
+    public static final int kFrontRightMotorPort = 3;
+    public static final int kRearRightMotorPort = 4;
+    public static final int kCurrentLimit = 40;  // Amps
+    public static final double kClosedLoopRampRate = 0.7;
+    public static final double kOpenLoopRampRate = 0.7;
+    public static final IdleMode kIdleMode = IdleMode.kBrake;
     public static final double kEncoderRevToMeters = 0;
     public static final double kEncoderRpmToMetersPerSecond = 0;
-    public static int kRearLeftMotorPort;
-    public static int kFrontRightMotorPort;
-    public static int kRearRightMotorPort;
+    
     
   }
 }
