@@ -57,10 +57,10 @@ public class DriveSubsystem extends SubsystemBase {
 
   private final MotorControllerGroup mcg_left = new MotorControllerGroup(m_frontLeft, m_rearLeft);
   private final MotorControllerGroup mcg_right = new MotorControllerGroup(m_frontRight, m_rearRight);
-  private final Solenoid ds_shifterLeft = new Solenoid(PneumaticsModuleType.REVPH, 1);
-  private final Solenoid ds_shifterRight = new Solenoid(PneumaticsModuleType.REVPH, 2);
+  private final Solenoid ss_shifterLeft = new Solenoid(PneumaticsModuleType.REVPH, 1);
+  private final Solenoid ss_shifterRight = new Solenoid(PneumaticsModuleType.REVPH, 2);
 
-  private final DifferentialDrive m_drive;
+  private final DifferentialDrive dd_drive;
 
   /** Creates a new DriveSubsystem. */
   public DriveSubsystem() {
@@ -68,8 +68,8 @@ public class DriveSubsystem extends SubsystemBase {
     initMotors();
     initEncoders();
 
-    m_drive = new DifferentialDrive(mcg_left, mcg_right);
-    m_drive.setExpiration(0.1);
+    dd_drive = new DifferentialDrive(mcg_left, mcg_right);
+    dd_drive.setExpiration(0.1);
   }
 
     @Override
@@ -148,9 +148,9 @@ public class DriveSubsystem extends SubsystemBase {
   @SuppressWarnings("ParameterName")
   public void drive(double leftSpeed, double rightSpeed) {
     
-    m_drive.setSafetyEnabled(true);
+    dd_drive.setSafetyEnabled(true);
     
-    m_drive.tankDrive(leftSpeed, rightSpeed);
+    dd_drive.tankDrive(leftSpeed, rightSpeed);
   }
 
   /** Stops all drive motors */
@@ -167,28 +167,28 @@ public class DriveSubsystem extends SubsystemBase {
    */
   public void setMaxOutput(double maxOutput) {
     
-    // TODO: setMaxOutput for m_drive
+    // TODO: setMaxOutput for dd_drive
     
   }
 
   /** Zeroes the heading of the robot. */
   public void zeroHeading() {
 
-    // TODO: reset m_gyro
+    // TODO: reset g_navX
 
   }
 
   /** Shifts gearbox into high */
-  public void highGear() {
+  public void shiftHighGear() {
 
-    // TODO: set ds_shifterLeft and ds_shifterRight
+    // TODO: set ss_shifterLeft and ss_shifterRight
 
   }
 
   /** Shifts gearbox into low */
-  public void LowGear() {
+  public void shiftLowGear() {
 
-    // TODO: set ds_shifterLeft and ds_shifterRight
+    // TODO: set ss_shifterLeft and ss_shifterRight
 
   }
 
@@ -199,7 +199,7 @@ public class DriveSubsystem extends SubsystemBase {
    */
   public double getTurnRate() {
 
-    // TODO: getRate of m_gyro
+    // TODO: getRate of g_navX
 
     return 0;
 
@@ -212,7 +212,7 @@ public class DriveSubsystem extends SubsystemBase {
    */
   public double getAngle() {
 
-    // TODO: getAngle of m_gyro
+    // TODO: getAngle of g_navX
 
     return 0;
 
