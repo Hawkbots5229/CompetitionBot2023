@@ -20,6 +20,8 @@ import frc.robot.Constants.DriveConstants;
 
 public class DriveSubsystem extends SubsystemBase {
 
+  private static final boolean shiftHighGear = false;
+  private static final boolean shiftLowGear = false;
   // The front-left-side drive motor
   private final CANSparkMax m_frontLeft = 
     new CANSparkMax(DriveConstants.kFrontLeftMotorPort, MotorType.kBrushless);
@@ -134,8 +136,10 @@ public class DriveSubsystem extends SubsystemBase {
   /** Resets the drive encoders to currently read a position of 0. */
   public void resetEncoders() {
 
-    // TODO: setPosition of m_frontLeftEncoder, m_rearLeftEncoder, m_frontRightEncoder, and m_rearRightEncoder to zero
-
+    m_frontLeftEncoder.setPosition(0);
+    m_rearLeftEncoder.setPosition(0);
+    m_frontRightEncoder.setPosition(0);
+    m_rearRightEncoder.setPosition(0);
   }
 
   /**
@@ -156,7 +160,11 @@ public class DriveSubsystem extends SubsystemBase {
   /** Stops all drive motors */
   public void stopMotors() {
 
-    // TODO: stopMotor for m_frontLeft, m_rearLeft, m_frontRight, and m_rearRight
+  m_frontLeft.stopMotor();
+  m_rearLeft.stopMotor();
+  m_frontRight.stopMotor();
+  m_rearRight.stopMotor();
+
 
   }
 
@@ -167,28 +175,30 @@ public class DriveSubsystem extends SubsystemBase {
    */
   public void setMaxOutput(double maxOutput) {
     
-    // TODO: setMaxOutput for dd_drive
+  dd_drive.setMaxOutput(maxOutput);
     
   }
 
   /** Zeroes the heading of the robot. */
   public void zeroHeading() {
 
-    // TODO: reset g_navX
+  g_navX.reset();
 
   }
 
   /** Shifts gearbox into high */
   public void shiftHighGear() {
 
-    // TODO: set ss_shifterLeft and ss_shifterRight
+    ss_shifterLeft.set(shiftHighGear);
+    ss_shifterRight.set(shiftHighGear);
 
   }
 
   /** Shifts gearbox into low */
   public void shiftLowGear() {
 
-    // TODO: set ss_shifterLeft and ss_shifterRight
+    ss_shifterLeft.set(shiftLowGear);
+    ss_shifterRight.set(shiftLowGear);
 
   }
 
@@ -199,7 +209,7 @@ public class DriveSubsystem extends SubsystemBase {
    */
   public double getTurnRate() {
 
-    // TODO: getRate of g_navX
+    g_navX.getRate();
 
     return 0;
 
@@ -212,7 +222,7 @@ public class DriveSubsystem extends SubsystemBase {
    */
   public double getAngle() {
 
-    // TODO: getAngle of g_navX
+    g_navX.getAngle();
 
     return 0;
 

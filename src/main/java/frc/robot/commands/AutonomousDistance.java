@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveSubsystem;
+import pabeles.concurrency.ConcurrencyOps.Reset;
 
 public class AutonomousDistance extends CommandBase {
   private final DriveSubsystem s_robotDrive;
@@ -46,6 +47,7 @@ public class AutonomousDistance extends CommandBase {
   @Override
   public boolean isFinished() {
     // TODO return true when robot reaches position. Hint: getRobotPosition
+    
     return true;
   }
 }
