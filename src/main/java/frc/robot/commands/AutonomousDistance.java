@@ -57,6 +57,6 @@ public class AutonomousDistance extends CommandBase {
   @Override
   public boolean isFinished() {
     // TODO return true when robot reaches position. Hint: getRobotPosition
-    return true 
+    return s_robotDrive.getRobotPosition()>distance;
   }
 }
