@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.revrobotics.CANSparkMax.IdleMode;
 
 /**
@@ -50,6 +51,10 @@ public final class Constants {
 
     public static final int kLeftFrontMotorPort = 0;
     public static final boolean kLeftFrontMotorInverted = false;
+    public static int kLeftRearMotorPart;
+    public static int kRightFrontMotorPart;
+    public static int kRightRearMotorPart;
+    public static TalonFXInvertType kLeftRearMotorInverted;
 
   }
 }

@@ -15,19 +15,31 @@ public class ElevatorPivotSubsystem extends SubsystemBase {
 
   private final WPI_TalonFX m_leftFront = 
     new WPI_TalonFX(ElevatorPivotConstants.kLeftFrontMotorPort);
-  // TODO: Create m_leftRear, m_rightFront, and m_rightRear
+  private final WPI_TalonFX m_leftRear =
+    new WPI_TalonFX(ElevatorPivotConstants.kLeftRearMotorPart);
+  private final WPI_TalonFX m_rightFront =
+    new WPI_TalonFX(ElevatorPivotConstants.kRightFrontMotorPart);
+  private final WPI_TalonFX m_rightRear =
+    new WPI_TalonFX(ElevatorPivotConstants.kRightRearMotorPart);
 
   /** Creates a new ElevatorPivotSubsystem. */
   public ElevatorPivotSubsystem() {
     
     m_leftFront.configFactoryDefault();
-    // TODO: Do this for all motors
+    m_leftRear.configFactoryDefault();
+    m_rightFront.configFactoryDefault();
+    m_rightRear.configFactoryDefault();
+    
 
     m_leftFront.configNeutralDeadband(0.001); 
-    // TODO: Do this for all motors
+    m_leftRear.configNeutralDeadband(0.001);
+    m_rightFront.configNeutralDeadband(0.001);
+    m_rightRear.configNeutralDeadband(0.001);
 
     m_leftFront.setInverted(ElevatorPivotConstants.kLeftFrontMotorInverted);
     // TODO: Do this for all motors. Each motor will need a ElevatorConstant
+    m_leftRear.setInverted(ElevatorPivotConstants.kLeftRearMotorInverted);
+    m_rightFront.setInverted(ElevatorPivotConstants.kRightFrontMotorInverted);
     
     m_leftFront.setNeutralMode(NeutralMode.Brake);
     // TODO: Do this for all motors. Each motor will need a ElevatorConstant
