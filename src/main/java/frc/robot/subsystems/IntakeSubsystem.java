@@ -4,11 +4,18 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.IntakeConstants;
 
 public class IntakeSubsystem extends SubsystemBase {
-
-  // TODO: Create new CANSparkMax m_left and m_right
+  private final CANSparkMax m_left =
+    new CANSparkMax(IntakeConstants.kLeftMotorPort, MotorType.kBrushless);
+  private final CANSparkMax m_right =
+    new CANSparkMax(IntakeConstants.kRightMotorPort, MotorType.kBrushless);
   
   /** Creates a new IntakeSubsystem. */
   public IntakeSubsystem() {}

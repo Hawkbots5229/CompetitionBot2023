@@ -64,4 +64,18 @@ public final class Constants {
     public static final double kI= 0;
     public static final double kD = 0;
   }
+
+  public static class IntakeConstants{
+
+    public static final int kLeftMotorPort = 4;
+    public static final int kRightMotorPort = 5;
+    
+  }
+
+  public static class ClawConstants{
+    public static final int kPneumaticLeftForwardChannel = 1;
+    public static final int kPneumaticRightForwardChannel = 2;
+    public static final int kPneumaticLeftReverseChannel = 3;
+    public static final int kPneumaticRightReverseChannel = 4;
+  }
 }
