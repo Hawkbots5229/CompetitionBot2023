@@ -215,20 +215,22 @@ public class DriveSubsystem extends SubsystemBase {
 
   }
 
-  /** Shifts gearbox into high */
+  /** Shifts gearbox into high 
+   *  High Gear is default position
+  */
   public void shiftHighGear() {
 
-    // TODO: This may need to be kOff depending on gearbox configuration
-    ds_gearBox.set(DoubleSolenoid.Value.kForward);
+    ds_gearBox.set(DoubleSolenoid.Value.kOff);
     setEncoderHighGearConversionFactor();
 
   }
 
-  /** Shifts gearbox into low */
+  /** Shifts gearbox into low 
+   *  Low Gear is extended position
+  */
   public void shiftLowGear() {
 
-    // TODO: This may need to be kOff depending on gearbox configuration
-    ds_gearBox.set(DoubleSolenoid.Value.kOff);
+    ds_gearBox.set(DoubleSolenoid.Value.kForward);
     setEncoderLowGearConversionFactor();
 
   }

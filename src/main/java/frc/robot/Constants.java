@@ -32,6 +32,8 @@ public final class Constants {
     public static final int kPneumaticReverseChannel = 1;
 
     // TODO: Calculate these conversion factors with gear box ratios
+    // High Gear 9.54:1
+    // Low Gear 45.33:1
     public static final double kEncoderRevToMetersHighGear = 0;
     public static final double kEncoderRpmToMetersPerSecondHighGear = 0;
     public static final double kEncoderRevToMetersLowGear = 0;
