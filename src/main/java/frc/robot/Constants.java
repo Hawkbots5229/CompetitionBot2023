@@ -28,9 +28,26 @@ public final class Constants {
     public static final double kClosedLoopRampRate = 0.7;
     public static final double kOpenLoopRampRate = 0.7;
     public static final IdleMode kIdleMode = IdleMode.kBrake;
-    public static final double kEncoderRevToMeters = 0;
-    public static final double kEncoderRpmToMetersPerSecond = 0;
-    
-    
+    public static final int kPneumaticForwardChannel = 0;
+    public static final int kPneumaticReverseChannel = 1;
+
+    // TODO: Calculate these conversion factors with gear box ratios
+    public static final double kEncoderRevToMetersHighGear = 0;
+    public static final double kEncoderRpmToMetersPerSecondHighGear = 0;
+    public static final double kEncoderRevToMetersLowGear = 0;
+    public static final double kEncoderRpmToMetersPerSecondLowGear = 0;  
+  }
+
+  public static class ElevatorConstants {
+
+
+
+  }
+
+  public static class ElevatorPivotConstants {
+
+    public static final int kLeftFrontMotorPort = 0;
+    public static final boolean kLeftFrontMotorInverted = false;
+
   }
 }

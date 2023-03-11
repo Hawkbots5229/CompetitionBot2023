@@ -4,11 +4,19 @@
 
 package frc.robot.subsystems;
 
+import frc.robot.Constants.ElevatorConstants;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ElevatorSubsystem extends SubsystemBase {
+
+// TODO: Create new CANSparkMax motor
+
   /** Creates a new ExampleSubsystem. */
-  public ElevatorSubsystem() {}
+  public ElevatorSubsystem() {
+   
+
+  }
 
    @Override
   public void periodic() {

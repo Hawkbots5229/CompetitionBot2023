@@ -29,7 +29,6 @@ public class RobotContainer {
   private final DriveSubsystem s_robotDrive = new DriveSubsystem();
   // TODO: create s_robotArm, s_robotElevator, and s_robotIntake
 
-  // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandPS4Controller j_driverController =
       new CommandPS4Controller(OperatorConstants.kDriverControllerPort);
   // TODO: create j_mechController with kMechControllerPort

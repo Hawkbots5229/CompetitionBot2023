@@ -13,15 +13,16 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.Solenoid;
+//import edu.wpi.first.wpilibj.Solenoid;
+//import edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import frc.robot.Constants.DriveConstants;
 
 public class DriveSubsystem extends SubsystemBase {
 
-  private static final boolean shiftHighGear = false;
-  private static final boolean shiftLowGear = false;
+  public enum gear{kHigh, kLow};
+
   // The front-left-side drive motor
   private final CANSparkMax m_frontLeft = 
     new CANSparkMax(DriveConstants.kFrontLeftMotorPort, MotorType.kBrushless);
@@ -59,8 +60,8 @@ public class DriveSubsystem extends SubsystemBase {
 
   private final MotorControllerGroup mcg_left = new MotorControllerGroup(m_frontLeft, m_rearLeft);
   private final MotorControllerGroup mcg_right = new MotorControllerGroup(m_frontRight, m_rearRight);
-  private final Solenoid ss_shifterLeft = new Solenoid(PneumaticsModuleType.REVPH, 1);
-  private final Solenoid ss_shifterRight = new Solenoid(PneumaticsModuleType.REVPH, 2);
+  //private final Solenoid ss_gearbox = new Solenoid(PneumaticsModuleType.REVPH, DriveConstants.kPneumaticForwardChannel);
+  private final DoubleSolenoid ds_gearBox = new DoubleSolenoid(PneumaticsModuleType.REVPH, DriveConstants.kPneumaticForwardChannel, DriveConstants.kPneumaticReverseChannel);
 
   private final DifferentialDrive dd_drive;
 
@@ -71,6 +72,9 @@ public class DriveSubsystem extends SubsystemBase {
     initEncoders();
 
     dd_drive = new DifferentialDrive(mcg_left, mcg_right);
+
+    shiftHighGear();
+
     dd_drive.setExpiration(0.1);
   }
 
@@ -116,21 +120,32 @@ public class DriveSubsystem extends SubsystemBase {
 
   private void initEncoders() {
 
-    // Converts revolutions to meters
-    m_frontLeftEncoder.setPositionConversionFactor(DriveConstants.kEncoderRevToMeters);
-    m_rearLeftEncoder.setPositionConversionFactor(DriveConstants.kEncoderRevToMeters);
-    m_frontRightEncoder.setPositionConversionFactor(DriveConstants.kEncoderRevToMeters);
-    m_rearRightEncoder.setPositionConversionFactor(DriveConstants.kEncoderRevToMeters);
-
-    // Converts RPM to meters per second
-    m_frontLeftEncoder.setVelocityConversionFactor(DriveConstants.kEncoderRpmToMetersPerSecond);
-    m_rearLeftEncoder.setVelocityConversionFactor(DriveConstants.kEncoderRpmToMetersPerSecond);
-    m_frontRightEncoder.setVelocityConversionFactor(DriveConstants.kEncoderRpmToMetersPerSecond);
-    m_rearRightEncoder.setVelocityConversionFactor(DriveConstants.kEncoderRpmToMetersPerSecond);
+    setEncoderHighGearConversionFactor();
     
     resetEncoders();
 
     // Note: SparkMax relateive encoders are inverted with motors. No action needed here.
+  }
+
+  // Sets the position and velocity encoder conversion factors when gear box is in high gear
+  public void setEncoderHighGearConversionFactor() {
+
+      // Converts revolutions to meters
+      m_frontLeftEncoder.setPositionConversionFactor(DriveConstants.kEncoderRevToMetersHighGear);
+      m_rearLeftEncoder.setPositionConversionFactor(DriveConstants.kEncoderRevToMetersHighGear);
+      m_frontRightEncoder.setPositionConversionFactor(DriveConstants.kEncoderRevToMetersHighGear);
+      m_rearRightEncoder.setPositionConversionFactor(DriveConstants.kEncoderRevToMetersHighGear);
+  
+      // Converts RPM to meters per second
+      m_frontLeftEncoder.setVelocityConversionFactor(DriveConstants.kEncoderRpmToMetersPerSecondHighGear);
+      m_rearLeftEncoder.setVelocityConversionFactor(DriveConstants.kEncoderRpmToMetersPerSecondHighGear);
+      m_frontRightEncoder.setVelocityConversionFactor(DriveConstants.kEncoderRpmToMetersPerSecondHighGear);
+      m_rearRightEncoder.setVelocityConversionFactor(DriveConstants.kEncoderRpmToMetersPerSecondHighGear);
+  }
+
+  // Sets the position and velocity encoder conversion factors when gear box is in low gear
+  public void setEncoderLowGearConversionFactor() {
+    // TODO: setPositionConversionFactor and setVelocityConversionFactor with kEncoderRevToMetersLowGear and kEncoderRpmToMetersPerSecondLowGear
   }
 
   /** Resets the drive encoders to currently read a position of 0. */
@@ -160,12 +175,26 @@ public class DriveSubsystem extends SubsystemBase {
   /** Stops all drive motors */
   public void stopMotors() {
 
-  m_frontLeft.stopMotor();
-  m_rearLeft.stopMotor();
-  m_frontRight.stopMotor();
-  m_rearRight.stopMotor();
+    m_frontLeft.stopMotor();
+    m_rearLeft.stopMotor();
+    m_frontRight.stopMotor();
+    m_rearRight.stopMotor();
 
+  }
 
+    /**
+   * Gets robot position in meters by averaging each wheel position.
+   * Does not indicate direction.
+   *
+   * @return the robot's position
+   */
+  public double getRobotPosition() {
+    final double m_frontLeftPos = Math.abs(m_frontLeftEncoder.getPosition());
+    final double m_rearLeftPos = Math.abs(m_rearLeftEncoder.getPosition());
+    final double m_frontRightPos = Math.abs(m_frontRightEncoder.getPosition());
+    final double m_rearRightPos = Math.abs(m_rearRightEncoder.getPosition());
+
+    return (m_frontLeftPos + m_rearLeftPos + m_frontRightPos + m_rearRightPos) / 4;
   }
 
   /**
@@ -189,16 +218,18 @@ public class DriveSubsystem extends SubsystemBase {
   /** Shifts gearbox into high */
   public void shiftHighGear() {
 
-    ss_shifterLeft.set(shiftHighGear);
-    ss_shifterRight.set(shiftHighGear);
+    // TODO: This may need to be kOff depending on gearbox configuration
+    ds_gearBox.set(DoubleSolenoid.Value.kForward);
+    setEncoderHighGearConversionFactor();
 
   }
 
   /** Shifts gearbox into low */
   public void shiftLowGear() {
 
-    ss_shifterLeft.set(shiftLowGear);
-    ss_shifterRight.set(shiftLowGear);
+    // TODO: This may need to be kOff depending on gearbox configuration
+    ds_gearBox.set(DoubleSolenoid.Value.kOff);
+    setEncoderLowGearConversionFactor();
 
   }
 
