@@ -16,11 +16,11 @@ public class ElevatorPivotSubsystem extends SubsystemBase {
   private final WPI_TalonFX m_leftFront = 
     new WPI_TalonFX(ElevatorPivotConstants.kLeftFrontMotorPort);
   private final WPI_TalonFX m_leftRear =
-    new WPI_TalonFX(ElevatorPivotConstants.kLeftRearMotorPart);
+    new WPI_TalonFX(ElevatorPivotConstants.kLeftRearMotorPort);
   private final WPI_TalonFX m_rightFront =
-    new WPI_TalonFX(ElevatorPivotConstants.kRightFrontMotorPart);
+    new WPI_TalonFX(ElevatorPivotConstants.kRightFrontMotorPort);
   private final WPI_TalonFX m_rightRear =
-    new WPI_TalonFX(ElevatorPivotConstants.kRightRearMotorPart);
+    new WPI_TalonFX(ElevatorPivotConstants.kRightRearMotorPort);
 
   /** Creates a new ElevatorPivotSubsystem. */
   public ElevatorPivotSubsystem() {
@@ -37,30 +37,30 @@ public class ElevatorPivotSubsystem extends SubsystemBase {
     m_rightRear.configNeutralDeadband(0.001);
 
     m_leftFront.setInverted(ElevatorPivotConstants.kLeftFrontMotorInverted);
-    // TODO: Do this for all motors. Each motor will need a ElevatorConstant
     m_leftRear.setInverted(ElevatorPivotConstants.kLeftRearMotorInverted);
     m_rightFront.setInverted(ElevatorPivotConstants.kRightFrontMotorInverted);
+    m_rightRear.setInverted(ElevatorPivotConstants.kRightRearMotorInverted);
     
     m_leftFront.setNeutralMode(NeutralMode.Brake);
-    // TODO: Do this for all motors. Each motor will need a ElevatorConstant
-    
-    m_LeftRearMotor.follow(m_leftFront);
-    m_RightFrontMotor.follow(m_leftFront);
-    m_RightRearMotor.follow(m_leftFront);
+    m_leftRear.setNeutralMode(NeutralMode.Brake);
+    m_rightFront.setNeutralMode(NeutralMode.Brake);
+    m_rightRear.setNeutralMode(NeutralMode.Brake);
+
+    m_leftRear.follow(m_leftFront);
+    m_rightFront.follow(m_leftFront);
+    m_rightRear.follow(m_leftFront);
 
     /* Config sensor used for Primary PID [Velocity] */
     m_leftFront.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor,
       ElevatorPivotConstants.kPIDLoopIdx, ElevatorPivotConstants.kTimeoutMs);
 
     /* Config the peak and nominal outputs */
-    // TODO: Add kTimeoutMs to ElevatorPivotConstants
     m_leftFront.configNominalOutputForward(0, ElevatorPivotConstants.kTimeoutMs);
 		m_leftFront.configNominalOutputReverse(0, ElevatorPivotConstants.kTimeoutMs);
 		m_leftFront.configPeakOutputForward(1, ElevatorPivotConstants.kTimeoutMs);
 		m_leftFront.configPeakOutputReverse(-1, ElevatorPivotConstants.kTimeoutMs);
 
     /* Config the Velocity closed loop gains in slot0 */
-    // TODO: Add all these constants to ElevatorPivotConstants
 		m_leftFront.config_kF(ElevatorPivotConstants.kPIDLoopIdx, ElevatorPivotConstants.kF, ElevatorPivotConstants.kTimeoutMs);
 		m_leftFront.config_kP(ElevatorPivotConstants.kPIDLoopIdx, ElevatorPivotConstants.kP, ElevatorPivotConstants.kTimeoutMs);
 		m_leftFront.config_kI(ElevatorPivotConstants.kPIDLoopIdx, ElevatorPivotConstants.kI, ElevatorPivotConstants.kTimeoutMs);

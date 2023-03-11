@@ -50,11 +50,18 @@ public final class Constants {
   public static class ElevatorPivotConstants {
 
     public static final int kLeftFrontMotorPort = 0;
+    public static final int kLeftRearMotorPort = 1;
+    public static final int kRightFrontMotorPort = 2;
+    public static final int kRightRearMotorPort = 3;
     public static final boolean kLeftFrontMotorInverted = false;
-    public static int kLeftRearMotorPart;
-    public static int kRightFrontMotorPart;
-    public static int kRightRearMotorPart;
-    public static TalonFXInvertType kLeftRearMotorInverted;
-
+    public static final boolean kLeftRearMotorInverted = false;
+    public static final boolean kRightFrontMotorInverted = false;
+    public static final boolean kRightRearMotorInverted = false;
+    public static final int kPIDLoopIdx = 0;
+    public static final int kTimeoutMs = 30;
+    public static final double kF = 1;
+    public static final double kP = 1;
+    public static final double kI= 0;
+    public static final double kD = 0;
   }
 }
