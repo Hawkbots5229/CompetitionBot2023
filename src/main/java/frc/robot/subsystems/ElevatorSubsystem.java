@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ElevatorSubsystem extends SubsystemBase {
 
-// TODO: Create new CANSparkMax motor
+// TODO: Create new CANSparkMax m_elevator
 
   /** Creates a new ExampleSubsystem. */
   public ElevatorSubsystem() {

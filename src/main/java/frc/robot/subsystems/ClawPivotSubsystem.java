@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ClawPivotSubsystem extends SubsystemBase {
 
-  // TODO: Create new CANSparkMax motor
+  // TODO: Create new CANSparkMax m_clawPivot
 
   /** Creates a new ClawPivotSubsystem. */
   public ClawPivotSubsystem() {}
