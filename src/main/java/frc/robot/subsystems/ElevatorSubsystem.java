@@ -6,11 +6,15 @@ package frc.robot.subsystems;
 
 import frc.robot.Constants.ElevatorConstants;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ElevatorSubsystem extends SubsystemBase {
 
-// TODO: Create new CANSparkMax m_elevator
+private final CANSparkMax m_elevator =
+  new CANSparkMax(ElevatorConstants.kElevatorMotorPort, MotorType.kBrushless);
 
   /** Creates a new ExampleSubsystem. */
   public ElevatorSubsystem() {

@@ -4,14 +4,56 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.ClawPivotConstants;
 
 public class ClawPivotSubsystem extends SubsystemBase {
+  private final CANSparkMax m_clawPivot =
+    new CANSparkMax(ClawPivotConstants.kClawPivotMotorPort, MotorType.kBrushless);
 
-  // TODO: Create new CANSparkMax m_clawPivot
+    private final RelativeEncoder e_ClawPivotEncoder = m_clawPivot.getEncoder();
+
+    private final SparkMaxPIDController pid_ClawPivotVelControl = m_clawPivot.getPIDController();
 
   /** Creates a new ClawPivotSubsystem. */
-  public ClawPivotSubsystem() {}
+  public ClawPivotSubsystem() {
+    m_clawPivot.restoreFactoryDefaults();
+    m_clawPivot.setIdleMode(ClawPivotConstants.kIdleMode);
+    m_clawPivot.setInverted(ClawPivotConstants.kClawPivotMotorIntverted);
+    m_clawPivot.setClosedLoopRampRate(ClawPivotConstants.kClosedLoopRampRate);
+    m_clawPivot.setSecondaryCurrentLimit(50);
+
+    pid_ClawPivotVelControl.setFF(ClawPivotConstants.kFVel, ClawPivotConstants.kVelPidSlot);
+    pid_ClawPivotVelControl.setP(ClawPivotConstants.kPVel, ClawPivotConstants.kVelPidSlot);
+    pid_ClawPivotVelControl.setD(ClawPivotConstants.kDVel, ClawPivotConstants.KVelPidSlot);
+    pid_ClawPivotVelControl.setI(ClawPivotConstants.kIVel, ClawPivotConstants.kVelPidSlot);
+
+  }
+
+  public void setTargetOutput(double output) {
+    m_clawPivot.set(output);
+  }
+
+  public void setTargetVelocity(double Velocity) {
+    pid_ClawPivotVelControl.setReference(
+      Velocity,
+      CANSparkMax.ControlType.kVelocity
+      ClawPivotConstants.kVelPidSlot);
+
+  }
+
+  public double getClawPivotVel() {
+    return e_ClawPivotEncoder.getVelocity();
+  }
+
+  public void stopMotor() {
+    m_clawPivot.stopMotor();
+  }
 
   @Override
   public void periodic() {

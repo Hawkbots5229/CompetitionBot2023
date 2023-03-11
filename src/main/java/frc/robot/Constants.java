@@ -42,7 +42,7 @@ public final class Constants {
   }
 
   public static class ElevatorConstants {
-
+    public static final int kElevatorMotorPort = 1;
 
 
   }
@@ -77,5 +77,20 @@ public final class Constants {
     public static final int kPneumaticRightForwardChannel = 2;
     public static final int kPneumaticLeftReverseChannel = 3;
     public static final int kPneumaticRightReverseChannel = 4;
+  }
+
+  public static class ClawPivotConstants{
+    public static final int kClawPivotMotorPort = 1;
+    public static final int kLowClawPivotVelocity = 3600;
+    public static final int kHighClawPivotVelocity = 4800;
+    public static final boolean kClawPivotMotorIntverted = false;
+    public static final double kClosedLoopRampRate = 0.5;
+    public static final IdleMode kIdleMode = IdleMode.kBrake;
+    public static final int kCurrentLimit = 40;
+    public static final int kVelPidSlot = 0;
+    public static final double kFVel = 0.000115;
+    public static final double kPVel = 0.00011;
+    public static final double kDVel = 10;
+    public static final double kIVel = 0;
   }
 }
