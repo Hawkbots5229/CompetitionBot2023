@@ -13,10 +13,12 @@ import frc.robot.subsystems.ClawSubsystem;
 public class OperateClaw extends InstantCommand {
   
   private final ClawSubsystem s_robotClaw;
+  private final ClawSubsystem.clawPosition clawPos;
 
-  public OperateClaw(ClawSubsystem s_robotClaw) {
+  public OperateClaw(ClawSubsystem s_robotClaw, ClawSubsystem.clawPosition clawPos) {
 
     this.s_robotClaw = s_robotClaw;
+    this.clawPos = clawPos;
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(s_robotClaw);
@@ -24,5 +26,16 @@ public class OperateClaw extends InstantCommand {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    switch(clawPos) {
+      case kOpen: 
+        s_robotClaw.open();
+        break;
+      case kClosed: 
+        s_robotClaw.close();
+        break;
+      default:
+        throw new AssertionError("Illegal value: " + clawPos);   
+    }
+  }
 }
