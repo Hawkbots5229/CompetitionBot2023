@@ -7,7 +7,8 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ClawSubsystem extends SubsystemBase {
-  
+
+  public enum gear{kOpen, kClosed};
   // TODO: Create new DoubleSolenoid ds_left and ds_right
 
   /** Creates a new ClawSubsystem. */

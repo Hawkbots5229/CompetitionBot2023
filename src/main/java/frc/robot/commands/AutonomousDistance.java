@@ -12,12 +12,10 @@ import frc.robot.subsystems.DriveSubsystem;
 import pabeles.concurrency.ConcurrencyOps.Reset;
 
 public class AutonomousDistance extends CommandBase {
-  private static final String Position = null;
+  
   private final DriveSubsystem s_robotDrive;
   private final double distance;
   private final double speed;
-  private Object RobotPosition;
-
 
   /** Creates a new AutonomousDistance. */
   public AutonomousDistance(DriveSubsystem s_robotDrive, double distance, double speed) {
@@ -41,13 +39,10 @@ public class AutonomousDistance extends CommandBase {
   @Override
   public void execute() {
     
-    drive();
+    s_robotDrive.drive(speed, speed);
   }
 
   // Called once the command ends or is interrupted.
-  private void drive() {
-  }
-
   @Override
   public void end(boolean interrupted) {
     s_robotDrive.stopMotors();
@@ -56,7 +51,7 @@ public class AutonomousDistance extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    // TODO return true when robot reaches position. Hint: getRobotPosition
+
     return s_robotDrive.getRobotPosition()>distance;
   }
 }
