@@ -7,19 +7,54 @@ package frc.robot.subsystems;
 import frc.robot.Constants.ElevatorConstants;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ElevatorSubsystem extends SubsystemBase {
 
-private final CANSparkMax m_elevator =
-  new CANSparkMax(ElevatorConstants.kElevatorMotorPort, MotorType.kBrushless);
+  private final CANSparkMax m_elevator =
+    new CANSparkMax(ElevatorConstants.kElevatorMotorPort, MotorType.kBrushless);
+  
+  private final RelativeEncoder e_ElevatorEncoder = m_elevator.getEncoder();
+
+  private final SparkMaxPIDController pid_ElevatorVelControl = m_elevator.getPIDController();
 
   /** Creates a new ExampleSubsystem. */
   public ElevatorSubsystem() {
-   
+      m_elevator.restoreFactoryDefaults();
+      m_elevator.setIdleMode(ElevatorConstants.kIdleMode);
+      m_elevator.setInverted(ElevatorConstants.kElevatorMotorIntverted);
+      m_elevator.setClosedLoopRampRate(ElevatorConstants.kClosedLoopRampRate);
+      m_elevator.setSecondaryCurrentLimit(50);
 
+      pid_ElevatorVelControl.setFF(ElevatorConstants.kFVel, ElevatorConstants.kVelPidSlot);
+      pid_ElevatorVelControl.setP(ElevatorConstants.kPVel, ElevatorConstants.kVelPidSlot);
+      pid_ElevatorVelControl.setD(ElevatorConstants.kDVel, ElevatorConstants.kVelPidSlot);
+      pid_ElevatorVelControl.setI(ElevatorConstants.kIVel, ElevatorConstants.kVelPidSlot);
+
+  }
+  
+  public void setTargetOutput(double output) {
+    m_elevator.set(output);
+  }
+
+  public void setTargetVelocity(double Velocity) {
+    pid_ElevatorVelControl.setReference(
+      Velocity,
+      CANSparkMax.ControlType.kVelocity,
+      ElevatorConstants.kVelPidSlot);
+
+  }
+
+  public double getElevatorVel() {
+    return e_ElevatorEncoder.getVelocity();
+  }
+
+  public void stopMotor() {
+    m_elevator.stopMotor();
   }
 
    @Override

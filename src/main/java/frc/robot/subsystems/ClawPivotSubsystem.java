@@ -30,7 +30,7 @@ public class ClawPivotSubsystem extends SubsystemBase {
 
     pid_ClawPivotVelControl.setFF(ClawPivotConstants.kFVel, ClawPivotConstants.kVelPidSlot);
     pid_ClawPivotVelControl.setP(ClawPivotConstants.kPVel, ClawPivotConstants.kVelPidSlot);
-    pid_ClawPivotVelControl.setD(ClawPivotConstants.kDVel, ClawPivotConstants.KVelPidSlot);
+    pid_ClawPivotVelControl.setD(ClawPivotConstants.kDVel, ClawPivotConstants.kVelPidSlot);
     pid_ClawPivotVelControl.setI(ClawPivotConstants.kIVel, ClawPivotConstants.kVelPidSlot);
 
   }
@@ -42,7 +42,7 @@ public class ClawPivotSubsystem extends SubsystemBase {
   public void setTargetVelocity(double Velocity) {
     pid_ClawPivotVelControl.setReference(
       Velocity,
-      CANSparkMax.ControlType.kVelocity
+      CANSparkMax.ControlType.kVelocity,
       ClawPivotConstants.kVelPidSlot);
 
   }
