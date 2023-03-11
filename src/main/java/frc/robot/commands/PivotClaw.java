@@ -8,8 +8,15 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ClawPivotSubsystem;
 
 public class PivotClaw extends CommandBase {
+  private final ClawPivotSubsystem s_robotClawPivot;
+  private final double speed;
+
   /** Creates a new PivotClaw. */
-  public PivotClaw(ClawPivotSubsystem s_robotClawPivot) {
+  public PivotClaw(ClawPivotSubsystem s_robotClawPivot, double speed) {
+
+    this.s_robotClawPivot = s_robotClawPivot;
+    this.speed = speed;
+
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(s_robotClawPivot);
   }
@@ -20,7 +27,10 @@ public class PivotClaw extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    // TODO: s_robotClawPivot.setTargetVel(speed)
+
+  }
 
   // Called once the command ends or is interrupted.
   @Override
