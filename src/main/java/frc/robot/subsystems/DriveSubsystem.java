@@ -145,7 +145,15 @@ public class DriveSubsystem extends SubsystemBase {
 
   // Sets the position and velocity encoder conversion factors when gear box is in low gear
   public void setEncoderLowGearConversionFactor() {
-    // TODO: setPositionConversionFactor and setVelocityConversionFactor with kEncoderRevToMetersLowGear and kEncoderRpmToMetersPerSecondLowGear
+    m_frontLeftEncoder.setPositionConversionFactor(DriveConstants.kEncoderRevToMetersLowGear);
+      m_rearLeftEncoder.setPositionConversionFactor(DriveConstants.kEncoderRevToMetersLowGear);
+      m_frontRightEncoder.setPositionConversionFactor(DriveConstants.kEncoderRevToMetersLowGear);
+      m_rearRightEncoder.setPositionConversionFactor(DriveConstants.kEncoderRevToMetersLowGear);
+
+      m_frontLeftEncoder.setVelocityConversionFactor(DriveConstants.kEncoderRpmToMetersPerSecondLowGear);
+      m_rearLeftEncoder.setVelocityConversionFactor(DriveConstants.kEncoderRpmToMetersPerSecondLowGear);
+      m_frontRightEncoder.setVelocityConversionFactor(DriveConstants.kEncoderRpmToMetersPerSecondLowGear);
+      m_rearRightEncoder.setVelocityConversionFactor(DriveConstants.kEncoderRpmToMetersPerSecondLowGear);
   }
 
   /** Resets the drive encoders to currently read a position of 0. */

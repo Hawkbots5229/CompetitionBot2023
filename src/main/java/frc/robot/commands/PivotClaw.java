@@ -29,6 +29,7 @@ public class PivotClaw extends CommandBase {
   @Override
   public void execute() {
     // TODO: s_robotClawPivot.setTargetVel(speed)
+    s_robotClawPivot.setTargetVel(speed);
 
   }
 

@@ -30,6 +30,7 @@ public class OperateIntake extends CommandBase {
   @Override
   public void execute() {
     //TODO: s_robotIntake.setTargetVel(speed)
+    s_robotIntake.setTargetVel(speed);
 
   }
 
