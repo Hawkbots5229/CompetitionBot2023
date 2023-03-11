@@ -7,24 +7,27 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.ClawConstants;
 
 public class ClawSubsystem extends SubsystemBase {
 
   public enum clawPosition {kOpen, kClosed};
   
   private final DoubleSolenoid ds_left = new DoubleSolenoid(PneumaticsModuleType.REVPH, ClawConstants.kPneumaticLeftForwardChannel, ClawConstants.kPneumaticLeftReverseChannel);
-  // TODO: Create new DoubleSolenoid ds_right
+  private final DoubleSolenoid ds_right = new DoubleSolenoid(PneumaticsModuleType.REVPH, ClawConstants.kPneumaticRightForwardChannel, ClawConstants.kPneumaticRightReverseChannel);
 
 
   /** Creates a new ClawSubsystem. */
   public ClawSubsystem() {}
 
   public void open() {
-    // TODO: set ds_left and ds_right kReverse (see shiftLowGear in DriveSubsystem)
+    ds_left.set(DoubleSolenoid.Value.kReverse);
+    ds_right.set(DoubleSolenoid.Value.kReverse);
   }
 
   public void close() {
-    // TODO: set ds_left and ds_right kForward (see shiftLowGear in DriveSubsystem)
+    ds_left.set(DoubleSolenoid.Value.kForward);
+    ds_right.set(DoubleSolenoid.Value.kForward);
   }
 
   @Override
