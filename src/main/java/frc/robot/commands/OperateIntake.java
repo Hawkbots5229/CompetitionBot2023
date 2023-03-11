@@ -8,8 +8,16 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IntakeSubsystem;
 
 public class OperateIntake extends CommandBase {
+
+  private final IntakeSubsystem s_robotIntake;
+  private final double speed;
+
   /** Creates a new OperateIntake. */
-  public OperateIntake(IntakeSubsystem s_robotIntake) {
+  public OperateIntake(IntakeSubsystem s_robotIntake, double speed) {
+
+    this.s_robotIntake = s_robotIntake;
+    this.speed = speed;
+
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(s_robotIntake);
   }
@@ -20,7 +28,10 @@ public class OperateIntake extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    //TODO: s_robotIntake.setTargetVel(speed)
+
+  }
 
   // Called once the command ends or is interrupted.
   @Override
