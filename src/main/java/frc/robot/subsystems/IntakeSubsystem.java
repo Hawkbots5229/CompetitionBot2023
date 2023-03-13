@@ -5,6 +5,8 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -16,9 +18,56 @@ public class IntakeSubsystem extends SubsystemBase {
     new CANSparkMax(IntakeConstants.kLeftMotorPort, MotorType.kBrushless);
   private final CANSparkMax m_right =
     new CANSparkMax(IntakeConstants.kRightMotorPort, MotorType.kBrushless);
+
+    private final SparkMaxPIDController pid_LeftVelControl = m_left.getPIDController();
+
+    private final RelativeEncoder e_LeftEncoder = m_left.getEncoder();
+
+    private final RelativeEncoder e_RightEncoder = m_right.getEncoder();
   
   /** Creates a new IntakeSubsystem. */
-  public IntakeSubsystem() {}
+  public IntakeSubsystem() {
+    m_left.restoreFactoryDefaults();
+    m_left.setIdleMode(IntakeConstants.kIdleMode);
+    m_left.setInverted(IntakeConstants.kLeftMotorIntverted);
+    m_left.setClosedLoopRampRate(IntakeConstants.kClosedLoopRampRate);
+    m_left.setSecondaryCurrentLimit(50);
+    
+    m_right.restoreFactoryDefaults();
+    m_right.setIdleMode(IntakeConstants.kIdleMode);
+    m_right.setInverted(IntakeConstants.kRightMotorInverted);
+    m_right.setClosedLoopRampRate(IntakeConstants.kClosedLoopRampRate);
+    m_right.setSecondaryCurrentLimit(50);
+
+    m_right.follow(m_left);
+
+    pid_LeftVelControl.setFF(IntakeConstants.kFVel, IntakeConstants.kVelPidSlot);
+    pid_LeftVelControl.setP(IntakeConstants.kPVel, IntakeConstants.kVelPidSlot);
+    pid_LeftVelControl.setD(IntakeConstants.kDVel, IntakeConstants.kVelPidSlot);
+    pid_LeftVelControl.setI(IntakeConstants.kIVel, IntakeConstants.kVelPidSlot);
+
+  }
+
+  public void setTargetOutput(double output) {
+    m_left.set(output);
+  }
+
+  public void setTargetVelocity(double Velocity) {
+    pid_LeftVelControl.setReference(
+      Velocity,
+      CANSparkMax.ControlType.kVelocity,
+      IntakeConstants.kVelPidSlot);
+
+  }
+
+  public double getLeftVel() {
+    return (e_LeftEncoder.getVelocity() + e_RightEncoder.getVelocity())/2;
+  }
+
+  public void stopMotor() {
+    m_left.stopMotor();
+  }
+
 
   @Override
   public void periodic() {

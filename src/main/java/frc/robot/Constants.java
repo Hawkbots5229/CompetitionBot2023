@@ -79,6 +79,16 @@ public final class Constants {
 
     public static final int kLeftMotorPort = 4;
     public static final int kRightMotorPort = 5;
+    public static final double kClosedLoopRampRate = 0.5;
+    public static final IdleMode kIdleMode = IdleMode.kBrake;
+    public static final boolean kLeftMotorIntverted = false;
+    public static final boolean kRightMotorInverted = false;
+    public static final int kVelPidSlot = 0;
+    public static final double kFVel = 0.000115;
+    public static final double kPVel = 0.00011;
+    public static final double kDVel = 10;
+    public static final double kIVel = 0;
+    
     
   }
 

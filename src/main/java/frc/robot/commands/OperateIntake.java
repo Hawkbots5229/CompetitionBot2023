@@ -29,8 +29,8 @@ public class OperateIntake extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //TODO: s_robotIntake.setTargetVel(speed)
-    s_robotIntake.setTargetVel(speed);
+
+    s_robotIntake.setTargetVelocity(speed);
 
   }
 
