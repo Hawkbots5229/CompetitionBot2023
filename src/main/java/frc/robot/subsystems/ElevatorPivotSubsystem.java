@@ -5,9 +5,11 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ElevatorPivotConstants;
 
@@ -71,8 +73,22 @@ public class ElevatorPivotSubsystem extends SubsystemBase {
     m_leftFront.set(output);
   }
 
+  public void setTargetVelocity(double Velocity) {
+    m_leftFront.set(TalonFXControlMode.Velocity, Velocity);
+
+  }
+
+  public double getElevatorPivotVel() {
+    return m_leftFront.getSelectedSensorVelocity();
+  }
+
+  public void stopMotor() {
+    m_leftFront.stopMotor();
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Elevator Pivot Velocity", getElevatorPivotVel());
   }
 }
