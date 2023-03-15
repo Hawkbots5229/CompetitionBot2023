@@ -4,12 +4,8 @@
 
 package frc.robot.commands;
 
-import javax.swing.text.Position;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.SelectCommand;
 import frc.robot.subsystems.DriveSubsystem;
-import pabeles.concurrency.ConcurrencyOps.Reset;
 
 public class AutonomousDistance extends CommandBase {
   
