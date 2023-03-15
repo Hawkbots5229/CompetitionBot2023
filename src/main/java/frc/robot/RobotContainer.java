@@ -73,6 +73,13 @@ public class RobotContainer {
   private void configureBindings() {
 
     // TODO: Schedule Commands
+    // extend intake when left bumber is pressed
+    new JoystickButton(m_mechController, Button.kLeftBumper.value)
+        .whenPressed(new AdjustIntakeHeight(m_adjustIntake, IntakeConstants.kIntakeHeight));
+    
+    // intake intake when right bumper is pressed
+    new JoystickButton(m_mechController, Button.kRightBumper.value)
+        .whenPressed(new AdjustIntakeHeight(m_adjustIntake, 0));
 
   }
 
