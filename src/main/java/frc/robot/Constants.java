@@ -127,9 +127,10 @@ public final class Constants {
     public static final double kClosedLoopRampRate = 1.5;
      
     public static final double kVexGearBoxRatio = 1/10;
-    //TODO: Convert gearbox revs to linear travel
-    public static final double kVexRevtoMeters = 0.0508;
-    public static final double kEncoderRpmToMetersPerSecond = (kVexGearBoxRatio*kVexRevtoMeters)/60;
+    // TODO:
+    public static final double kSprocketRatio = (16/38);
+    public static final double kRevtoMeters = 0.0508;
+    public static final double kEncoderRpmToMetersPerSecond = (kVexGearBoxRatio*kSprocketRatio*kRevtoMeters)/60;
     
     public static final int kVelPidSlot = 0;
     public static final double kFVel = 1;
