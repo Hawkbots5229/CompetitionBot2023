@@ -10,13 +10,13 @@ import frc.robot.subsystems.IntakeSubsystem;
 public class OperateIntake extends CommandBase {
 
   private final IntakeSubsystem s_robotIntake;
-  private final double speed;
+  private final IntakeSubsystem.intakeDir direction;
 
   /** Creates a new OperateIntake. */
-  public OperateIntake(IntakeSubsystem s_robotIntake, double speed) {
+  public OperateIntake(IntakeSubsystem s_robotIntake, IntakeSubsystem.intakeDir direction) {
 
     this.s_robotIntake = s_robotIntake;
-    this.speed = speed;
+    this.direction = direction;
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(s_robotIntake);
@@ -30,13 +30,26 @@ public class OperateIntake extends CommandBase {
   @Override
   public void execute() {
 
-    s_robotIntake.setTargetVelocity(speed);
-
+    switch(direction) {
+      case kIn: 
+        s_robotIntake.wheelsIn();
+        break;
+      case kOut: 
+        s_robotIntake.wheelsOut();
+        break;
+      case kOff:
+        s_robotIntake.stopMotor();
+        break;
+      default:
+        throw new AssertionError("Illegal value: " + direction);   
+    };
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    s_robotIntake.stopMotor();
+  }
 
   // Returns true when the command should end.
   @Override

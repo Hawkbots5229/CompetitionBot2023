@@ -18,7 +18,6 @@ public class ClawSubsystem extends SubsystemBase {
   private final DoubleSolenoid ds_left = new DoubleSolenoid(PneumaticsModuleType.REVPH, ClawConstants.kPneumaticLeftForwardChannel, ClawConstants.kPneumaticLeftReverseChannel);
   private final DoubleSolenoid ds_right = new DoubleSolenoid(PneumaticsModuleType.REVPH, ClawConstants.kPneumaticRightForwardChannel, ClawConstants.kPneumaticRightReverseChannel);
 
-
   /** Creates a new ClawSubsystem. */
   public ClawSubsystem() {
     clawPos = "Off";

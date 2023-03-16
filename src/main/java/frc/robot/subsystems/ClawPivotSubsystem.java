@@ -14,26 +14,27 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ClawPivotConstants;
 
 public class ClawPivotSubsystem extends SubsystemBase {
+
   private final CANSparkMax m_clawPivot =
     new CANSparkMax(ClawPivotConstants.kClawPivotMotorPort, MotorType.kBrushless);
 
-    private final RelativeEncoder e_ClawPivotEncoder = m_clawPivot.getEncoder();
+  private final RelativeEncoder e_ClawPivotEncoder = m_clawPivot.getEncoder();
 
-    private final SparkMaxPIDController pid_ClawPivotVelControl = m_clawPivot.getPIDController();
+  private final SparkMaxPIDController pid_ClawPivotVelControl = m_clawPivot.getPIDController();
 
   /** Creates a new ClawPivotSubsystem. */
   public ClawPivotSubsystem() {
+
     m_clawPivot.restoreFactoryDefaults();
-    m_clawPivot.setIdleMode(ClawPivotConstants.kIdleMode);
     m_clawPivot.setInverted(ClawPivotConstants.kClawPivotMotorIntverted);
+    m_clawPivot.setIdleMode(ClawPivotConstants.kIdleMode);
+    m_clawPivot.setSmartCurrentLimit(ClawPivotConstants.kCurrentLimit);
     m_clawPivot.setClosedLoopRampRate(ClawPivotConstants.kClosedLoopRampRate);
-    m_clawPivot.setSecondaryCurrentLimit(50);
 
     pid_ClawPivotVelControl.setFF(ClawPivotConstants.kFVel, ClawPivotConstants.kVelPidSlot);
     pid_ClawPivotVelControl.setP(ClawPivotConstants.kPVel, ClawPivotConstants.kVelPidSlot);
     pid_ClawPivotVelControl.setD(ClawPivotConstants.kDVel, ClawPivotConstants.kVelPidSlot);
     pid_ClawPivotVelControl.setI(ClawPivotConstants.kIVel, ClawPivotConstants.kVelPidSlot);
-
   }
 
   public void setTargetOutput(double output) {
@@ -45,7 +46,6 @@ public class ClawPivotSubsystem extends SubsystemBase {
       Velocity,
       CANSparkMax.ControlType.kVelocity,
       ClawPivotConstants.kVelPidSlot);
-
   }
 
   public double getClawPivotVel() {
@@ -59,6 +59,6 @@ public class ClawPivotSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("ClawPivot Velocity", e_ClawPivotEncoder.getVelocity());
+    SmartDashboard.putNumber("Claw Pivot Velocity", getClawPivotVel());
   }
 }

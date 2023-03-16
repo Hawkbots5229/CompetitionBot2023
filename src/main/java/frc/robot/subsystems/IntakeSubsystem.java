@@ -14,38 +14,40 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IntakeConstants;
 
 public class IntakeSubsystem extends SubsystemBase {
+
+  public enum intakeDir {kIn, kOut, kOff};
+
   private final CANSparkMax m_left =
     new CANSparkMax(IntakeConstants.kLeftMotorPort, MotorType.kBrushless);
   private final CANSparkMax m_right =
     new CANSparkMax(IntakeConstants.kRightMotorPort, MotorType.kBrushless);
 
-    private final SparkMaxPIDController pid_LeftVelControl = m_left.getPIDController();
+  private final SparkMaxPIDController pid_LeftVelControl = m_left.getPIDController();
 
-    private final RelativeEncoder e_LeftEncoder = m_left.getEncoder();
-
-    private final RelativeEncoder e_RightEncoder = m_right.getEncoder();
+  private final RelativeEncoder e_LeftEncoder = m_left.getEncoder();
+  private final RelativeEncoder e_RightEncoder = m_right.getEncoder();
   
   /** Creates a new IntakeSubsystem. */
   public IntakeSubsystem() {
+
     m_left.restoreFactoryDefaults();
-    m_left.setIdleMode(IntakeConstants.kIdleMode);
     m_left.setInverted(IntakeConstants.kLeftMotorIntverted);
+    m_left.setIdleMode(IntakeConstants.kIdleMode);
+    m_left.setSmartCurrentLimit(IntakeConstants.kCurrentLimit);
     m_left.setClosedLoopRampRate(IntakeConstants.kClosedLoopRampRate);
-    m_left.setSecondaryCurrentLimit(50);
     
     m_right.restoreFactoryDefaults();
-    m_right.setIdleMode(IntakeConstants.kIdleMode);
     m_right.setInverted(IntakeConstants.kRightMotorInverted);
+    m_right.setIdleMode(IntakeConstants.kIdleMode);
+    m_right.setSecondaryCurrentLimit(IntakeConstants.kCurrentLimit);
     m_right.setClosedLoopRampRate(IntakeConstants.kClosedLoopRampRate);
-    m_right.setSecondaryCurrentLimit(50);
-
+    
     m_right.follow(m_left);
 
     pid_LeftVelControl.setFF(IntakeConstants.kFVel, IntakeConstants.kVelPidSlot);
     pid_LeftVelControl.setP(IntakeConstants.kPVel, IntakeConstants.kVelPidSlot);
     pid_LeftVelControl.setD(IntakeConstants.kDVel, IntakeConstants.kVelPidSlot);
     pid_LeftVelControl.setI(IntakeConstants.kIVel, IntakeConstants.kVelPidSlot);
-
   }
 
   public void setTargetOutput(double output) {
@@ -57,7 +59,14 @@ public class IntakeSubsystem extends SubsystemBase {
       Velocity,
       CANSparkMax.ControlType.kVelocity,
       IntakeConstants.kVelPidSlot);
+  }
 
+  public void wheelsIn() {
+    setTargetVelocity(IntakeConstants.kMaxVel);
+  }
+
+  public void wheelsOut() {
+    setTargetVelocity(-IntakeConstants.kMaxVel);
   }
 
   public double getIntakeVel() {
@@ -67,7 +76,6 @@ public class IntakeSubsystem extends SubsystemBase {
   public void stopMotor() {
     m_left.stopMotor();
   }
-
 
   @Override
   public void periodic() {

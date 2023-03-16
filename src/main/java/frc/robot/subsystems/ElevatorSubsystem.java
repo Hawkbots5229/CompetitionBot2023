@@ -25,29 +25,28 @@ public class ElevatorSubsystem extends SubsystemBase {
 
   /** Creates a new ExampleSubsystem. */
   public ElevatorSubsystem() {
-      m_elevator.restoreFactoryDefaults();
-      m_elevator.setIdleMode(ElevatorConstants.kIdleMode);
-      m_elevator.setInverted(ElevatorConstants.kElevatorMotorIntverted);
-      m_elevator.setClosedLoopRampRate(ElevatorConstants.kClosedLoopRampRate);
-      m_elevator.setSecondaryCurrentLimit(50);
 
-      pid_ElevatorVelControl.setFF(ElevatorConstants.kFVel, ElevatorConstants.kVelPidSlot);
-      pid_ElevatorVelControl.setP(ElevatorConstants.kPVel, ElevatorConstants.kVelPidSlot);
-      pid_ElevatorVelControl.setD(ElevatorConstants.kDVel, ElevatorConstants.kVelPidSlot);
-      pid_ElevatorVelControl.setI(ElevatorConstants.kIVel, ElevatorConstants.kVelPidSlot);
-
+    m_elevator.restoreFactoryDefaults();
+    m_elevator.setInverted(ElevatorConstants.kElevatorMotorIntverted);
+    m_elevator.setIdleMode(ElevatorConstants.kIdleMode);
+    m_elevator.setSmartCurrentLimit(ElevatorConstants.kCurrentLimit);
+    m_elevator.setClosedLoopRampRate(ElevatorConstants.kClosedLoopRampRate);
+    
+    pid_ElevatorVelControl.setFF(ElevatorConstants.kFVel, ElevatorConstants.kVelPidSlot);
+    pid_ElevatorVelControl.setP(ElevatorConstants.kPVel, ElevatorConstants.kVelPidSlot);
+    pid_ElevatorVelControl.setD(ElevatorConstants.kDVel, ElevatorConstants.kVelPidSlot);
+    pid_ElevatorVelControl.setI(ElevatorConstants.kIVel, ElevatorConstants.kVelPidSlot);
   }
   
   public void setTargetOutput(double output) {
     m_elevator.set(output);
   }
 
-  public void setTargetVelocity(double Velocity) {
+  public void setTargetVelocity(double upVel, double downVel) {
     pid_ElevatorVelControl.setReference(
-      Velocity,
+      (upVel + downVel),
       CANSparkMax.ControlType.kVelocity,
       ElevatorConstants.kVelPidSlot);
-
   }
 
   public double getElevatorVel() {

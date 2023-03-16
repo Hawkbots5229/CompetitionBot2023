@@ -4,19 +4,31 @@
 
 package frc.robot;
 
+import frc.robot.Constants.ClawPivotConstants;
+import frc.robot.Constants.ElevatorConstants;
+import frc.robot.Constants.ElevatorPivotConstants;
 import frc.robot.Constants.OperatorConstants;
 
 import frc.robot.commands.AutonomousDefault;
-
+import frc.robot.commands.OperateClaw;
+import frc.robot.commands.OperateIntake;
+import frc.robot.commands.ShiftGears;
+import frc.robot.subsystems.ClawPivotSubsystem;
+import frc.robot.subsystems.ClawSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
-
+import frc.robot.subsystems.ElevatorPivotSubsystem;
+import frc.robot.subsystems.ElevatorSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -26,12 +38,18 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final DriveSubsystem s_robotDrive = new DriveSubsystem();
-  // TODO: create s_robotArm, s_robotElevator, and s_robotIntake
 
-  private final CommandPS4Controller j_driverController =
-      new CommandPS4Controller(OperatorConstants.kDriverControllerPort);
-  // TODO: create j_mechController with kMechControllerPort
+  private final ClawPivotSubsystem s_clawPivot = new ClawPivotSubsystem();
+  private final ClawSubsystem s_claw = new ClawSubsystem();
+  private final DriveSubsystem s_robotDrive = new DriveSubsystem();
+  private final ElevatorPivotSubsystem s_elevatorPivot = new ElevatorPivotSubsystem();
+  private final ElevatorSubsystem s_elevator = new ElevatorSubsystem();
+  private final IntakeSubsystem s_intake = new IntakeSubsystem();
+
+  XboxController j_driverController =
+      new XboxController(OperatorConstants.kDriverControllerPort);
+  XboxController j_mechController =
+      new XboxController(OperatorConstants.kMechControllerPort);
 
   // Create SmartDashboard chooser for autonomous routines
   private final SendableChooser<Command> sc_autonSelect = new SendableChooser<>();
@@ -51,14 +69,36 @@ public class RobotContainer {
     SmartDashboard.putData(sc_autonSelect);
 
     // Configure default commands
-    // Set the default drive command to split-stick tank drive
+
     s_robotDrive.setDefaultCommand(
-        new RunCommand(
-            () ->
-                s_robotDrive.drive(
-                    j_driverController.getLeftY(),                   
-                    j_driverController.getRightY()),
-            s_robotDrive));
+      new RunCommand(
+        () ->
+          s_robotDrive.drive(
+            j_driverController.getLeftY(),                   
+            j_driverController.getRightY()),
+        s_robotDrive));
+    
+    s_elevatorPivot.setDefaultCommand(
+      new RunCommand(
+        () ->
+          s_elevatorPivot.setTargetVelocity(
+            j_mechController.getLeftY()*ElevatorPivotConstants.kMaxVel),
+        s_elevatorPivot));
+
+    s_clawPivot.setDefaultCommand(
+      new RunCommand(
+        () ->
+          s_clawPivot.setTargetVelocity(
+            j_mechController.getRightY()*ClawPivotConstants.kMaxVel),
+        s_clawPivot));
+
+    s_elevator.setDefaultCommand(    
+      new RunCommand(
+        () ->
+          s_elevator.setTargetVelocity(
+            j_mechController.getLeftTriggerAxis()*ElevatorConstants.kMaxVel,
+            -j_mechController.getRightTriggerAxis()*ElevatorConstants.kMaxVel),
+        s_elevator));
   }
 
   /**
@@ -72,15 +112,29 @@ public class RobotContainer {
    */
   private void configureBindings() {
 
-    // TODO: Schedule Commands
-    // extend intake when left bumber is pressed
-    new JoystickButton(m_mechController, Button.kLeftBumper.value)
-        .whenPressed(new AdjustIntakeHeight(m_adjustIntake, IntakeConstants.kIntakeHeight));
-    
-    // intake intake when right bumper is pressed
-    new JoystickButton(m_mechController, Button.kRightBumper.value)
-        .whenPressed(new AdjustIntakeHeight(m_adjustIntake, 0));
+    // Drive Controller
 
+    /**  Shift Gears: LeftBumper-High RightBumper-Low */
+    new JoystickButton(j_driverController, Button.kLeftBumper.value)
+      .onTrue(new ShiftGears(s_robotDrive, DriveSubsystem.gear.kHigh));
+    new JoystickButton(j_driverController, Button.kRightBumper.value)
+      .onTrue(new ShiftGears(s_robotDrive, DriveSubsystem.gear.kLow));
+
+    // Mech Controller
+
+    /** Intake Wheels: PovUp-Out PovDown-In */
+    new POVButton(j_mechController, OperatorConstants.kUpDPad)
+      .onTrue(new OperateIntake(s_intake, IntakeSubsystem.intakeDir.kIn))
+      .onFalse(new OperateIntake(s_intake, IntakeSubsystem.intakeDir.kOff));     
+    new POVButton(j_mechController, OperatorConstants.kDownDPad)
+      .onTrue(new OperateIntake(s_intake, IntakeSubsystem.intakeDir.kOut))
+      .onFalse(new OperateIntake(s_intake, IntakeSubsystem.intakeDir.kOff));
+
+    /** Claw: LeftBumper-Open RightBumper-Close */
+    new JoystickButton(j_mechController, Button.kLeftBumper.value)
+        .onTrue(new OperateClaw(s_claw, ClawSubsystem.clawPosition.kOpen));
+    new JoystickButton(j_mechController, Button.kRightBumper.value)
+        .onTrue(new OperateClaw(s_claw, ClawSubsystem.clawPosition.kClosed));
   }
 
   /**
