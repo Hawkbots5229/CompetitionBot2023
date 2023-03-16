@@ -111,10 +111,15 @@ public class RobotContainer {
 
     // Drive Controller
 
-    /**  Shift Gears: LeftBumper-High RightBumper-Low */
-    new JoystickButton(j_driverController, Button.kLeftBumper.value)
-      .onTrue(new ShiftGears(s_robotDrive, DriveSubsystem.gear.kHigh));
+    /** Control Mode: RightBumper-50% */
     new JoystickButton(j_driverController, Button.kRightBumper.value)
+        .onTrue(new RunCommand (() -> s_robotDrive.setMaxOutput(0.5)))
+        .onFalse(new RunCommand (() -> s_robotDrive.setMaxOutput(1.0)));  
+
+    /**  Shift Gears: PovUp-High PovDown-Low */
+    new POVButton(j_driverController, OperatorConstants.kUpDPad)
+      .onTrue(new ShiftGears(s_robotDrive, DriveSubsystem.gear.kHigh));
+    new POVButton(j_driverController, OperatorConstants.kDownDPad)
       .onTrue(new ShiftGears(s_robotDrive, DriveSubsystem.gear.kLow));
 
     // Mech Controller
