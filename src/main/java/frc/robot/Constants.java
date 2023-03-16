@@ -32,6 +32,11 @@ public final class Constants {
     public static final int kPneumaticForwardChannel = 0;
     public static final int kPneumaticReverseChannel = 1;
 
+    public static final boolean kFrontLeftMotorInverted = false;
+    public static final boolean kRearLeftMotorInverted = true;
+    public static final boolean kFrontRightMotorInverted = false;
+    public static final boolean kRearRightMotorInverted = true;
+
     public static final IdleMode kIdleMode = IdleMode.kBrake;
     public static final int kCurrentLimit = 40;  // Amps
     public static final double kClosedLoopRampRate = 0.7;

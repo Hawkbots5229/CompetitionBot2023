@@ -44,13 +44,9 @@ public class DriveSubsystem extends SubsystemBase {
   private final RelativeEncoder m_rearRightEncoder = m_rearRight.getEncoder();
 
   // Front left motor velocity PID controller
-  private final SparkMaxPIDController m_frontLeftVelPIDController = m_frontLeft.getPIDController();
-  // Rear left motor velocity PID controller
-  private final SparkMaxPIDController m_rearLeftVelPIDController = m_rearLeft.getPIDController();
+  private final SparkMaxPIDController pid_leftVel = m_frontLeft.getPIDController();
   // Front right motor velocity PID controller
-  private final SparkMaxPIDController m_frontRightVelPIDController = m_frontRight.getPIDController();
-  // Rear right motor velocity PID controller
-  private final SparkMaxPIDController m_rearRightVelPIDController = m_rearRight.getPIDController();
+  private final SparkMaxPIDController pid_rightVel = m_frontRight.getPIDController();
 
   // Kauailabs navX-MXP motion processor
   private final AHRS g_navX = 
@@ -76,16 +72,6 @@ public class DriveSubsystem extends SubsystemBase {
     dd_drive.setExpiration(0.1);
   }
 
-    @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-  }
-
-  @Override
-  public void simulationPeriodic() {
-    // This method will be called once per scheduler run during simulation
-  }
-
   private void initMotors() {
 
     // TODO: Check if motors need to be inverted or if it is done in DifferentialDrive
@@ -94,64 +80,67 @@ public class DriveSubsystem extends SubsystemBase {
     m_rearLeft.restoreFactoryDefaults();
     m_frontRight.restoreFactoryDefaults();
     m_rearRight.restoreFactoryDefaults();
+
+    m_frontLeft.setInverted(DriveConstants.kFrontLeftMotorInverted);
+    m_rearLeft.setInverted(DriveConstants.kRearLeftMotorInverted);
+    m_frontRight.setInverted(DriveConstants.kFrontRightMotorInverted);
+    m_rearRight.setInverted(DriveConstants.kRearRightMotorInverted);
     
     m_frontLeft.setIdleMode(DriveConstants.kIdleMode);
     m_rearLeft.setIdleMode(DriveConstants.kIdleMode);
     m_frontRight.setIdleMode(DriveConstants.kIdleMode);
     m_rearRight.setIdleMode(DriveConstants.kIdleMode);
-    
-    m_frontLeft.setOpenLoopRampRate(DriveConstants.kOpenLoopRampRate);
-    m_rearLeft.setOpenLoopRampRate(DriveConstants.kOpenLoopRampRate);
-    m_frontRight.setOpenLoopRampRate(DriveConstants.kOpenLoopRampRate);
-    m_rearRight.setOpenLoopRampRate(DriveConstants.kOpenLoopRampRate);
+       
+    m_frontLeft.setSmartCurrentLimit(DriveConstants.kCurrentLimit);
+    m_rearLeft.setSmartCurrentLimit(DriveConstants.kCurrentLimit);
+    m_frontRight.setSmartCurrentLimit(DriveConstants.kCurrentLimit);
+    m_rearRight.setSmartCurrentLimit(DriveConstants.kCurrentLimit);
     
     m_frontLeft.setClosedLoopRampRate(DriveConstants.kClosedLoopRampRate);
     m_rearLeft.setClosedLoopRampRate(DriveConstants.kClosedLoopRampRate);
     m_frontRight.setClosedLoopRampRate(DriveConstants.kClosedLoopRampRate);
     m_rearRight.setClosedLoopRampRate(DriveConstants.kClosedLoopRampRate);
     
-    m_frontLeft.setSmartCurrentLimit(DriveConstants.kCurrentLimit);
-    m_rearLeft.setSmartCurrentLimit(DriveConstants.kCurrentLimit);
-    m_frontRight.setSmartCurrentLimit(DriveConstants.kCurrentLimit);
-    m_rearRight.setSmartCurrentLimit(DriveConstants.kCurrentLimit);
+    m_frontLeft.setOpenLoopRampRate(DriveConstants.kOpenLoopRampRate);
+    m_rearLeft.setOpenLoopRampRate(DriveConstants.kOpenLoopRampRate);
+    m_frontRight.setOpenLoopRampRate(DriveConstants.kOpenLoopRampRate);
+    m_rearRight.setOpenLoopRampRate(DriveConstants.kOpenLoopRampRate);
   }
 
   private void initEncoders() {
 
-    setEncoderHighGearConversionFactor();
-    
+    setEncoderHighGearConversionFactor();  
     resetEncoders();
-
-    // Note: SparkMax relateive encoders are inverted with motors. No action needed here.
   }
 
   // Sets the position and velocity encoder conversion factors when gear box is in high gear
   public void setEncoderHighGearConversionFactor() {
 
-      // Converts revolutions to meters
-      m_frontLeftEncoder.setPositionConversionFactor(DriveConstants.kEncoderRevToMetersHighGear);
-      m_rearLeftEncoder.setPositionConversionFactor(DriveConstants.kEncoderRevToMetersHighGear);
-      m_frontRightEncoder.setPositionConversionFactor(DriveConstants.kEncoderRevToMetersHighGear);
-      m_rearRightEncoder.setPositionConversionFactor(DriveConstants.kEncoderRevToMetersHighGear);
-  
-      // Converts RPM to meters per second
-      m_frontLeftEncoder.setVelocityConversionFactor(DriveConstants.kEncoderRpmToMetersPerSecondHighGear);
-      m_rearLeftEncoder.setVelocityConversionFactor(DriveConstants.kEncoderRpmToMetersPerSecondHighGear);
-      m_frontRightEncoder.setVelocityConversionFactor(DriveConstants.kEncoderRpmToMetersPerSecondHighGear);
-      m_rearRightEncoder.setVelocityConversionFactor(DriveConstants.kEncoderRpmToMetersPerSecondHighGear);
+    // Converts revolutions to meters
+    m_frontLeftEncoder.setPositionConversionFactor(DriveConstants.kEncoderRevToMetersHighGear);
+    m_rearLeftEncoder.setPositionConversionFactor(DriveConstants.kEncoderRevToMetersHighGear);
+    m_frontRightEncoder.setPositionConversionFactor(DriveConstants.kEncoderRevToMetersHighGear);
+    m_rearRightEncoder.setPositionConversionFactor(DriveConstants.kEncoderRevToMetersHighGear);
+
+    // Converts RPM to meters per second
+    m_frontLeftEncoder.setVelocityConversionFactor(DriveConstants.kEncoderRpmToMetersPerSecondHighGear);
+    m_rearLeftEncoder.setVelocityConversionFactor(DriveConstants.kEncoderRpmToMetersPerSecondHighGear);
+    m_frontRightEncoder.setVelocityConversionFactor(DriveConstants.kEncoderRpmToMetersPerSecondHighGear);
+    m_rearRightEncoder.setVelocityConversionFactor(DriveConstants.kEncoderRpmToMetersPerSecondHighGear);
   }
 
   // Sets the position and velocity encoder conversion factors when gear box is in low gear
   public void setEncoderLowGearConversionFactor() {
-    m_frontLeftEncoder.setPositionConversionFactor(DriveConstants.kEncoderRevToMetersLowGear);
-      m_rearLeftEncoder.setPositionConversionFactor(DriveConstants.kEncoderRevToMetersLowGear);
-      m_frontRightEncoder.setPositionConversionFactor(DriveConstants.kEncoderRevToMetersLowGear);
-      m_rearRightEncoder.setPositionConversionFactor(DriveConstants.kEncoderRevToMetersLowGear);
 
-      m_frontLeftEncoder.setVelocityConversionFactor(DriveConstants.kEncoderRpmToMetersPerSecondLowGear);
-      m_rearLeftEncoder.setVelocityConversionFactor(DriveConstants.kEncoderRpmToMetersPerSecondLowGear);
-      m_frontRightEncoder.setVelocityConversionFactor(DriveConstants.kEncoderRpmToMetersPerSecondLowGear);
-      m_rearRightEncoder.setVelocityConversionFactor(DriveConstants.kEncoderRpmToMetersPerSecondLowGear);
+    m_frontLeftEncoder.setPositionConversionFactor(DriveConstants.kEncoderRevToMetersLowGear);
+    m_rearLeftEncoder.setPositionConversionFactor(DriveConstants.kEncoderRevToMetersLowGear);
+    m_frontRightEncoder.setPositionConversionFactor(DriveConstants.kEncoderRevToMetersLowGear);
+    m_rearRightEncoder.setPositionConversionFactor(DriveConstants.kEncoderRevToMetersLowGear);
+
+    m_frontLeftEncoder.setVelocityConversionFactor(DriveConstants.kEncoderRpmToMetersPerSecondLowGear);
+    m_rearLeftEncoder.setVelocityConversionFactor(DriveConstants.kEncoderRpmToMetersPerSecondLowGear);
+    m_frontRightEncoder.setVelocityConversionFactor(DriveConstants.kEncoderRpmToMetersPerSecondLowGear);
+    m_rearRightEncoder.setVelocityConversionFactor(DriveConstants.kEncoderRpmToMetersPerSecondLowGear);
   }
 
   /** Resets the drive encoders to currently read a position of 0. */
@@ -173,8 +162,7 @@ public class DriveSubsystem extends SubsystemBase {
   @SuppressWarnings("ParameterName")
   public void drive(double leftSpeed, double rightSpeed) {
     
-    dd_drive.setSafetyEnabled(true);
-    
+    dd_drive.setSafetyEnabled(true);  
     dd_drive.tankDrive(leftSpeed, rightSpeed);
   }
 
@@ -185,7 +173,6 @@ public class DriveSubsystem extends SubsystemBase {
     m_rearLeft.stopMotor();
     m_frontRight.stopMotor();
     m_rearRight.stopMotor();
-
   }
 
     /**
@@ -195,6 +182,7 @@ public class DriveSubsystem extends SubsystemBase {
    * @return the robot's position
    */
   public double getRobotPosition() {
+
     final double m_frontLeftPos = Math.abs(m_frontLeftEncoder.getPosition());
     final double m_rearLeftPos = Math.abs(m_rearLeftEncoder.getPosition());
     final double m_frontRightPos = Math.abs(m_frontRightEncoder.getPosition());
@@ -208,17 +196,15 @@ public class DriveSubsystem extends SubsystemBase {
    *
    * @param maxOutput the maximum output to which the drive will be constrained
    */
-  public void setMaxOutput(double maxOutput) {
-    
-  dd_drive.setMaxOutput(maxOutput);
-    
+  public void setMaxOutput(double maxOutput) {  
+
+    dd_drive.setMaxOutput(maxOutput);  
   }
 
   /** Zeroes the heading of the robot. */
   public void zeroHeading() {
 
-  g_navX.reset();
-
+    g_navX.reset();
   }
 
   /** Shifts gearbox into high 
@@ -228,7 +214,6 @@ public class DriveSubsystem extends SubsystemBase {
 
     ds_gearBox.set(DoubleSolenoid.Value.kOff);
     setEncoderHighGearConversionFactor();
-
   }
 
   /** Shifts gearbox into low 
@@ -238,7 +223,6 @@ public class DriveSubsystem extends SubsystemBase {
 
     ds_gearBox.set(DoubleSolenoid.Value.kForward);
     setEncoderLowGearConversionFactor();
-
   }
 
   /**
@@ -248,10 +232,7 @@ public class DriveSubsystem extends SubsystemBase {
    */
   public double getTurnRate() {
 
-    g_navX.getRate();
-
-    return 0;
-
+    return g_navX.getRate();
   }
 
   /**
@@ -261,9 +242,16 @@ public class DriveSubsystem extends SubsystemBase {
    */
   public double getAngle() {
 
-    g_navX.getAngle();
+    return g_navX.getAngle();
+  }
 
-    return 0;
+  @Override
+  public void periodic() {
+    // This method will be called once per scheduler run
+  }
 
+  @Override
+  public void simulationPeriodic() {
+    // This method will be called once per scheduler run during simulation
   }
 }
