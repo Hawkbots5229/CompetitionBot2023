@@ -31,6 +31,8 @@ public class ElevatorSubsystem extends SubsystemBase {
     m_elevator.setIdleMode(ElevatorConstants.kIdleMode);
     m_elevator.setSmartCurrentLimit(ElevatorConstants.kCurrentLimit);
     m_elevator.setClosedLoopRampRate(ElevatorConstants.kClosedLoopRampRate);
+
+    e_ElevatorEncoder.setVelocityConversionFactor(ElevatorConstants.kEncoderRpmToMetersPerSecond);
     
     pid_ElevatorVelControl.setFF(ElevatorConstants.kFVel, ElevatorConstants.kVelPidSlot);
     pid_ElevatorVelControl.setP(ElevatorConstants.kPVel, ElevatorConstants.kVelPidSlot);

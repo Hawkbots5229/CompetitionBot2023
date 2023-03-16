@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.ElevatorPivotConstants;
 
 public class ElevatorPivotSubsystem extends SubsystemBase {
@@ -72,7 +73,11 @@ public class ElevatorPivotSubsystem extends SubsystemBase {
   }
 
   public void setTargetVelocity(double velocity) {
-    m_leftFront.set(TalonFXControlMode.Velocity, velocity*ElevatorPivotConstants.kMaxVel);
+    m_leftFront.set(TalonFXControlMode.Velocity, convertTarVelToRPM(velocity*ElevatorPivotConstants.kMaxVel)/600); // 600 100ms in 1 min
+  }
+
+  public double convertTarVelToRPM (double velocity) {
+    return velocity/ElevatorConstants.kEncoderRpmToMetersPerSecond;
   }
 
   public double getElevatorPivotVel() {

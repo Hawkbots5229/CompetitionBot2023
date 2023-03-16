@@ -4,9 +4,6 @@
 
 package frc.robot;
 
-import frc.robot.Constants.ClawPivotConstants;
-import frc.robot.Constants.ElevatorConstants;
-import frc.robot.Constants.ElevatorPivotConstants;
 import frc.robot.Constants.OperatorConstants;
 
 import frc.robot.commands.AutonomousDefault;

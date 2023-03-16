@@ -41,6 +41,9 @@ public class IntakeSubsystem extends SubsystemBase {
     m_right.setIdleMode(IntakeConstants.kIdleMode);
     m_right.setSecondaryCurrentLimit(IntakeConstants.kCurrentLimit);
     m_right.setClosedLoopRampRate(IntakeConstants.kClosedLoopRampRate);
+
+    e_LeftEncoder.setVelocityConversionFactor(IntakeConstants.kEncoderRpmToWheelRpm);
+    e_RightEncoder.setVelocityConversionFactor(IntakeConstants.kEncoderRpmToWheelRpm);
     
     m_right.follow(m_left);
 
