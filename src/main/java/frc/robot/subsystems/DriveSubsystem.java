@@ -54,7 +54,6 @@ public class DriveSubsystem extends SubsystemBase {
 
   private final MotorControllerGroup mcg_left = new MotorControllerGroup(m_frontLeft, m_rearLeft);
   private final MotorControllerGroup mcg_right = new MotorControllerGroup(m_frontRight, m_rearRight);
-  //private final Solenoid ss_gearbox = new Solenoid(PneumaticsModuleType.REVPH, DriveConstants.kPneumaticForwardChannel);
   private final DoubleSolenoid ds_gearBox = new DoubleSolenoid(PneumaticsModuleType.REVPH, DriveConstants.kPneumaticForwardChannel, DriveConstants.kPneumaticReverseChannel);
 
   private final DifferentialDrive dd_drive;
@@ -64,6 +63,7 @@ public class DriveSubsystem extends SubsystemBase {
 
     initMotors();
     initEncoders();
+    initPID();
 
     dd_drive = new DifferentialDrive(mcg_left, mcg_right);
 
@@ -73,8 +73,6 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   private void initMotors() {
-
-    // TODO: Check if motors need to be inverted or if it is done in DifferentialDrive
     
     m_frontLeft.restoreFactoryDefaults();
     m_rearLeft.restoreFactoryDefaults();
@@ -111,6 +109,19 @@ public class DriveSubsystem extends SubsystemBase {
 
     setEncoderHighGearConversionFactor();  
     resetEncoders();
+  }
+
+  private void initPID() {
+
+    pid_leftVel.setFF(DriveConstants.kFVelLeft, DriveConstants.kVelPidSlot);
+    pid_leftVel.setP(DriveConstants.kPVelLeft, DriveConstants.kVelPidSlot);
+    pid_leftVel.setD(DriveConstants.kDVelLeft, DriveConstants.kVelPidSlot);
+    pid_leftVel.setI(DriveConstants.kIVelLeft, DriveConstants.kVelPidSlot);
+
+    pid_rightVel.setFF(DriveConstants.kFVelLeft, DriveConstants.kVelPidSlot);
+    pid_rightVel.setP(DriveConstants.kPVelLeft, DriveConstants.kVelPidSlot);
+    pid_rightVel.setD(DriveConstants.kDVelLeft, DriveConstants.kVelPidSlot);
+    pid_rightVel.setI(DriveConstants.kIVelLeft, DriveConstants.kVelPidSlot);
   }
 
   // Sets the position and velocity encoder conversion factors when gear box is in high gear
@@ -160,10 +171,33 @@ public class DriveSubsystem extends SubsystemBase {
    * @param rightSpeed - The robot's right side speed along the X axis [-1.0..1.0]. Forward is positive.
    */
   @SuppressWarnings("ParameterName")
-  public void drive(double leftSpeed, double rightSpeed) {
+  public void driveTank(double leftSpeed, double rightSpeed) {
     
     dd_drive.setSafetyEnabled(true);  
     dd_drive.tankDrive(leftSpeed, rightSpeed);
+  }
+
+    /**
+   * Drives the robot at given left and right speeds. Speeds range from [-1, 1] and the linear
+   * speeds have no effect on the angular speed.
+   *
+   * @param leftSpeed - The robot's left side speed along the X axis [-1.0..1.0]. Forward is positive.
+   * @param rightSpeed - The robot's right side speed along the X axis [-1.0..1.0]. Forward is positive.
+   */
+  @SuppressWarnings("ParameterName")
+  public void setTargetVelocity(double leftSpeed, double rightSpeed) {
+    
+    dd_drive.setSafetyEnabled(true);  
+    
+    pid_leftVel.setReference(
+      leftSpeed*DriveConstants.kMaxVel,
+      CANSparkMax.ControlType.kVelocity,
+      DriveConstants.kVelPidSlot);
+
+    pid_rightVel.setReference(
+      rightSpeed*DriveConstants.kMaxVel,
+      CANSparkMax.ControlType.kVelocity,
+      DriveConstants.kVelPidSlot);
   }
 
   /** Stops all drive motors */

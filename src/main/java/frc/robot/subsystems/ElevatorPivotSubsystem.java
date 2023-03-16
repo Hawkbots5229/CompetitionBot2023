@@ -72,7 +72,7 @@ public class ElevatorPivotSubsystem extends SubsystemBase {
   }
 
   public void setTargetVelocity(double velocity) {
-    m_leftFront.set(TalonFXControlMode.Velocity, velocity);
+    m_leftFront.set(TalonFXControlMode.Velocity, velocity*ElevatorPivotConstants.kMaxVel);
   }
 
   public double getElevatorPivotVel() {

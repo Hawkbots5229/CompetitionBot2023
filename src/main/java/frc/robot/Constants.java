@@ -41,14 +41,26 @@ public final class Constants {
     public static final int kCurrentLimit = 40;  // Amps
     public static final double kClosedLoopRampRate = 0.7;
     public static final double kOpenLoopRampRate = 0.7;
+
+    public static final int kVelPidSlot = 0;
+    public static final double kFVelLeft = 1;
+    public static final double kPVelLeft = 0;
+    public static final double kIVelLeft = 0;
+    public static final double kDVelLeft = 0; 
+    public static final double kFVelRight = 1;
+    public static final double kPVelRight = 0;
+    public static final double kIVelRight = 0;
+    public static final double kDVelRight = 0;
     
-    // TODO: Calculate these conversion factors with gear box ratios
-    // High Gear 9.54:1
-    // Low Gear 45.33:1
-    public static final double kEncoderRevToMetersHighGear = 0;
-    public static final double kEncoderRpmToMetersPerSecondHighGear = 0;
-    public static final double kEncoderRevToMetersLowGear = 0;
-    public static final double kEncoderRpmToMetersPerSecondLowGear = 0;  
+    public static final double kWheelDiameterMeters = 0.2032;
+    public static final double kDrivetrainHighGearRatio = 9.54;
+    public static final double kDrivetrainLowGearRatio = 45.33;
+    public static final double kEncoderRevToMetersHighGear = (kWheelDiameterMeters * Math.PI / kDrivetrainHighGearRatio);
+    public static final double kEncoderRpmToMetersPerSecondHighGear = kEncoderRevToMetersHighGear / 60;;
+    public static final double kEncoderRevToMetersLowGear = (kWheelDiameterMeters * Math.PI / kDrivetrainLowGearRatio);
+    public static final double kEncoderRpmToMetersPerSecondLowGear = kEncoderRevToMetersLowGear / 60;;  
+
+    public static final double kMaxVel = 0.0254; //Motor MeterPerSec
   }
 
   public static class ElevatorConstants {

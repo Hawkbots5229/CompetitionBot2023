@@ -73,7 +73,7 @@ public class RobotContainer {
     s_robotDrive.setDefaultCommand(
       new RunCommand(
         () ->
-          s_robotDrive.drive(
+          s_robotDrive.setTargetVelocity(
             j_driverController.getLeftY(),                   
             j_driverController.getRightY()),
         s_robotDrive));
@@ -82,22 +82,22 @@ public class RobotContainer {
       new RunCommand(
         () ->
           s_elevatorPivot.setTargetVelocity(
-            j_mechController.getLeftY()*ElevatorPivotConstants.kMaxVel),
+            j_mechController.getLeftY()),
         s_elevatorPivot));
 
     s_clawPivot.setDefaultCommand(
       new RunCommand(
         () ->
           s_clawPivot.setTargetVelocity(
-            j_mechController.getRightY()*ClawPivotConstants.kMaxVel),
+            j_mechController.getRightY()),
         s_clawPivot));
 
     s_elevator.setDefaultCommand(    
       new RunCommand(
         () ->
           s_elevator.setTargetVelocity(
-            j_mechController.getLeftTriggerAxis()*ElevatorConstants.kMaxVel,
-            -j_mechController.getRightTriggerAxis()*ElevatorConstants.kMaxVel),
+            j_mechController.getLeftTriggerAxis(),
+            -j_mechController.getRightTriggerAxis()),
         s_elevator));
   }
 

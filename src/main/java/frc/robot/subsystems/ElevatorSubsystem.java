@@ -44,7 +44,7 @@ public class ElevatorSubsystem extends SubsystemBase {
 
   public void setTargetVelocity(double upVel, double downVel) {
     pid_ElevatorVelControl.setReference(
-      (upVel + downVel),
+      (upVel+downVel)*ElevatorConstants.kMaxVel,
       CANSparkMax.ControlType.kVelocity,
       ElevatorConstants.kVelPidSlot);
   }

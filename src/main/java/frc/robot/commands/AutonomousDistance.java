@@ -35,7 +35,7 @@ public class AutonomousDistance extends CommandBase {
   @Override
   public void execute() {
     
-    s_robotDrive.drive(speed, speed);
+    s_robotDrive.setTargetVelocity(speed, speed);
   }
 
   // Called once the command ends or is interrupted.

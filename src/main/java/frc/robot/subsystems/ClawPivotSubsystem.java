@@ -41,9 +41,9 @@ public class ClawPivotSubsystem extends SubsystemBase {
     m_clawPivot.set(output);
   }
 
-  public void setTargetVelocity(double Velocity) {
+  public void setTargetVelocity(double velocity) {
     pid_ClawPivotVelControl.setReference(
-      Velocity,
+      velocity*ClawPivotConstants.kMaxVel,
       CANSparkMax.ControlType.kVelocity,
       ClawPivotConstants.kVelPidSlot);
   }
