@@ -26,8 +26,8 @@ public final class Constants {
     public static final int kCurrentLimit = 40;
     public static final double kClosedLoopRampRate = 1.5;
    
-    // TODO: Check this ratio
     public static final double kVexGearRatio = 1/10;
+    public static final double kSprocketRatio = (18/38);
     public static final double kEncoderRpmToClawRpm = kVexGearRatio; // Motor RPM to Claw Pivot RPM
 
     public static final int kVelPidSlot = 0;
@@ -48,6 +48,7 @@ public final class Constants {
   }
 
   public static class DriveConstants {
+
     public static final int kFrontLeftMotorPort = 1;
     public static final int kRearLeftMotorPort = 2;
     public static final int kFrontRightMotorPort = 3;
@@ -66,8 +67,7 @@ public final class Constants {
     public static final double kClosedLoopRampRate = 0.7;
     public static final double kOpenLoopRampRate = 0.7;
 
-    //TODO: Get Wheel Diameter
-    public static final double kWheelDiameterMeters = 0.2032;
+    public static final double kWheelDiameterMeters = 0.1524;
     public static final double kDrivetrainHighGearRatio = 1/9.54;
     public static final double kDrivetrainLowGearRatio = 1/45.33;
     public static final double kEncoderRevToMetersHighGear = (kWheelDiameterMeters * Math.PI / kDrivetrainHighGearRatio);
@@ -104,8 +104,8 @@ public final class Constants {
     public static final double kClosedLoopRampRate = 1.5;
    
     public static final double kGearBoxRatio = (1/12.75);
-    public static final double kSprocketRatio = (16/38); // Motor RPM to Elevator RPM
-    public static final double kEncoderRpmToElevatorRpm = kGearBoxRatio*kSprocketRatio;
+    public static final double kSprocketRatio = (22/38); 
+    public static final double kEncoderRpmToElevatorRpm = kGearBoxRatio*kSprocketRatio; // Motor RPM to Elevator RPM
 
     public static final int kVelPidSlot = 0;
     public static final int kTimeoutMs = 30;
@@ -127,10 +127,8 @@ public final class Constants {
     public static final double kClosedLoopRampRate = 1.5;
      
     public static final double kVexGearBoxRatio = 1/10;
-    // TODO:
-    public static final double kSprocketRatio = (16/38);
-    public static final double kRevtoMeters = 0.0508;
-    public static final double kEncoderRpmToMetersPerSecond = (kVexGearBoxRatio*kSprocketRatio*kRevtoMeters)/60;
+    public static final double kRevtoMeters = 0.133;  //5.25 inches
+    public static final double kEncoderRpmToMetersPerSecond = (kVexGearBoxRatio*kRevtoMeters)/60;
     
     public static final int kVelPidSlot = 0;
     public static final double kFVel = 1;
