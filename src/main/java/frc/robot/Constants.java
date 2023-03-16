@@ -67,7 +67,7 @@ public final class Constants {
     public static final double kClosedLoopRampRate = 0.7;
     public static final double kOpenLoopRampRate = 0.7;
 
-    public static final double kWheelDiameterMeters = 0.1524;
+    public static final double kWheelDiameterMeters = 0.1524; // 6 inches
     public static final double kDrivetrainHighGearRatio = 1/9.54;
     public static final double kDrivetrainLowGearRatio = 1/45.33;
     public static final double kEncoderRevToMetersHighGear = (kWheelDiameterMeters * Math.PI / kDrivetrainHighGearRatio);
