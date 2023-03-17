@@ -22,6 +22,8 @@ import frc.robot.Constants.DriveConstants;
 public class DriveSubsystem extends SubsystemBase {
 
   public enum gear{kHigh, kLow};
+  private String gearPos;
+  
 
   // The front-left-side drive motor
   private final CANSparkMax m_frontLeft = 
@@ -56,9 +58,11 @@ public class DriveSubsystem extends SubsystemBase {
 
   private final MotorControllerGroup mcg_left = new MotorControllerGroup(m_frontLeft, m_rearLeft);
   private final MotorControllerGroup mcg_right = new MotorControllerGroup(m_frontRight, m_rearRight);
-  //private final DoubleSolenoid ds_gearBox = new DoubleSolenoid(PneumaticsModuleType.REVPH, DriveConstants.kPneumaticForwardChannel, DriveConstants.kPneumaticReverseChannel);
+  private final DoubleSolenoid ds_gearBox;
 
   private final DifferentialDrive dd_drive;
+
+  //private final Compressor phCompressor = new Compressor(62, PneumaticsModuleType.REVPH);
 
   /** Creates a new DriveSubsystem. */
   public DriveSubsystem() {
@@ -67,10 +71,11 @@ public class DriveSubsystem extends SubsystemBase {
     initEncoders();
     initPID();
 
+    ds_gearBox = new DoubleSolenoid(62, PneumaticsModuleType.REVPH, DriveConstants.kPneumaticForwardChannel, DriveConstants.kPneumaticReverseChannel);
     dd_drive = new DifferentialDrive(mcg_left, mcg_right);
-    setMaxOutput(0.75);
-
-    //shiftHighGear();
+    setMaxOutput(DriveConstants.kMaxOutput);
+    gearPos = "High";
+    shiftHighGear();
 
     dd_drive.setExpiration(0.1);
   }
@@ -106,6 +111,7 @@ public class DriveSubsystem extends SubsystemBase {
     m_rearLeft.setOpenLoopRampRate(DriveConstants.kOpenLoopRampRate);
     m_frontRight.setOpenLoopRampRate(DriveConstants.kOpenLoopRampRate);
     m_rearRight.setOpenLoopRampRate(DriveConstants.kOpenLoopRampRate);
+
   }
 
   private void initEncoders() {
@@ -248,23 +254,25 @@ public class DriveSubsystem extends SubsystemBase {
   /** Shifts gearbox into high 
    *  High Gear is default position
   */
-  /**
+  
   public void shiftHighGear() {
 
-    ds_gearBox.set(DoubleSolenoid.Value.kOff);
+    ds_gearBox.set(DoubleSolenoid.Value.kForward);
     setEncoderHighGearConversionFactor();
+    gearPos = "High";
   }
-  */
+  
   /** Shifts gearbox into low 
    *  Low Gear is extended position
   */
-  /**
+  
   public void shiftLowGear() {
 
-    ds_gearBox.set(DoubleSolenoid.Value.kForward);
+    ds_gearBox.set(DoubleSolenoid.Value.kReverse);
     setEncoderLowGearConversionFactor();
+    gearPos = "Low";
   }
-  */
+  
 
   /**
    * Returns the turn rate of the robot.
@@ -289,6 +297,9 @@ public class DriveSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    //System.out.println(phCompressor.getPressure());
+    //System.out.println(phCompressor.isEnabled());
+    SmartDashboard.putString("Gear Pos", gearPos);
   }
 
   @Override

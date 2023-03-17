@@ -54,8 +54,8 @@ public final class Constants {
     public static final int kFrontRightMotorPort = 20;
     public static final int kRearRightMotorPort = 21;
 
-    public static final int kPneumaticForwardChannel = 0;
-    public static final int kPneumaticReverseChannel = 1;
+    public static final int kPneumaticForwardChannel = 8;
+    public static final int kPneumaticReverseChannel = 9;
 
     public static final boolean kFrontLeftMotorInverted = false;
     public static final boolean kRearLeftMotorInverted = false;
@@ -65,7 +65,8 @@ public final class Constants {
     public static final IdleMode kIdleMode = IdleMode.kBrake;
     public static final int kCurrentLimit = 40;  // Amps
     public static final double kClosedLoopRampRate = 0.7;
-    public static final double kOpenLoopRampRate = 0.7;
+    public static final double kOpenLoopRampRate = 30;
+    public static final double kMaxOutput = 1;
 
     public static final double kWheelDiameterMeters = 0.1524; // 6 inches
     public static final double kDrivetrainHighGearRatio = 1/9.54;

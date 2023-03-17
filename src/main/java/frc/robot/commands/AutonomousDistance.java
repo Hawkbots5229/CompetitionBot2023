@@ -35,7 +35,7 @@ public class AutonomousDistance extends CommandBase {
   @Override
   public void execute() {
     
-    s_robotDrive.setTargetVelocity(speed, speed);
+    s_robotDrive.driveTank(speed, speed);
   }
 
   // Called once the command ends or is interrupted.
@@ -47,7 +47,7 @@ public class AutonomousDistance extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-
+    //System.out.println(s_robotDrive.getRobotPosition());
     return s_robotDrive.getRobotPosition()>distance;
   }
 }

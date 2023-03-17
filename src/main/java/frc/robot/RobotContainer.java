@@ -7,6 +7,7 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 
 import frc.robot.commands.AutonomousDefault;
+import frc.robot.commands.AutonomouseCube;
 import frc.robot.commands.OperateClaw;
 import frc.robot.commands.OperateIntake;
 import frc.robot.commands.ShiftGears;
@@ -63,7 +64,7 @@ public class RobotContainer {
 
     // Setup SmartDashboard Auton options
     sc_autonSelect.setDefaultOption("Basic Auto", new AutonomousDefault(s_robotDrive));
-    //sc_autonSelect.addOption("Auto 2", new Autonomous2(s_robotDrive, s_robotArm, s_robotElevator, s_robotIntake));
+    sc_autonSelect.addOption("Cube Drop", new AutonomouseCube(s_robotDrive));
     SmartDashboard.putData(sc_autonSelect);
 
     // Configure default commands
@@ -120,12 +121,12 @@ public class RobotContainer {
         .onFalse(new RunCommand (() -> s_robotDrive.setMaxOutput(1.0)));  
     */
     /**  Shift Gears: PovUp-High PovDown-Low */
-    /**
-    new POVButton(j_driverController, OperatorConstants.kUpDPad)
+    
+    new JoystickButton(j_driverController, Button.kRightBumper.value)
       .onTrue(new ShiftGears(s_robotDrive, DriveSubsystem.gear.kHigh));
-    new POVButton(j_driverController, OperatorConstants.kDownDPad)
+    new JoystickButton(j_driverController, Button.kLeftBumper.value)
       .onTrue(new ShiftGears(s_robotDrive, DriveSubsystem.gear.kLow));
-    */
+    
     // Mech Controller
 
     /** Intake Wheels: PovUp-Out PovDown-In */
