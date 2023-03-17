@@ -28,10 +28,10 @@ public class ShiftGears extends InstantCommand {
   public void initialize() {
     switch(gearPos) {
       case kHigh: 
-        s_robotDrive.shiftHighGear();
+        //s_robotDrive.shiftHighGear();
         break;
       case kLow: 
-        s_robotDrive.shiftLowGear();
+        //s_robotDrive.shiftLowGear();
         break;
       default:
         throw new AssertionError("Illegal value: " + gearPos);   

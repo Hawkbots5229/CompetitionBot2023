@@ -16,8 +16,10 @@ public class AutonomousDefault extends SequentialCommandGroup {
   public AutonomousDefault(DriveSubsystem s_robotDrive) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
+    /**
     addCommands(
       new AutonomousDistance(s_robotDrive, 0.2, 0)
     );
+    */
   }
 }

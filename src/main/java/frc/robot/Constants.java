@@ -49,17 +49,17 @@ public final class Constants {
 
   public static class DriveConstants {
 
-    public static final int kFrontLeftMotorPort = 1;
-    public static final int kRearLeftMotorPort = 2;
-    public static final int kFrontRightMotorPort = 3;
-    public static final int kRearRightMotorPort = 4;
+    public static final int kFrontLeftMotorPort = 23;
+    public static final int kRearLeftMotorPort = 22;
+    public static final int kFrontRightMotorPort = 20;
+    public static final int kRearRightMotorPort = 21;
 
     public static final int kPneumaticForwardChannel = 0;
     public static final int kPneumaticReverseChannel = 1;
 
     public static final boolean kFrontLeftMotorInverted = false;
-    public static final boolean kRearLeftMotorInverted = true;
-    public static final boolean kFrontRightMotorInverted = false;
+    public static final boolean kRearLeftMotorInverted = false;
+    public static final boolean kFrontRightMotorInverted = true;
     public static final boolean kRearRightMotorInverted = true;
 
     public static final IdleMode kIdleMode = IdleMode.kBrake;
@@ -90,10 +90,10 @@ public final class Constants {
 
   public static class ElevatorPivotConstants {
 
-    public static final int kLeftFrontMotorPort = 6;
-    public static final int kLeftRearMotorPort = 7;
-    public static final int kRightFrontMotorPort = 8;
-    public static final int kRightRearMotorPort = 9;
+    public static final int kLeftFrontMotorPort = 40;
+    public static final int kLeftRearMotorPort = 41;
+    public static final int kRightFrontMotorPort = 42;
+    public static final int kRightRearMotorPort = 43;
 
     public static final boolean kLeftFrontMotorInverted = false;
     public static final boolean kLeftRearMotorInverted = true;

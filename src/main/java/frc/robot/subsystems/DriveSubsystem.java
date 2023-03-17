@@ -54,7 +54,7 @@ public class DriveSubsystem extends SubsystemBase {
 
   private final MotorControllerGroup mcg_left = new MotorControllerGroup(m_frontLeft, m_rearLeft);
   private final MotorControllerGroup mcg_right = new MotorControllerGroup(m_frontRight, m_rearRight);
-  private final DoubleSolenoid ds_gearBox = new DoubleSolenoid(PneumaticsModuleType.REVPH, DriveConstants.kPneumaticForwardChannel, DriveConstants.kPneumaticReverseChannel);
+  //private final DoubleSolenoid ds_gearBox = new DoubleSolenoid(PneumaticsModuleType.REVPH, DriveConstants.kPneumaticForwardChannel, DriveConstants.kPneumaticReverseChannel);
 
   private final DifferentialDrive dd_drive;
 
@@ -67,7 +67,7 @@ public class DriveSubsystem extends SubsystemBase {
 
     dd_drive = new DifferentialDrive(mcg_left, mcg_right);
 
-    shiftHighGear();
+    //shiftHighGear();
 
     dd_drive.setExpiration(0.1);
   }
@@ -244,20 +244,23 @@ public class DriveSubsystem extends SubsystemBase {
   /** Shifts gearbox into high 
    *  High Gear is default position
   */
+  /**
   public void shiftHighGear() {
 
     ds_gearBox.set(DoubleSolenoid.Value.kOff);
     setEncoderHighGearConversionFactor();
   }
-
+  */
   /** Shifts gearbox into low 
    *  Low Gear is extended position
   */
+  /**
   public void shiftLowGear() {
 
     ds_gearBox.set(DoubleSolenoid.Value.kForward);
     setEncoderLowGearConversionFactor();
   }
+  */
 
   /**
    * Returns the turn rate of the robot.

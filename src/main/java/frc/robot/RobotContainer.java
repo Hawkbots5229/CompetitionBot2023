@@ -36,18 +36,19 @@ import edu.wpi.first.wpilibj2.command.button.POVButton;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
-  private final ClawPivotSubsystem s_clawPivot = new ClawPivotSubsystem();
-  private final ClawSubsystem s_claw = new ClawSubsystem();
+  //private final ClawPivotSubsystem s_clawPivot = new ClawPivotSubsystem();
+  //private final ClawSubsystem s_claw = new ClawSubsystem();
   private final DriveSubsystem s_robotDrive = new DriveSubsystem();
-  private final ElevatorPivotSubsystem s_elevatorPivot = new ElevatorPivotSubsystem();
-  private final ElevatorSubsystem s_elevator = new ElevatorSubsystem();
-  private final IntakeSubsystem s_intake = new IntakeSubsystem();
+  //private final ElevatorPivotSubsystem s_elevatorPivot = new ElevatorPivotSubsystem();
+  //private final ElevatorSubsystem s_elevator = new ElevatorSubsystem();
+  //private final IntakeSubsystem s_intake = new IntakeSubsystem();
 
   XboxController j_driverController =
       new XboxController(OperatorConstants.kDriverControllerPort);
+  /**
   XboxController j_mechController =
       new XboxController(OperatorConstants.kMechControllerPort);
-
+  */
   // Create SmartDashboard chooser for autonomous routines
   private final SendableChooser<Command> sc_autonSelect = new SendableChooser<>();
 
@@ -55,7 +56,7 @@ public class RobotContainer {
   public RobotContainer() {
 
     CameraServer.startAutomaticCapture("Usb Camera 0", 0);
-    CameraServer.startAutomaticCapture("Usb Camera 1", 1);
+    //CameraServer.startAutomaticCapture("Usb Camera 1", 1);
 
     // Configure the trigger bindings
     configureBindings();
@@ -70,11 +71,11 @@ public class RobotContainer {
     s_robotDrive.setDefaultCommand(
       new RunCommand(
         () ->
-          s_robotDrive.setTargetVelocity(
+          s_robotDrive.driveTank(
             j_driverController.getLeftY(),                   
             j_driverController.getRightY()),
         s_robotDrive));
-    
+    /**
     s_elevatorPivot.setDefaultCommand(
       new RunCommand(
         () ->
@@ -96,6 +97,7 @@ public class RobotContainer {
             j_mechController.getLeftTriggerAxis(),
             -j_mechController.getRightTriggerAxis()),
         s_elevator));
+    */
   }
 
   /**
@@ -117,26 +119,30 @@ public class RobotContainer {
         .onFalse(new RunCommand (() -> s_robotDrive.setMaxOutput(1.0)));  
 
     /**  Shift Gears: PovUp-High PovDown-Low */
+    /**
     new POVButton(j_driverController, OperatorConstants.kUpDPad)
       .onTrue(new ShiftGears(s_robotDrive, DriveSubsystem.gear.kHigh));
     new POVButton(j_driverController, OperatorConstants.kDownDPad)
       .onTrue(new ShiftGears(s_robotDrive, DriveSubsystem.gear.kLow));
-
+    */
     // Mech Controller
 
     /** Intake Wheels: PovUp-Out PovDown-In */
+    /**
     new POVButton(j_mechController, OperatorConstants.kUpDPad)
       .onTrue(new OperateIntake(s_intake, IntakeSubsystem.intakeDir.kIn))
       .onFalse(new OperateIntake(s_intake, IntakeSubsystem.intakeDir.kOff));     
     new POVButton(j_mechController, OperatorConstants.kDownDPad)
       .onTrue(new OperateIntake(s_intake, IntakeSubsystem.intakeDir.kOut))
       .onFalse(new OperateIntake(s_intake, IntakeSubsystem.intakeDir.kOff));
-
+    */
     /** Claw: LeftBumper-Open RightBumper-Close */
+    /**
     new JoystickButton(j_mechController, Button.kLeftBumper.value)
         .onTrue(new OperateClaw(s_claw, ClawSubsystem.clawPosition.kOpen));
     new JoystickButton(j_mechController, Button.kRightBumper.value)
         .onTrue(new OperateClaw(s_claw, ClawSubsystem.clawPosition.kClosed));
+    */
   }
 
   /**
