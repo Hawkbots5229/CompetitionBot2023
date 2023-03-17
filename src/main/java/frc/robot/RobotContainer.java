@@ -114,10 +114,11 @@ public class RobotContainer {
     // Drive Controller
 
     /** Control Mode: RightBumper-50% */
+    /**
     new JoystickButton(j_driverController, Button.kRightBumper.value)
         .onTrue(new RunCommand (() -> s_robotDrive.setMaxOutput(0.5)))
         .onFalse(new RunCommand (() -> s_robotDrive.setMaxOutput(1.0)));  
-
+    */
     /**  Shift Gears: PovUp-High PovDown-Low */
     /**
     new POVButton(j_driverController, OperatorConstants.kUpDPad)

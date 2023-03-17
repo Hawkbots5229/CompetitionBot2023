@@ -10,11 +10,13 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.DriveConstants;
 
 public class DriveSubsystem extends SubsystemBase {
@@ -66,6 +68,7 @@ public class DriveSubsystem extends SubsystemBase {
     initPID();
 
     dd_drive = new DifferentialDrive(mcg_left, mcg_right);
+    setMaxOutput(0.75);
 
     //shiftHighGear();
 
@@ -233,6 +236,7 @@ public class DriveSubsystem extends SubsystemBase {
   public void setMaxOutput(double maxOutput) {  
 
     dd_drive.setMaxOutput(maxOutput);  
+    //System.out.println(maxOutput);
   }
 
   /** Zeroes the heading of the robot. */
