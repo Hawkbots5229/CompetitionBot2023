@@ -5,7 +5,7 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
-
+import frc.robot.commands.AutonomousCharge;
 import frc.robot.commands.AutonomousDefault;
 import frc.robot.commands.AutonomouseCube;
 import frc.robot.commands.OperateClaw;
@@ -65,6 +65,7 @@ public class RobotContainer {
     // Setup SmartDashboard Auton options
     sc_autonSelect.setDefaultOption("Basic Auto", new AutonomousDefault(s_robotDrive));
     sc_autonSelect.addOption("Cube Drop", new AutonomouseCube(s_robotDrive));
+    sc_autonSelect.addOption("Charge Station", new AutonomousCharge(s_robotDrive));
     SmartDashboard.putData(sc_autonSelect);
 
     // Configure default commands

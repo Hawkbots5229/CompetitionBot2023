@@ -75,7 +75,7 @@ public class DriveSubsystem extends SubsystemBase {
     dd_drive = new DifferentialDrive(mcg_left, mcg_right);
     setMaxOutput(DriveConstants.kMaxOutput);
     gearPos = "High";
-    shiftHighGear();
+    shiftLowGear();
 
     dd_drive.setExpiration(0.1);
   }
@@ -292,6 +292,14 @@ public class DriveSubsystem extends SubsystemBase {
   public double getAngle() {
 
     return g_navX.getAngle();
+
+    
+  }
+
+  public double getPitch() {
+
+    return g_navX.getPitch();
+    
   }
 
   @Override
@@ -300,6 +308,7 @@ public class DriveSubsystem extends SubsystemBase {
     //System.out.println(phCompressor.getPressure());
     //System.out.println(phCompressor.isEnabled());
     SmartDashboard.putString("Gear Pos", gearPos);
+    SmartDashboard.putNumber("Pitch", getPitch());
   }
 
   @Override

@@ -5,21 +5,20 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-
 import frc.robot.subsystems.DriveSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class AutonomousDefault extends SequentialCommandGroup {
-  /** Creates a new AutonomousDefault. */
-  public AutonomousDefault(DriveSubsystem s_robotDrive) {
+public class AutonomousCharge extends SequentialCommandGroup {
+  /** Creates a new AutonomousCharge. */
+  public AutonomousCharge(DriveSubsystem s_robotDrive) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    
     addCommands(
-      new ShiftGears(s_robotDrive, DriveSubsystem.gear.kHigh),
-      new AutonomousDistance(s_robotDrive, 120, -0.5)
+      new ShiftGears(s_robotDrive, DriveSubsystem.gear.kLow),
+      new AutonomousDistance(s_robotDrive, 1200, -0.9),
+      new AutonomousPitch(s_robotDrive, 86, -0.5)
     );
   }
 }

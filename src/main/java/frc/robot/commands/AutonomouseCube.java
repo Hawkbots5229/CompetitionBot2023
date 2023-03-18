@@ -16,6 +16,9 @@ public class AutonomouseCube extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new AutonomousDistance(s_robotDrive, 0, 0));
+      new ShiftGears(s_robotDrive, DriveSubsystem.gear.kHigh),
+      new AutonomousDistance(s_robotDrive, 100, -0.5),
+      new AutonomousDistance(s_robotDrive, 100, 0.4),
+      new AutonomousDistance(s_robotDrive, 300, -0.5));
   }
 }
