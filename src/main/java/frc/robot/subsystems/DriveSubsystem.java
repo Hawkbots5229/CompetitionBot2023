@@ -75,7 +75,7 @@ public class DriveSubsystem extends SubsystemBase {
     dd_drive = new DifferentialDrive(mcg_left, mcg_right);
     setMaxOutput(DriveConstants.kMaxOutput);
     gearPos = "High";
-    shiftLowGear();
+    shiftHighGear();
 
     dd_drive.setExpiration(0.1);
   }
