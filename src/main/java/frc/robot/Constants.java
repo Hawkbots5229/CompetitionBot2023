@@ -27,7 +27,7 @@ public final class Constants {
     public static final double kClosedLoopRampRate = 1.5;
    
     public static final double kVexGearRatio = 1/10;
-    public static final double kSprocketRatio = (18/38);
+    public static final double kSprocketRatio = (16/38);
     public static final double kEncoderRpmToClawRpm = kVexGearRatio; // Motor RPM to Claw Pivot RPM
 
     public static final int kVelPidSlot = 0;
