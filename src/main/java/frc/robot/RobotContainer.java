@@ -5,15 +5,15 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.AutonomousCharge;
-import frc.robot.commands.AutonomousCubeLong;
-import frc.robot.commands.AutonomousLine;
-import frc.robot.commands.AutonomousStop;
-import frc.robot.commands.AutonomousHailMary;
-import frc.robot.commands.AutonomousCubeShort;
 import frc.robot.commands.OperateClaw;
 import frc.robot.commands.OperateIntake;
 import frc.robot.commands.ShiftGears;
+import frc.robot.commands.Autonomous.AutonomousCharge;
+import frc.robot.commands.Autonomous.AutonomousCubeLong;
+import frc.robot.commands.Autonomous.AutonomousCubeShort;
+import frc.robot.commands.Autonomous.AutonomousHailMary;
+import frc.robot.commands.Autonomous.AutonomousLine;
+import frc.robot.commands.Autonomous.AutonomousStop;
 import frc.robot.subsystems.ClawPivotSubsystem;
 import frc.robot.subsystems.ClawSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
