@@ -21,12 +21,13 @@ public class AutonomousPivotClaw extends CommandBase {
     this.angle = angle;
 
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(s_clawPivot);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    // TODO: reset encoder
+    s_clawPivot.resetEncoders();
   }
 
   // Called every time the scheduler runs while the command is scheduled.

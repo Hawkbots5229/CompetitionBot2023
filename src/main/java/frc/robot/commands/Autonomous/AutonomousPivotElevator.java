@@ -19,13 +19,15 @@ public class AutonomousPivotElevator extends CommandBase {
     this.s_elevatorPivot = s_elevatorPivot;
     this.speed = speed;
     this.angle = angle;
+    
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(s_elevatorPivot);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    // TODO: reset encoders
+    s_elevatorPivot.resetEncoders();
   }
 
   // Called every time the scheduler runs while the command is scheduled.

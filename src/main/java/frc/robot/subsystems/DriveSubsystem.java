@@ -291,15 +291,12 @@ public class DriveSubsystem extends SubsystemBase {
    */
   public double getAngle() {
 
-    return g_navX.getAngle();
-
-    
+    return g_navX.getAngle();   
   }
 
   public double getPitch() {
 
-    return g_navX.getPitch();
-    
+    return g_navX.getPitch(); 
   }
 
   @Override

@@ -80,6 +80,13 @@ public class IntakeSubsystem extends SubsystemBase {
     m_left.stopMotor();
   }
 
+  /** Resets the drive encoders to currently read a position of 0. */
+  public void resetEncoders() {
+
+    e_LeftEncoder.setPosition(0);
+    e_RightEncoder.setPosition(0);
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

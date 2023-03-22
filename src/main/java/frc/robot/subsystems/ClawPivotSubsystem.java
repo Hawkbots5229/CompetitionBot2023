@@ -51,6 +51,12 @@ public class ClawPivotSubsystem extends SubsystemBase {
       ClawPivotConstants.kVelPidSlot);
   }
 
+  /** Resets the drive encoders to currently read a position of 0. */
+  public void resetEncoders() {
+
+    e_ClawPivotEncoder.setPosition(0);
+  }
+
   public double getClawPivotVel() {
     return e_ClawPivotEncoder.getVelocity();
   }

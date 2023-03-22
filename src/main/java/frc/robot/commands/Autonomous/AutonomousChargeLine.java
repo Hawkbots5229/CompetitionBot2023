@@ -11,9 +11,9 @@ import frc.robot.subsystems.DriveSubsystem;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class AutonomousHailMary extends SequentialCommandGroup {
+public class AutonomousChargeLine extends SequentialCommandGroup {
   /** Creates a new AutonomousHailMary. */
-  public AutonomousHailMary(DriveSubsystem s_robotDrive) {
+  public AutonomousChargeLine(DriveSubsystem s_robotDrive) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(

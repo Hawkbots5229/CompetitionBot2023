@@ -11,7 +11,7 @@ import frc.robot.commands.ShiftGears;
 import frc.robot.commands.Autonomous.AutonomousCharge;
 import frc.robot.commands.Autonomous.AutonomousCubeLong;
 import frc.robot.commands.Autonomous.AutonomousCubeShort;
-import frc.robot.commands.Autonomous.AutonomousHailMary;
+import frc.robot.commands.Autonomous.AutonomousChargeLine;
 import frc.robot.commands.Autonomous.AutonomousLine;
 import frc.robot.commands.Autonomous.AutonomousDriveStop;
 import frc.robot.subsystems.ClawPivotSubsystem;
@@ -71,7 +71,7 @@ public class RobotContainer {
     sc_autonSelect.addOption("Short Cube Drop", new AutonomousCubeShort(s_robotDrive));
     sc_autonSelect.addOption("Long Cube Drop", new AutonomousCubeLong(s_robotDrive));
     sc_autonSelect.addOption("Charge Station", new AutonomousCharge(s_robotDrive));
-    sc_autonSelect.addOption("Hail Mary", new AutonomousHailMary(s_robotDrive));
+    sc_autonSelect.addOption("Hail Mary", new AutonomousChargeLine(s_robotDrive));
     SmartDashboard.putData("Auton Selection", sc_autonSelect);
 
     // Configure default commands

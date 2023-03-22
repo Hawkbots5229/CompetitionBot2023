@@ -64,6 +64,12 @@ public class ElevatorSubsystem extends SubsystemBase {
     m_elevator.stopMotor();
   }
 
+  /** Resets the drive encoders to currently read a position of 0. */
+  public void resetEncoders() {
+
+    e_ElevatorEncoder.setPosition(0);
+  }
+
    @Override
   public void periodic() {
     // This method will be called once per scheduler run

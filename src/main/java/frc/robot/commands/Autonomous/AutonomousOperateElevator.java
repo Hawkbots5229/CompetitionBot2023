@@ -27,7 +27,7 @@ public class AutonomousOperateElevator extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    // TODO: add encoder reset
+    s_elevator.resetEncoders();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
