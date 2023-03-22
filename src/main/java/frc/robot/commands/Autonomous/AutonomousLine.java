@@ -19,8 +19,8 @@ public class AutonomousLine extends SequentialCommandGroup {
     
     addCommands(
       new ShiftGears(s_robotDrive, DriveSubsystem.gear.kHigh),
-      new AutonomousDelay(s_robotDrive, 1.5),
-      new AutonomousDistance(s_robotDrive, 120, -0.5)
+      new AutonomousDriveDelay(s_robotDrive, 1.5),
+      new AutonomousDriveDistance(s_robotDrive, 120, -0.5)
     );
   }
 }

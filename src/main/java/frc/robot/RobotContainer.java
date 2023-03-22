@@ -13,7 +13,7 @@ import frc.robot.commands.Autonomous.AutonomousCubeLong;
 import frc.robot.commands.Autonomous.AutonomousCubeShort;
 import frc.robot.commands.Autonomous.AutonomousHailMary;
 import frc.robot.commands.Autonomous.AutonomousLine;
-import frc.robot.commands.Autonomous.AutonomousStop;
+import frc.robot.commands.Autonomous.AutonomousDriveStop;
 import frc.robot.subsystems.ClawPivotSubsystem;
 import frc.robot.subsystems.ClawSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
@@ -66,7 +66,7 @@ public class RobotContainer {
     configureBindings();
 
     // Setup SmartDashboard Auton options
-    sc_autonSelect.setDefaultOption("Don't Move", new AutonomousStop(s_robotDrive));
+    sc_autonSelect.setDefaultOption("Don't Move", new AutonomousDriveStop(s_robotDrive));
     sc_autonSelect.addOption("Cross Line", new AutonomousLine(s_robotDrive));
     sc_autonSelect.addOption("Short Cube Drop", new AutonomousCubeShort(s_robotDrive));
     sc_autonSelect.addOption("Long Cube Drop", new AutonomousCubeLong(s_robotDrive));

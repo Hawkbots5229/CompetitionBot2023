@@ -18,9 +18,9 @@ public class AutonomousCubeLong extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new ShiftGears(s_robotDrive, DriveSubsystem.gear.kHigh),
-      new AutonomousDelay(s_robotDrive, 1.5),
-      new AutonomousDistance(s_robotDrive, 100, -0.5),
-      new AutonomousDistance(s_robotDrive, 100, 0.4),
-      new AutonomousDistance(s_robotDrive, 400, -0.5));
+      new AutonomousDriveDelay(s_robotDrive, 1.5),
+      new AutonomousDriveDistance(s_robotDrive, 100, -0.5),
+      new AutonomousDriveDistance(s_robotDrive, 100, 0.4),
+      new AutonomousDriveDistance(s_robotDrive, 400, -0.5));
   }
 }

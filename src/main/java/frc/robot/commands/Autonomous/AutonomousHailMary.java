@@ -18,15 +18,15 @@ public class AutonomousHailMary extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new ShiftGears(s_robotDrive, DriveSubsystem.gear.kLow),
-      new AutonomousDelay(s_robotDrive, 0.2),
-      new AutonomousDistance(s_robotDrive, 1500, -0.9),
-      new AutonomousDistance(s_robotDrive, 1500, 0.9),
-      new AutonomousDistance(s_robotDrive, 4000, -0.9),
-      new AutonomousPitch(s_robotDrive, 86, -0.9),
-      new AutonomousDistance(s_robotDrive, 1500, -0.9),
-      new AutonomousPitch(s_robotDrive, 86, -0.9),
-      new AutonomousDistance(s_robotDrive, 1000, -0.9),
-      new AutonomousDistance(s_robotDrive, 2500, 0.9),
-      new AutonomousPitch(s_robotDrive, 86, 0.5));    
+      new AutonomousDriveDelay(s_robotDrive, 0.2),
+      new AutonomousDriveDistance(s_robotDrive, 1500, -0.9),
+      new AutonomousDriveDistance(s_robotDrive, 1500, 0.9),
+      new AutonomousDriveDistance(s_robotDrive, 4000, -0.9),
+      new AutonomousDrivePitch(s_robotDrive, 86, -0.9),
+      new AutonomousDriveDistance(s_robotDrive, 1500, -0.9),
+      new AutonomousDrivePitch(s_robotDrive, 86, -0.9),
+      new AutonomousDriveDistance(s_robotDrive, 1000, -0.9),
+      new AutonomousDriveDistance(s_robotDrive, 2500, 0.9),
+      new AutonomousDrivePitch(s_robotDrive, 86, 0.5));    
   }
 }

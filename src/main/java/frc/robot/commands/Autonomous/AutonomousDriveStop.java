@@ -10,11 +10,11 @@ import frc.robot.subsystems.DriveSubsystem;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class AutonomousStop extends InstantCommand {
+public class AutonomousDriveStop extends InstantCommand {
 
   private final DriveSubsystem s_robotDrive;
 
-  public AutonomousStop(DriveSubsystem s_robotDrive) {
+  public AutonomousDriveStop(DriveSubsystem s_robotDrive) {
 
     this.s_robotDrive = s_robotDrive;
 

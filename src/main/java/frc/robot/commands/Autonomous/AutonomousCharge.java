@@ -18,9 +18,9 @@ public class AutonomousCharge extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new ShiftGears(s_robotDrive, DriveSubsystem.gear.kLow),
-      new AutonomousDelay(s_robotDrive, 1.5),
-      new AutonomousDistance(s_robotDrive, 1200, -0.9),
-      new AutonomousPitch(s_robotDrive, 86, -0.5)
+      new AutonomousDriveDelay(s_robotDrive, 1.5),
+      new AutonomousDriveDistance(s_robotDrive, 1200, -0.9),
+      new AutonomousDrivePitch(s_robotDrive, 86, -0.5)
     );
   }
 }

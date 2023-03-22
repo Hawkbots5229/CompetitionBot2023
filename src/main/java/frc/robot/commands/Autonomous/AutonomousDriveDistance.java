@@ -7,17 +7,17 @@ package frc.robot.commands.Autonomous;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveSubsystem;
 
-public class AutonomousPitch extends CommandBase {
-
+public class AutonomousDriveDistance extends CommandBase {
+  
   private final DriveSubsystem s_robotDrive;
-  private final double pitch;
+  private final double distance;
   private final double speed;
 
-  /** Creates a new AutonomousPitch. */
-  public AutonomousPitch(DriveSubsystem s_robotDrive, double pitch, double speed) {
+  /** Creates a new AutonomousDistance. */
+  public AutonomousDriveDistance(DriveSubsystem s_robotDrive, double distance, double speed) {
 
     this.s_robotDrive = s_robotDrive;
-    this.pitch = pitch;
+    this.distance = distance;
     this.speed = speed;
 
     // Use addRequirements() here to declare subsystem dependencies.
@@ -26,12 +26,15 @@ public class AutonomousPitch extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    s_robotDrive.resetEncoders();
+
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
+    
     s_robotDrive.driveTank(speed, speed);
   }
 
@@ -44,6 +47,7 @@ public class AutonomousPitch extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return s_robotDrive.getPitch() > pitch;
+    //System.out.println(s_robotDrive.getRobotPosition());
+    return s_robotDrive.getRobotPosition()>distance;
   }
 }
