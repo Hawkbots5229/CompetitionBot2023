@@ -7,7 +7,8 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.AutonomousCharge;
 import frc.robot.commands.AutonomousCubeLong;
-import frc.robot.commands.AutonomousDefault;
+import frc.robot.commands.AutonomousLine;
+import frc.robot.commands.AutonomousStop;
 import frc.robot.commands.AutonomousHailMary;
 import frc.robot.commands.AutonomousCubeShort;
 import frc.robot.commands.OperateClaw;
@@ -65,7 +66,8 @@ public class RobotContainer {
     configureBindings();
 
     // Setup SmartDashboard Auton options
-    sc_autonSelect.setDefaultOption("Basic Auto", new AutonomousDefault(s_robotDrive));
+    sc_autonSelect.setDefaultOption("Don't Move", new AutonomousStop(s_robotDrive));
+    sc_autonSelect.addOption("Cross Line", new AutonomousLine(s_robotDrive));
     sc_autonSelect.addOption("Short Cube Drop", new AutonomousCubeShort(s_robotDrive));
     sc_autonSelect.addOption("Long Cube Drop", new AutonomousCubeLong(s_robotDrive));
     sc_autonSelect.addOption("Charge Station", new AutonomousCharge(s_robotDrive));

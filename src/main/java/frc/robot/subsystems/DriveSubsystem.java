@@ -309,6 +309,7 @@ public class DriveSubsystem extends SubsystemBase {
     //System.out.println(phCompressor.isEnabled());
     SmartDashboard.putString("Gear Pos", gearPos);
     SmartDashboard.putNumber("Pitch", getPitch());
+    SmartDashboard.putNumber("Position", getRobotPosition());
   }
 
   @Override

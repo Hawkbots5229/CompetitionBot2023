@@ -19,7 +19,7 @@ public final class Constants {
 
   public static class ClawPivotConstants{
 
-    public static final int kClawPivotMotorPort = 12;
+    public static final int kClawPivotMotorPort = 30;
 
     public static final boolean kClawPivotMotorIntverted = false;
     public static final IdleMode kIdleMode = IdleMode.kBrake;
@@ -49,10 +49,10 @@ public final class Constants {
 
   public static class DriveConstants {
 
-    public static final int kFrontLeftMotorPort = 23;
-    public static final int kRearLeftMotorPort = 22;
-    public static final int kFrontRightMotorPort = 20;
-    public static final int kRearRightMotorPort = 21;
+    public static final int kFrontLeftMotorPort = 20;
+    public static final int kRearLeftMotorPort = 21;
+    public static final int kFrontRightMotorPort = 22;
+    public static final int kRearRightMotorPort = 24;
 
     public static final int kPneumaticForwardChannel = 8;
     public static final int kPneumaticReverseChannel = 9;
@@ -68,12 +68,12 @@ public final class Constants {
     public static final double kOpenLoopRampRate = 30;
     public static final double kMaxOutput = 1;
 
-    public static final double kWheelDiameterMeters = 0.1524; // 6 inches
+    public static final double kWheelDiameterMeters = 6; // inches
     public static final double kDrivetrainHighGearRatio = 1/9.54;
     public static final double kDrivetrainLowGearRatio = 1/45.33;
-    public static final double kEncoderRevToMetersHighGear = (kWheelDiameterMeters * Math.PI / kDrivetrainHighGearRatio);
+    public static final double kEncoderRevToMetersHighGear = (kWheelDiameterMeters * Math.PI * kDrivetrainHighGearRatio);
     public static final double kEncoderRpmToMetersPerSecondHighGear = kEncoderRevToMetersHighGear / 60;
-    public static final double kEncoderRevToMetersLowGear = (kWheelDiameterMeters * Math.PI / kDrivetrainLowGearRatio);
+    public static final double kEncoderRevToMetersLowGear = (kWheelDiameterMeters * Math.PI * kDrivetrainLowGearRatio);
     public static final double kEncoderRpmToMetersPerSecondLowGear = kEncoderRevToMetersLowGear / 60;
 
     public static final int kVelPidSlot = 0;
@@ -120,7 +120,7 @@ public final class Constants {
 
   public static class ElevatorConstants {
 
-    public static final int kElevatorMotorPort = 5;
+    public static final int kElevatorMotorPort = 33;
 
     public static final boolean kElevatorMotorIntverted = false;
     public static final IdleMode kIdleMode = IdleMode.kBrake;
@@ -142,8 +142,8 @@ public final class Constants {
 
   public static class IntakeConstants{
 
-    public static final int kLeftMotorPort = 10;
-    public static final int kRightMotorPort = 11;
+    public static final int kLeftMotorPort = 31;
+    public static final int kRightMotorPort = 32;
 
     public static final boolean kLeftMotorIntverted = false;
     public static final boolean kRightMotorInverted = false;
