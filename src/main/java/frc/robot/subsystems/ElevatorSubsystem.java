@@ -33,6 +33,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     m_elevator.setClosedLoopRampRate(ElevatorConstants.kClosedLoopRampRate);
 
     e_ElevatorEncoder.setVelocityConversionFactor(ElevatorConstants.kEncoderRpmToMetersPerSecond);
+    // TODO: setPositionConversionFactor
     
     pid_ElevatorVelControl.setFF(ElevatorConstants.kFVel, ElevatorConstants.kVelPidSlot);
     pid_ElevatorVelControl.setP(ElevatorConstants.kPVel, ElevatorConstants.kVelPidSlot);
@@ -53,6 +54,10 @@ public class ElevatorSubsystem extends SubsystemBase {
 
   public double getElevatorVel() {
     return e_ElevatorEncoder.getVelocity();
+  }
+
+  public double getElevatorPos() {
+    return e_ElevatorEncoder.getPosition();
   }
 
   public void stopMotor() {

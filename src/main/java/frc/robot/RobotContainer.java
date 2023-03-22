@@ -72,7 +72,7 @@ public class RobotContainer {
     sc_autonSelect.addOption("Long Cube Drop", new AutonomousCubeLong(s_robotDrive));
     sc_autonSelect.addOption("Charge Station", new AutonomousCharge(s_robotDrive));
     sc_autonSelect.addOption("Hail Mary", new AutonomousHailMary(s_robotDrive));
-    SmartDashboard.putData(sc_autonSelect);
+    SmartDashboard.putData("Auton Selection", sc_autonSelect);
 
     // Configure default commands
 

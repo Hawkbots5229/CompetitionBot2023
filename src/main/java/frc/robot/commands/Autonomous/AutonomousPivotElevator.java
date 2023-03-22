@@ -5,28 +5,44 @@
 package frc.robot.commands.Autonomous;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.ElevatorPivotSubsystem;
 
 public class AutonomousPivotElevator extends CommandBase {
+
+  private final ElevatorPivotSubsystem s_elevatorPivot;
+  private final double speed;
+  private final double angle;
+
   /** Creates a new AutonomousElevatorPivot. */
-  public AutonomousPivotElevator() {
+  public AutonomousPivotElevator(ElevatorPivotSubsystem s_elevatorPivot, double speed, double angle) {
+    
+    this.s_elevatorPivot = s_elevatorPivot;
+    this.speed = speed;
+    this.angle = angle;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    // TODO: reset encoders
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    s_elevatorPivot.setTargetOutput(speed);
+  }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    s_elevatorPivot.stopMotor();
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return s_elevatorPivot.getElevatorPivotPos() >= angle;
   }
 }

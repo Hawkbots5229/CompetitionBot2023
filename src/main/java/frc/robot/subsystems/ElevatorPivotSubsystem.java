@@ -84,6 +84,10 @@ public class ElevatorPivotSubsystem extends SubsystemBase {
     return m_leftFront.getSelectedSensorVelocity();
   }
 
+  public double getElevatorPivotPos() {
+    return m_leftFront.getSelectedSensorPosition();
+  }
+
   public void stopMotor() {
     m_leftFront.stopMotor();
   }

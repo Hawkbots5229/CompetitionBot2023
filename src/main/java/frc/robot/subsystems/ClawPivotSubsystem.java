@@ -32,6 +32,7 @@ public class ClawPivotSubsystem extends SubsystemBase {
     m_clawPivot.setClosedLoopRampRate(ClawPivotConstants.kClosedLoopRampRate);
 
     e_ClawPivotEncoder.setVelocityConversionFactor(ClawPivotConstants.kEncoderRpmToClawRpm);
+    // TODO: setPositionCoversionFactor
 
     pid_ClawPivotVelControl.setFF(ClawPivotConstants.kFVel, ClawPivotConstants.kVelPidSlot);
     pid_ClawPivotVelControl.setP(ClawPivotConstants.kPVel, ClawPivotConstants.kVelPidSlot);
@@ -52,6 +53,10 @@ public class ClawPivotSubsystem extends SubsystemBase {
 
   public double getClawPivotVel() {
     return e_ClawPivotEncoder.getVelocity();
+  }
+
+  public double getClawPivotPos() {
+    return e_ClawPivotEncoder.getPosition();
   }
 
   public void stopMotor() {
