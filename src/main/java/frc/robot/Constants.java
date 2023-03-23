@@ -70,12 +70,12 @@ public final class Constants {
     public static final double kOpenLoopRampRate = 30;
     public static final double kMaxOutput = 1;
 
-    public static final double kWheelDiameter = 6; // inches
+    public static final double kWheelDiameter = 0.1524;
     public static final double kDrivetrainHighGearRatio = 1/9.54;
     public static final double kDrivetrainLowGearRatio = 1/45.33;
-    public static final double kEncoderRevToMetersHighGear = (kWheelDiameter * Math.PI * kDrivetrainHighGearRatio);
+    public static final double kEncoderRevToMetersHighGear = (kWheelDiameter * Math.PI / kDrivetrainHighGearRatio);
     public static final double kEncoderRpmToMetersPerSecondHighGear = kEncoderRevToMetersHighGear / 60;
-    public static final double kEncoderRevToMetersLowGear = (kWheelDiameter * Math.PI * kDrivetrainLowGearRatio);
+    public static final double kEncoderRevToMetersLowGear = (kWheelDiameter * Math.PI / kDrivetrainLowGearRatio);
     public static final double kEncoderRpmToMetersPerSecondLowGear = kEncoderRevToMetersLowGear / 60;
 
     public static final int kVelPidSlot = 0;
