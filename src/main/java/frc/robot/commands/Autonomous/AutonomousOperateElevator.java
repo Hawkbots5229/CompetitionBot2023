@@ -33,7 +33,11 @@ public class AutonomousOperateElevator extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    s_elevator.setTargetOutput(speed);
+    double upVel = 0;
+    double downVel = 0;
+    if(speed < 0) {downVel = speed;}
+    else {upVel = speed;}
+    s_elevator.setTargetOutput(upVel, downVel);
   }
 
   // Called once the command ends or is interrupted.

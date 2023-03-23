@@ -53,6 +53,11 @@ public class ElevatorPivotSubsystem extends SubsystemBase {
     m_rightFront.configClosedloopRamp(ElevatorPivotConstants.kClosedLoopRampRate);
     m_rightRear.configClosedloopRamp(ElevatorPivotConstants.kClosedLoopRampRate);
 
+    m_leftFront.configOpenloopRamp(ElevatorPivotConstants.kOpenLoopRampRate);
+    m_leftRear.configOpenloopRamp(ElevatorPivotConstants.kOpenLoopRampRate);
+    m_rightFront.configOpenloopRamp(ElevatorPivotConstants.kOpenLoopRampRate);
+    m_rightRear.configOpenloopRamp(ElevatorPivotConstants.kOpenLoopRampRate);
+
     m_leftRear.follow(m_leftFront);
     m_rightFront.follow(m_leftFront);
     m_rightRear.follow(m_leftFront);
@@ -69,15 +74,18 @@ public class ElevatorPivotSubsystem extends SubsystemBase {
   }
 
   public void setTargetOutput(double output) {
-    m_leftFront.set(output);
+    if (Math.abs(output) < 0.1) {output = 0;}
+    m_leftFront.set(Math.min(output, ElevatorPivotConstants.kMaxOutput));
   }
 
   public void setTargetVelocity(double velocity) {
-    m_leftFront.set(TalonFXControlMode.Velocity, convertTarVelToRPM(velocity*ElevatorPivotConstants.kMaxVel)/600); // 600 100ms in 1 min
+    if (Math.abs(velocity) < 0.1) {velocity = 0;}
+    //System.out.println(convertTarVelToRPM(velocity*ElevatorPivotConstants.kMaxVel)/600);
+    m_leftFront.set(TalonFXControlMode.Velocity, convertTarVelToRPM(velocity*ElevatorPivotConstants.kMaxVel)); // 600 100ms in 1 min
   }
 
   public double convertTarVelToRPM (double velocity) {
-    return velocity/ElevatorConstants.kEncoderRpmToMetersPerSecond;
+    return velocity*ElevatorPivotConstants.kEncoderRpmToElevatorRpm;
   }
 
   public double getElevatorPivotVel() {
@@ -100,5 +108,6 @@ public class ElevatorPivotSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Elevator Pivot Velocity", getElevatorPivotVel());
+    //System.out.println(m_leftFront.getMotorOutputPercent());
   }
 }

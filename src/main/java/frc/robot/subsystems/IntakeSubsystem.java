@@ -35,17 +35,20 @@ public class IntakeSubsystem extends SubsystemBase {
     m_left.setIdleMode(IntakeConstants.kIdleMode);
     m_left.setSmartCurrentLimit(IntakeConstants.kCurrentLimit);
     m_left.setClosedLoopRampRate(IntakeConstants.kClosedLoopRampRate);
+    m_left.setOpenLoopRampRate(IntakeConstants.kOpenLoopRampRate);
+  
     
     m_right.restoreFactoryDefaults();
     m_right.setInverted(IntakeConstants.kRightMotorInverted);
     m_right.setIdleMode(IntakeConstants.kIdleMode);
     m_right.setSecondaryCurrentLimit(IntakeConstants.kCurrentLimit);
     m_right.setClosedLoopRampRate(IntakeConstants.kClosedLoopRampRate);
+    m_right.setOpenLoopRampRate(IntakeConstants.kOpenLoopRampRate);
 
-    e_LeftEncoder.setVelocityConversionFactor(IntakeConstants.kEncoderRpmToWheelRpm);
-    e_RightEncoder.setVelocityConversionFactor(IntakeConstants.kEncoderRpmToWheelRpm);
+    //e_LeftEncoder.setVelocityConversionFactor(IntakeConstants.kEncoderRpmToWheelRpm);
+    //e_RightEncoder.setVelocityConversionFactor(IntakeConstants.kEncoderRpmToWheelRpm);
     
-    m_right.follow(m_left);
+    //m_right.follow(m_left);
 
     pid_LeftVelControl.setFF(IntakeConstants.kFVel, IntakeConstants.kVelPidSlot);
     pid_LeftVelControl.setP(IntakeConstants.kPVel, IntakeConstants.kVelPidSlot);
@@ -55,6 +58,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
   public void setTargetOutput(double output) {
     m_left.set(output);
+    m_right.set(output);
   }
 
   public void setTargetVelocity(double Velocity) {
@@ -65,11 +69,11 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public void wheelsIn() {
-    setTargetVelocity(IntakeConstants.kMaxVel);
+    setTargetOutput(IntakeConstants.kMaxOutput);
   }
 
   public void wheelsOut() {
-    setTargetVelocity(-IntakeConstants.kMaxVel);
+    setTargetOutput(-IntakeConstants.kMaxOutput);
   }
 
   public double getIntakeVel() {
@@ -78,6 +82,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
   public void stopMotor() {
     m_left.stopMotor();
+    m_right.stopMotor();
   }
 
   /** Resets the drive encoders to currently read a position of 0. */
@@ -91,6 +96,7 @@ public class IntakeSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Intake Velocity", getIntakeVel());
+    //System.out.println(m_left.getAppliedOutput());
   }
 
   @Override

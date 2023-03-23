@@ -30,8 +30,9 @@ public class ClawPivotSubsystem extends SubsystemBase {
     m_clawPivot.setIdleMode(ClawPivotConstants.kIdleMode);
     m_clawPivot.setSmartCurrentLimit(ClawPivotConstants.kCurrentLimit);
     m_clawPivot.setClosedLoopRampRate(ClawPivotConstants.kClosedLoopRampRate);
-
-    e_ClawPivotEncoder.setVelocityConversionFactor(ClawPivotConstants.kEncoderRpmToClawRpm);
+    m_clawPivot.setOpenLoopRampRate(ClawPivotConstants.kOpenLoopRampRate);
+    
+    //e_ClawPivotEncoder.setVelocityConversionFactor(ClawPivotConstants.kEncoderRpmToClawRpm);
     // TODO: setPositionCoversionFactor
 
     pid_ClawPivotVelControl.setFF(ClawPivotConstants.kFVel, ClawPivotConstants.kVelPidSlot);

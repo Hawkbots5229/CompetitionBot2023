@@ -31,8 +31,9 @@ public class ElevatorSubsystem extends SubsystemBase {
     m_elevator.setIdleMode(ElevatorConstants.kIdleMode);
     m_elevator.setSmartCurrentLimit(ElevatorConstants.kCurrentLimit);
     m_elevator.setClosedLoopRampRate(ElevatorConstants.kClosedLoopRampRate);
+    m_elevator.setOpenLoopRampRate(ElevatorConstants.kOpenLoopRampRate);
 
-    e_ElevatorEncoder.setVelocityConversionFactor(ElevatorConstants.kEncoderRpmToMetersPerSecond);
+    //e_ElevatorEncoder.setVelocityConversionFactor(ElevatorConstants.kEncoderRpmToMetersPerSecond);
     // TODO: setPositionConversionFactor
     
     pid_ElevatorVelControl.setFF(ElevatorConstants.kFVel, ElevatorConstants.kVelPidSlot);
@@ -41,8 +42,8 @@ public class ElevatorSubsystem extends SubsystemBase {
     pid_ElevatorVelControl.setI(ElevatorConstants.kIVel, ElevatorConstants.kVelPidSlot);
   }
   
-  public void setTargetOutput(double output) {
-    m_elevator.set(output);
+  public void setTargetOutput(double upVel, double downVel) {
+    m_elevator.set((upVel+downVel));
   }
 
   public void setTargetVelocity(double upVel, double downVel) {

@@ -40,19 +40,19 @@ import edu.wpi.first.wpilibj2.command.button.POVButton;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
-  //private final ClawPivotSubsystem s_clawPivot = new ClawPivotSubsystem();
-  //private final ClawSubsystem s_claw = new ClawSubsystem();
+  private final ClawPivotSubsystem s_clawPivot = new ClawPivotSubsystem();
+  private final ClawSubsystem s_claw = new ClawSubsystem();
   private final DriveSubsystem s_robotDrive = new DriveSubsystem();
-  //private final ElevatorPivotSubsystem s_elevatorPivot = new ElevatorPivotSubsystem();
-  //private final ElevatorSubsystem s_elevator = new ElevatorSubsystem();
-  //private final IntakeSubsystem s_intake = new IntakeSubsystem();
+  private final ElevatorPivotSubsystem s_elevatorPivot = new ElevatorPivotSubsystem();
+  private final ElevatorSubsystem s_elevator = new ElevatorSubsystem();
+  private final IntakeSubsystem s_intake = new IntakeSubsystem();
 
   XboxController j_driverController =
       new XboxController(OperatorConstants.kDriverControllerPort);
-  /**
+  
   XboxController j_mechController =
       new XboxController(OperatorConstants.kMechControllerPort);
-  */
+  
   // Create SmartDashboard chooser for autonomous routines
   private final SendableChooser<Command> sc_autonSelect = new SendableChooser<>();
 
@@ -80,32 +80,32 @@ public class RobotContainer {
       new RunCommand(
         () ->
           s_robotDrive.driveTank(
-            j_driverController.getLeftY(),                   
-            j_driverController.getRightY()),
+            -j_driverController.getLeftY(),                   
+            -j_driverController.getRightY()),
         s_robotDrive));
-    /**
+    
     s_elevatorPivot.setDefaultCommand(
       new RunCommand(
         () ->
-          s_elevatorPivot.setTargetVelocity(
-            j_mechController.getLeftY()),
+          s_elevatorPivot.setTargetOutput(
+            -j_mechController.getLeftY()),
         s_elevatorPivot));
 
     s_clawPivot.setDefaultCommand(
       new RunCommand(
         () ->
-          s_clawPivot.setTargetVelocity(
-            j_mechController.getRightY()),
+          s_clawPivot.setTargetOutput(
+            -j_mechController.getRightY()),
         s_clawPivot));
 
     s_elevator.setDefaultCommand(    
       new RunCommand(
         () ->
-          s_elevator.setTargetVelocity(
+          s_elevator.setTargetOutput(
             j_mechController.getLeftTriggerAxis(),
             -j_mechController.getRightTriggerAxis()),
         s_elevator));
-    */
+    
   }
 
   /**
@@ -137,21 +137,21 @@ public class RobotContainer {
     // Mech Controller
 
     /** Intake Wheels: PovUp-Out PovDown-In */
-    /**
+    
     new POVButton(j_mechController, OperatorConstants.kUpDPad)
       .onTrue(new OperateIntake(s_intake, IntakeSubsystem.intakeDir.kIn))
       .onFalse(new OperateIntake(s_intake, IntakeSubsystem.intakeDir.kOff));     
     new POVButton(j_mechController, OperatorConstants.kDownDPad)
       .onTrue(new OperateIntake(s_intake, IntakeSubsystem.intakeDir.kOut))
       .onFalse(new OperateIntake(s_intake, IntakeSubsystem.intakeDir.kOff));
-    */
+    
     /** Claw: LeftBumper-Open RightBumper-Close */
-    /**
+    
     new JoystickButton(j_mechController, Button.kLeftBumper.value)
         .onTrue(new OperateClaw(s_claw, ClawSubsystem.clawPosition.kOpen));
     new JoystickButton(j_mechController, Button.kRightBumper.value)
         .onTrue(new OperateClaw(s_claw, ClawSubsystem.clawPosition.kClosed));
-    */
+    
   }
 
   /**
