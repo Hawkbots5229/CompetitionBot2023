@@ -5,11 +5,16 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.ElevatorPivotSubsystem;
 
 public class PivotElevator extends CommandBase {
+
+  private final ElevatorPivotSubsystem s_robotElevatorPivot;
+
   /** Creates a new PivotElevator. */
   public PivotElevator(ElevatorPivotSubsystem s_robotElevatorPivot) {
+    this.s_robotElevatorPivot = s_robotElevatorPivot;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(s_robotElevatorPivot);
   }
@@ -20,7 +25,9 @@ public class PivotElevator extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    s_robotElevatorPivot.setTargetPos(RobotContainer.l_elevatorPivotPos.getTargetPosition());
+  }
 
   // Called once the command ends or is interrupted.
   @Override

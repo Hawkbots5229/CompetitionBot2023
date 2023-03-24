@@ -5,16 +5,19 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.ElevatorPivotSetPos;
 import frc.robot.commands.OperateClaw;
 import frc.robot.commands.OperateIntake;
+import frc.robot.commands.PivotElevator;
 import frc.robot.commands.ShiftGears;
-import frc.robot.commands.Autonomous.CammandGroup.AutonomousCharge;
-import frc.robot.commands.Autonomous.CammandGroup.AutonomousChargeLine;
-import frc.robot.commands.Autonomous.CammandGroup.AutonomousCubeHigh;
-import frc.robot.commands.Autonomous.CammandGroup.AutonomousCubeLong;
-import frc.robot.commands.Autonomous.CammandGroup.AutonomousCubeShort;
-import frc.robot.commands.Autonomous.CammandGroup.AutonomousLine;
 import frc.robot.commands.Autonomous.Command.AutonomousDriveStop;
+import frc.robot.commands.Autonomous.Task.AutonomousCharge;
+import frc.robot.commands.Autonomous.Task.AutonomousChargeLine;
+import frc.robot.commands.Autonomous.Task.AutonomousCubeHigh;
+import frc.robot.commands.Autonomous.Task.AutonomousCubeLong;
+import frc.robot.commands.Autonomous.Task.AutonomousCubeShort;
+import frc.robot.commands.Autonomous.Task.AutonomousLine;
+import frc.robot.lib.ElevatorPivotPosition;
 import frc.robot.subsystems.ClawPivotSubsystem;
 import frc.robot.subsystems.ClawSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
@@ -47,6 +50,10 @@ public class RobotContainer {
   private final ElevatorPivotSubsystem s_elevatorPivot = new ElevatorPivotSubsystem();
   private final ElevatorSubsystem s_elevator = new ElevatorSubsystem();
   private final IntakeSubsystem s_intake = new IntakeSubsystem();
+
+  public static ElevatorPivotPosition l_elevatorPivotPos = new ElevatorPivotPosition(ElevatorPivotSubsystem.ElevatorPivotPos.kHome);
+
+  private PivotElevator c_elevatorPivotDefault = new PivotElevator(s_elevatorPivot);
 
   XboxController j_driverController =
       new XboxController(OperatorConstants.kDriverControllerPort);
@@ -85,14 +92,15 @@ public class RobotContainer {
             -j_driverController.getLeftY(),                   
             -j_driverController.getRightY()),
         s_robotDrive));
-    
+    /**
     s_elevatorPivot.setDefaultCommand(
       new RunCommand(
         () ->
           s_elevatorPivot.setTargetOutput(
             -j_mechController.getLeftY()),
         s_elevatorPivot));
-
+    */
+    s_elevatorPivot.setDefaultCommand(c_elevatorPivotDefault);
     s_clawPivot.setDefaultCommand(
       new RunCommand(
         () ->
@@ -106,8 +114,7 @@ public class RobotContainer {
           s_elevator.setTargetOutput(
             j_mechController.getLeftTriggerAxis(),
             -j_mechController.getRightTriggerAxis()),
-        s_elevator));
-    
+        s_elevator)); 
   }
 
   /**
@@ -153,7 +160,12 @@ public class RobotContainer {
         .onTrue(new OperateClaw(s_claw, ClawSubsystem.clawPosition.kOpen));
     new JoystickButton(j_mechController, Button.kRightBumper.value)
         .onTrue(new OperateClaw(s_claw, ClawSubsystem.clawPosition.kClosed));
-    
+
+    /** Elevator Pivot: A-Home B-Extend */
+    new JoystickButton(j_mechController, Button.kA.value)
+        .onTrue(new ElevatorPivotSetPos(ElevatorPivotSubsystem.ElevatorPivotPos.kHome));
+        new JoystickButton(j_mechController, Button.kB.value)
+        .onTrue(new ElevatorPivotSetPos(ElevatorPivotSubsystem.ElevatorPivotPos.kExtend));
   }
 
   /**
