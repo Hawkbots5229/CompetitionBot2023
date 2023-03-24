@@ -17,7 +17,9 @@ import frc.robot.commands.Autonomous.Task.AutonomousCubeHigh;
 import frc.robot.commands.Autonomous.Task.AutonomousCubeLong;
 import frc.robot.commands.Autonomous.Task.AutonomousCubeShort;
 import frc.robot.commands.Autonomous.Task.AutonomousLine;
+import frc.robot.lib.ClawPivotPosition;
 import frc.robot.lib.ElevatorPivotPosition;
+import frc.robot.lib.ElevatorPosition;
 import frc.robot.subsystems.ClawPivotSubsystem;
 import frc.robot.subsystems.ClawSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
@@ -52,6 +54,8 @@ public class RobotContainer {
   private final IntakeSubsystem s_intake = new IntakeSubsystem();
 
   public static ElevatorPivotPosition l_elevatorPivotPos = new ElevatorPivotPosition(ElevatorPivotSubsystem.ElevatorPivotPos.kHome);
+  public static ElevatorPosition l_elevatorPos = new ElevatorPosition(ElevatorSubsystem.ElevatorPos.kHome);
+  public static ClawPivotPosition l_clawPivotPos = new ClawPivotPosition(ClawPivotSubsystem.ClawPivotPos.kHome);
 
   private PivotElevator c_elevatorPivotDefault = new PivotElevator(s_elevatorPivot);
 

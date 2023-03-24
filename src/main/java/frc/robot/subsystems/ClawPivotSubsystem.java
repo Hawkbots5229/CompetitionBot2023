@@ -17,6 +17,8 @@ import frc.robot.Constants.ClawPivotConstants;
 
 public class ClawPivotSubsystem extends SubsystemBase {
 
+  public enum ClawPivotPos{kHome, kExtend};
+
   private final CANSparkMax m_clawPivot =
     new CANSparkMax(ClawPivotConstants.kClawPivotMotorPort, MotorType.kBrushless);
 

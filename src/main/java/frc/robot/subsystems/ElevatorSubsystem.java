@@ -18,6 +18,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ElevatorSubsystem extends SubsystemBase {
 
+  public enum ElevatorPos{kHome, kExtend};
+
   private final CANSparkMax m_elevator =
     new CANSparkMax(ElevatorConstants.kElevatorMotorPort, MotorType.kBrushless);
   
