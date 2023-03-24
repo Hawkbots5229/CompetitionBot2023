@@ -2,49 +2,49 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Autonomous;
+package frc.robot.commands.Autonomous.Command;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ElevatorPivotSubsystem;
+import frc.robot.subsystems.ClawPivotSubsystem;
 
-public class AutonomousPivotElevator extends CommandBase {
+public class AutonomousPivotClaw extends CommandBase {
 
-  private final ElevatorPivotSubsystem s_elevatorPivot;
+  private final ClawPivotSubsystem s_clawPivot;
   private final double speed;
-  private final double angle;
+  private final double angle;  
 
-  /** Creates a new AutonomousElevatorPivot. */
-  public AutonomousPivotElevator(ElevatorPivotSubsystem s_elevatorPivot, double speed, double angle) {
-    
-    this.s_elevatorPivot = s_elevatorPivot;
+  /** Creates a new AutonomousPivotClaw. */
+  public AutonomousPivotClaw(ClawPivotSubsystem s_clawPivot, double speed, double angle) {
+
+    this.s_clawPivot = s_clawPivot;
     this.speed = speed;
     this.angle = angle;
-    
+
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(s_elevatorPivot);
+    addRequirements(s_clawPivot);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    s_elevatorPivot.resetEncoders();
+    s_clawPivot.resetEncoders();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    s_elevatorPivot.setTargetOutput(speed);
+    s_clawPivot.setTargetOutput(speed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    s_elevatorPivot.stopMotor();
+    s_clawPivot.stopMotor();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return s_elevatorPivot.getElevatorPivotPos() >= angle;
+    return s_clawPivot.getClawPivotPos() >= angle;
   }
 }

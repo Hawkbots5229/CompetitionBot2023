@@ -8,12 +8,13 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.OperateClaw;
 import frc.robot.commands.OperateIntake;
 import frc.robot.commands.ShiftGears;
-import frc.robot.commands.Autonomous.AutonomousCharge;
-import frc.robot.commands.Autonomous.AutonomousCubeLong;
-import frc.robot.commands.Autonomous.AutonomousCubeShort;
-import frc.robot.commands.Autonomous.AutonomousChargeLine;
-import frc.robot.commands.Autonomous.AutonomousLine;
-import frc.robot.commands.Autonomous.AutonomousDriveStop;
+import frc.robot.commands.Autonomous.CammandGroup.AutonomousCharge;
+import frc.robot.commands.Autonomous.CammandGroup.AutonomousChargeLine;
+import frc.robot.commands.Autonomous.CammandGroup.AutonomousCubeHigh;
+import frc.robot.commands.Autonomous.CammandGroup.AutonomousCubeLong;
+import frc.robot.commands.Autonomous.CammandGroup.AutonomousCubeShort;
+import frc.robot.commands.Autonomous.CammandGroup.AutonomousLine;
+import frc.robot.commands.Autonomous.Command.AutonomousDriveStop;
 import frc.robot.subsystems.ClawPivotSubsystem;
 import frc.robot.subsystems.ClawSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
@@ -59,14 +60,15 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
 
-    CameraServer.startAutomaticCapture("Usb Camera 0", 0);
-    //CameraServer.startAutomaticCapture("Usb Camera 1", 1);
+    CameraServer.startAutomaticCapture("Drive Camera", 0);
+    CameraServer.startAutomaticCapture("Claw Camera", 1);
 
     // Configure the trigger bindings
     configureBindings();
 
     // Setup SmartDashboard Auton options
     sc_autonSelect.setDefaultOption("Don't Move", new AutonomousDriveStop(s_robotDrive));
+    sc_autonSelect.addOption("Cube High", new AutonomousCubeHigh(s_robotDrive, s_intake));
     sc_autonSelect.addOption("Cross Line", new AutonomousLine(s_robotDrive));
     sc_autonSelect.addOption("Short Cube Drop", new AutonomousCubeShort(s_robotDrive));
     sc_autonSelect.addOption("Long Cube Drop", new AutonomousCubeLong(s_robotDrive));

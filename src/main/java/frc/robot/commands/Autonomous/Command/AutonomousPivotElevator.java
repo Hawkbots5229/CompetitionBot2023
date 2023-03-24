@@ -2,52 +2,49 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Autonomous;
+package frc.robot.commands.Autonomous.Command;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.ElevatorPivotSubsystem;
 
-public class AutonomousOperateIntake extends CommandBase {
+public class AutonomousPivotElevator extends CommandBase {
 
-  private final Timer tmr = new Timer();
-  private final IntakeSubsystem s_intake;
+  private final ElevatorPivotSubsystem s_elevatorPivot;
   private final double speed;
-  private final double time;
+  private final double angle;
 
-  /** Creates a new AutonomousOperateIntake. */
-  public AutonomousOperateIntake(IntakeSubsystem s_intake, double speed, double time) {
-
-    this.s_intake = s_intake;
+  /** Creates a new AutonomousElevatorPivot. */
+  public AutonomousPivotElevator(ElevatorPivotSubsystem s_elevatorPivot, double speed, double angle) {
+    
+    this.s_elevatorPivot = s_elevatorPivot;
     this.speed = speed;
-    this.time = time;
-
+    this.angle = angle;
+    
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(s_intake);
+    addRequirements(s_elevatorPivot);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    tmr.reset();
-    tmr.start();
+    s_elevatorPivot.resetEncoders();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    s_intake.setTargetOutput(speed);
+    s_elevatorPivot.setTargetOutput(speed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    s_intake.stopMotor();
+    s_elevatorPivot.stopMotor();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return tmr.get() > time;
+    return s_elevatorPivot.getElevatorPivotPos() >= angle;
   }
 }

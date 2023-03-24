@@ -2,49 +2,52 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Autonomous;
+package frc.robot.commands.Autonomous.Command;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ClawPivotSubsystem;
+import frc.robot.subsystems.DriveSubsystem;
 
-public class AutonomousPivotClaw extends CommandBase {
-
-  private final ClawPivotSubsystem s_clawPivot;
+public class AutonomousDriveDistance extends CommandBase {
+  
+  private final DriveSubsystem s_robotDrive;
+  private final double distance;
   private final double speed;
-  private final double angle;  
 
-  /** Creates a new AutonomousPivotClaw. */
-  public AutonomousPivotClaw(ClawPivotSubsystem s_clawPivot, double speed, double angle) {
+  /** Creates a new AutonomousDistance. */
+  public AutonomousDriveDistance(DriveSubsystem s_robotDrive, double distance, double speed) {
 
-    this.s_clawPivot = s_clawPivot;
+    this.s_robotDrive = s_robotDrive;
+    this.distance = distance;
     this.speed = speed;
-    this.angle = angle;
 
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(s_clawPivot);
+    addRequirements(s_robotDrive);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    s_clawPivot.resetEncoders();
+    s_robotDrive.resetEncoders();
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    s_clawPivot.setTargetOutput(speed);
+    
+    s_robotDrive.driveTank(speed, speed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    s_clawPivot.stopMotor();
+    s_robotDrive.stopMotors();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return s_clawPivot.getClawPivotPos() >= angle;
+    //System.out.println(s_robotDrive.getRobotPosition());
+    return s_robotDrive.getRobotPosition()>distance;
   }
 }
