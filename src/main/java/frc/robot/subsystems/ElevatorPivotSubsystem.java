@@ -9,6 +9,8 @@ import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
+import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ElevatorConstants;
@@ -24,6 +26,8 @@ public class ElevatorPivotSubsystem extends SubsystemBase {
     new WPI_TalonFX(ElevatorPivotConstants.kRightFrontMotorPort);
   private final WPI_TalonFX m_rightRear =
     new WPI_TalonFX(ElevatorPivotConstants.kRightRearMotorPort);
+
+  private final ProfiledPIDController pid_elevatorPivotPos;
 
   /** Creates a new ElevatorPivotSubsystem. */
   public ElevatorPivotSubsystem() {
@@ -67,10 +71,13 @@ public class ElevatorPivotSubsystem extends SubsystemBase {
       ElevatorPivotConstants.kVelPidSlot, ElevatorPivotConstants.kTimeoutMs);
 
     /* Config the Velocity closed loop gains in slot0 */
-		m_leftFront.config_kF(ElevatorPivotConstants.kVelPidSlot, ElevatorPivotConstants.kF, ElevatorPivotConstants.kTimeoutMs);
-		m_leftFront.config_kP(ElevatorPivotConstants.kVelPidSlot, ElevatorPivotConstants.kP, ElevatorPivotConstants.kTimeoutMs);
-		m_leftFront.config_kI(ElevatorPivotConstants.kVelPidSlot, ElevatorPivotConstants.kI, ElevatorPivotConstants.kTimeoutMs);
-		m_leftFront.config_kD(ElevatorPivotConstants.kVelPidSlot, ElevatorPivotConstants.kD, ElevatorPivotConstants.kTimeoutMs);
+		m_leftFront.config_kF(ElevatorPivotConstants.kVelPidSlot, ElevatorPivotConstants.kFVel, ElevatorPivotConstants.kTimeoutMs);
+		m_leftFront.config_kP(ElevatorPivotConstants.kVelPidSlot, ElevatorPivotConstants.kPVel, ElevatorPivotConstants.kTimeoutMs);
+		m_leftFront.config_kI(ElevatorPivotConstants.kVelPidSlot, ElevatorPivotConstants.kIVel, ElevatorPivotConstants.kTimeoutMs);
+		m_leftFront.config_kD(ElevatorPivotConstants.kVelPidSlot, ElevatorPivotConstants.kDVel, ElevatorPivotConstants.kTimeoutMs);
+
+    pid_elevatorPivotPos = new ProfiledPIDController(ElevatorPivotConstants.kPPos, ElevatorPivotConstants.kDPos, ElevatorPivotConstants.kDPos, new TrapezoidProfile.Constraints(ElevatorPivotConstants.kMaxVel,  ElevatorPivotConstants.kMaxAcc));
+    pid_elevatorPivotPos.setTolerance(ElevatorPivotConstants.kPosErrTolerance);
   }
 
   public void setTargetOutput(double output) {
@@ -84,16 +91,26 @@ public class ElevatorPivotSubsystem extends SubsystemBase {
     m_leftFront.set(TalonFXControlMode.Velocity, convertTarVelToRPM(velocity*ElevatorPivotConstants.kMaxVel)); // 600 100ms in 1 min
   }
 
+  public void setTargetVoltage(double volts) {
+    m_leftFront.setVoltage(volts);
+  }
+
+  public void setTargetPos(double position) {
+    pid_elevatorPivotPos.setGoal(position);
+    double volts = pid_elevatorPivotPos.calculate(getElevatorPivotPos());
+    setTargetVoltage(volts);
+  }
+
   public double convertTarVelToRPM (double velocity) {
-    return velocity*ElevatorPivotConstants.kEncoderRpmToElevatorRpm;
+    return velocity*ElevatorPivotConstants.kEncoderRpmToElevatorDegreesPerSec;
   }
 
   public double getElevatorPivotVel() {
-    return m_leftFront.getSelectedSensorVelocity();
+    return m_leftFront.getSelectedSensorVelocity()*ElevatorPivotConstants.kEncoderRpmToElevatorDegreesPerSec;
   }
 
   public double getElevatorPivotPos() {
-    return m_leftFront.getSelectedSensorPosition();
+    return m_leftFront.getSelectedSensorPosition()*ElevatorPivotConstants.kEncoderRevToElevatorDegrees;
   }
 
   public void stopMotor() {
@@ -108,6 +125,7 @@ public class ElevatorPivotSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Elevator Pivot Velocity", getElevatorPivotVel());
+    SmartDashboard.putNumber("Elevator Pivot Position", getElevatorPivotPos());
     //System.out.println(m_leftFront.getMotorOutputPercent());
   }
 }
