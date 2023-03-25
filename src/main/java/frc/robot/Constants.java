@@ -127,13 +127,13 @@ public final class Constants {
     public static final double kIVel= 0.005;
     public static final double kDVel = 0;
 
-    public static final double kPPos = 0.5;
-    public static final double kIPos= 0;
+    public static final double kPPos = 0.41; //0.5
+    public static final double kIPos= 0.01;
     public static final double kDPos = 0;
     public static final double kPosErrTolerance = 10;
 
-    public static final double kMaxVel = 12;
-    public static final double kMaxAcc = 20;
+    public static final double kMaxVel = 10; //12
+    public static final double kMaxAcc = 50; //20
   }
 
   public static class ElevatorConstants {

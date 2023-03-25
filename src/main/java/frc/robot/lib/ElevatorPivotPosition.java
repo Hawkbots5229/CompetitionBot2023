@@ -20,7 +20,7 @@ public class ElevatorPivotPosition {
         case kHome: 
             return 0;
         case kExtend: 
-            return 40;
+            return 36; //40
         default:
             throw new AssertionError("Illegal value: " + pos);   
         }
