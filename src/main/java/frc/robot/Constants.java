@@ -28,8 +28,8 @@ public final class Constants {
     public static final double kOpenLoopRampRate = 30;
     public static final double kMaxOutput = 0.2;
    
-    public static final double kVexGearRatio = 1/100;
-    public static final double kSprocketRatio = (16/38);
+    public static final double kVexGearRatio = 1/100.0;
+    public static final double kSprocketRatio = (16.0/38.0);
     public static final double kEncoderRevToClawDegrees = kVexGearRatio*kSprocketRatio*360;
     public static final double kEncoderRpmToClawDegreesPerSec = kEncoderRevToClawDegrees/60;
 
@@ -74,8 +74,8 @@ public final class Constants {
     public static final IdleMode kIdleMode = IdleMode.kBrake;
     public static final int kCurrentLimit = 40;  // Amps
     public static final double kClosedLoopRampRate = 0.7;
-    public static final double kOpenLoopRampRate = 30;
-    public static final double kMaxOutput = 1;
+    public static final double kOpenLoopRampRate = 35;
+    public static final double kMaxOutput = 0.9;
 
     public static final double kWheelDiameter = 0.1524;
     public static final double kDrivetrainHighGearRatio = 1/9.54;
@@ -116,7 +116,7 @@ public final class Constants {
     public static final double kMaxOutput = 0.2;
    
     public static final double kGearBoxRatio = (1/12.75);
-    public static final double kSprocketRatio = (22/38); 
+    public static final double kSprocketRatio = (22.0/38.0); 
     public static final double kEncoderRevToElevatorDegrees = kGearBoxRatio*kSprocketRatio*360;
     public static final double kEncoderRpmToElevatorDegreesPerSec = kEncoderRevToElevatorDegrees/60;
 
@@ -127,13 +127,13 @@ public final class Constants {
     public static final double kIVel= 0.005;
     public static final double kDVel = 0;
 
-    public static final double kPPos = 0.1;
+    public static final double kPPos = 0.5;
     public static final double kIPos= 0;
     public static final double kDPos = 0;
-    public static final double kPosErrTolerance = 0.01;
+    public static final double kPosErrTolerance = 10;
 
-    public static final double kMaxVel = 1;
-    public static final double kMaxAcc = 2;
+    public static final double kMaxVel = 12;
+    public static final double kMaxAcc = 20;
   }
 
   public static class ElevatorConstants {
@@ -147,7 +147,7 @@ public final class Constants {
     public static final double kOpenLoopRampRate = 30;
     public static final double kMaxOutput = 1;
      
-    public static final double kVexGearBoxRatio = 1/10;
+    public static final double kVexGearBoxRatio = 1/10.0;
     public static final double kRevtoInches = 5.25;  //5.25 inches
     public static final double kEncoderRevToInches = (kVexGearBoxRatio*kRevtoInches);
     public static final double kEncoderRpmToInchesPerSec = kEncoderRevToInches/60;
@@ -180,7 +180,7 @@ public final class Constants {
     public static final double kOpenLoopRampRate = 40;
     public static final double kMaxOutput = 0.9;
         
-    public static final double kGearBoxRatio = 1/7;
+    public static final double kGearBoxRatio = 1/7.0;
     public static final double kEncoderRpmToWheelRpm = kGearBoxRatio;
 
     public static final int kVelPidSlot = 0;

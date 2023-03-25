@@ -71,6 +71,8 @@ public class ElevatorPivotSubsystem extends SubsystemBase {
     m_leftFront.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor,
       ElevatorPivotConstants.kVelPidSlot, ElevatorPivotConstants.kTimeoutMs);
 
+    resetEncoders();
+
     /* Config the Velocity closed loop gains in slot0 */
 		m_leftFront.config_kF(ElevatorPivotConstants.kVelPidSlot, ElevatorPivotConstants.kFVel, ElevatorPivotConstants.kTimeoutMs);
 		m_leftFront.config_kP(ElevatorPivotConstants.kVelPidSlot, ElevatorPivotConstants.kPVel, ElevatorPivotConstants.kTimeoutMs);
@@ -79,6 +81,8 @@ public class ElevatorPivotSubsystem extends SubsystemBase {
 
     pid_elevatorPivotPos = new ProfiledPIDController(ElevatorPivotConstants.kPPos, ElevatorPivotConstants.kDPos, ElevatorPivotConstants.kDPos, new TrapezoidProfile.Constraints(ElevatorPivotConstants.kMaxVel,  ElevatorPivotConstants.kMaxAcc));
     pid_elevatorPivotPos.setTolerance(ElevatorPivotConstants.kPosErrTolerance);
+    pid_elevatorPivotPos.setIntegratorRange(-1, 1);
+    pid_elevatorPivotPos.reset(0);
   }
 
   public void setTargetOutput(double output) {
@@ -97,8 +101,11 @@ public class ElevatorPivotSubsystem extends SubsystemBase {
   }
 
   public void setTargetPos(double position) {
+    //System.out.println(position);
     pid_elevatorPivotPos.setGoal(position);
     double volts = pid_elevatorPivotPos.calculate(getElevatorPivotPos());
+    //System.out.println(volts);
+    //SmartDashboard.putNumber("Elevator Pivot VOltage", volts);
     setTargetVoltage(volts);
   }
 
@@ -107,11 +114,12 @@ public class ElevatorPivotSubsystem extends SubsystemBase {
   }
 
   public double getElevatorPivotVel() {
-    return m_leftFront.getSelectedSensorVelocity()*ElevatorPivotConstants.kEncoderRpmToElevatorDegreesPerSec;
+    return (m_leftFront.getSelectedSensorVelocity()/4096)*ElevatorPivotConstants.kEncoderRpmToElevatorDegreesPerSec;
   }
 
   public double getElevatorPivotPos() {
-    return m_leftFront.getSelectedSensorPosition()*ElevatorPivotConstants.kEncoderRevToElevatorDegrees;
+    //System.out.println(ElevatorPivotConstants.kEncoderRevToElevatorDegrees);
+    return (m_leftFront.getSelectedSensorPosition()/4096)*ElevatorPivotConstants.kEncoderRevToElevatorDegrees;
   }
 
   public void stopMotor() {

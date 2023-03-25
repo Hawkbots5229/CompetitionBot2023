@@ -41,6 +41,8 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     e_ElevatorEncoder.setPositionConversionFactor(ElevatorConstants.kEncoderRevToInches);
     e_ElevatorEncoder.setVelocityConversionFactor(ElevatorConstants.kEncoderRpmToInchesPerSec);
+
+    resetEncoders();
     
     pid_ElevatorVelControl.setFF(ElevatorConstants.kFVel, ElevatorConstants.kVelPidSlot);
     pid_ElevatorVelControl.setP(ElevatorConstants.kPVel, ElevatorConstants.kVelPidSlot);
@@ -49,6 +51,8 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     pid_elevatorPos = new ProfiledPIDController(ElevatorConstants.kPPos, ElevatorConstants.kDPos, ElevatorConstants.kDPos, new TrapezoidProfile.Constraints(ElevatorConstants.kMaxVel,  ElevatorConstants.kMaxAcc));
     pid_elevatorPos.setTolerance(ElevatorConstants.kPosErrTolerance);
+    pid_elevatorPos.setIntegratorRange(-1, 1);
+    pid_elevatorPos.reset(0);
   }
   
   public void setTargetOutput(double upVel, double downVel) {

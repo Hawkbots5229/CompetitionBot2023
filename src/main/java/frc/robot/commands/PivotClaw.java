@@ -5,17 +5,16 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.ClawPivotSubsystem;
 
 public class PivotClaw extends CommandBase {
   private final ClawPivotSubsystem s_robotClawPivot;
-  private final double speed;
 
   /** Creates a new PivotClaw. */
-  public PivotClaw(ClawPivotSubsystem s_robotClawPivot, double speed) {
+  public PivotClaw(ClawPivotSubsystem s_robotClawPivot) {
 
     this.s_robotClawPivot = s_robotClawPivot;
-    this.speed = speed;
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(s_robotClawPivot);
@@ -29,14 +28,12 @@ public class PivotClaw extends CommandBase {
   @Override
   public void execute() {
     
-    s_robotClawPivot.setTargetVelocity(speed);
-
+    s_robotClawPivot.setTargetPos(RobotContainer.l_clawPivotPos.getTargetPosition());
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    s_robotClawPivot.setTargetVelocity(0);
   }
 
   // Returns true when the command should end.

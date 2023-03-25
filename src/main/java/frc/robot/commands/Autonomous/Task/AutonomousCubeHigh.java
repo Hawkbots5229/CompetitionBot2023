@@ -27,15 +27,15 @@ public class AutonomousCubeHigh extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new AutonomousShiftGears(s_robotDrive, DriveSubsystem.gear.kLow),
-      new AutonomousOperateIntake(s_intake, -1, 2),
+      new AutonomousOperateIntake(s_intake, -1, 0.7),
       //new AutonomousDriveDelay(s_robotDrive, 0.2),
-      new AutonomousDriveDistance(s_robotDrive, 4000, -0.9),
-      new AutonomousDrivePitch(s_robotDrive, 86, -0.9),
-      new AutonomousDriveDistance(s_robotDrive, 1500, -0.9),
-      new AutonomousDrivePitch(s_robotDrive, 86, -0.9),
-      new AutonomousDriveDistance(s_robotDrive, 1000, -0.9),
-      new AutonomousDriveDistance(s_robotDrive, 2500, 0.9),
-      new AutonomousDrivePitch(s_robotDrive, 86, 0.5) 
+      new AutonomousDriveDistance(s_robotDrive, 4000, -1),
+      new AutonomousDrivePitch(s_robotDrive, 86, -1),
+      new AutonomousDriveDistance(s_robotDrive, 1500, -1),
+      new AutonomousDrivePitch(s_robotDrive, 86, -1),
+      new AutonomousDriveDistance(s_robotDrive, 1000, -1),
+      new AutonomousDriveDistance(s_robotDrive, 3500, 1),
+      new AutonomousDrivePitch(s_robotDrive, 86, 0.32) 
     );
   }
 }

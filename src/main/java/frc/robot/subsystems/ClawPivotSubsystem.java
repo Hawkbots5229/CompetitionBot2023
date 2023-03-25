@@ -41,6 +41,8 @@ public class ClawPivotSubsystem extends SubsystemBase {
     e_clawPivotEncoder.setPositionConversionFactor(ClawPivotConstants.kEncoderRevToClawDegrees);
     e_clawPivotEncoder.setVelocityConversionFactor(ClawPivotConstants.kEncoderRpmToClawDegreesPerSec);
 
+    resetEncoders();
+
     pid_clawPivotVel.setFF(ClawPivotConstants.kFVel, ClawPivotConstants.kVelPidSlot);
     pid_clawPivotVel.setP(ClawPivotConstants.kPVel, ClawPivotConstants.kVelPidSlot);
     pid_clawPivotVel.setD(ClawPivotConstants.kDVel, ClawPivotConstants.kVelPidSlot);
@@ -48,6 +50,9 @@ public class ClawPivotSubsystem extends SubsystemBase {
 
     pid_clawPivotPos = new ProfiledPIDController(ClawPivotConstants.kPPos, ClawPivotConstants.kIPos, ClawPivotConstants.kDPos, new TrapezoidProfile.Constraints(ClawPivotConstants.kMaxVel,  ClawPivotConstants.kMaxAcc));
     pid_clawPivotPos.setTolerance(ClawPivotConstants.kPosErrTolerance);
+    pid_clawPivotPos.setIntegratorRange(-1, 1);
+    pid_clawPivotPos.reset(0);
+    
   }
 
   public void setTargetOutput(double output) {

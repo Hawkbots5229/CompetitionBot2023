@@ -5,11 +5,14 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.ElevatorSubsystem;
 
 public class OperateElevator extends CommandBase {
+  private final ElevatorSubsystem s_robotElevator;
   /** Creates a new OperateElevator. */
   public OperateElevator(ElevatorSubsystem s_robotElevator) {
+    this.s_robotElevator = s_robotElevator;
     
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(s_robotElevator);
@@ -21,7 +24,9 @@ public class OperateElevator extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    s_robotElevator.setTargetPos(RobotContainer.l_elevatorPos.getTargetPosition());
+  }
 
   // Called once the command ends or is interrupted.
   @Override

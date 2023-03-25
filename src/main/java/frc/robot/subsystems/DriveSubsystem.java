@@ -74,8 +74,8 @@ public class DriveSubsystem extends SubsystemBase {
     ds_gearBox = new DoubleSolenoid(62, PneumaticsModuleType.REVPH, DriveConstants.kPneumaticForwardChannel, DriveConstants.kPneumaticReverseChannel);
     dd_drive = new DifferentialDrive(mcg_left, mcg_right);
     setMaxOutput(DriveConstants.kMaxOutput);
-    gearPos = "High";
-    shiftHighGear();
+    //gearPos = "High";
+    shiftLowGear();
 
     dd_drive.setExpiration(0.1);
   }

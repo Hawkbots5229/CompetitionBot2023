@@ -6,8 +6,11 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.ElevatorPivotSetPos;
+import frc.robot.commands.ElevatorSetPos;
 import frc.robot.commands.OperateClaw;
+import frc.robot.commands.OperateElevator;
 import frc.robot.commands.OperateIntake;
+import frc.robot.commands.PivotClaw;
 import frc.robot.commands.PivotElevator;
 import frc.robot.commands.ShiftGears;
 import frc.robot.commands.Autonomous.Command.AutonomousDriveStop;
@@ -58,6 +61,8 @@ public class RobotContainer {
   public static ClawPivotPosition l_clawPivotPos = new ClawPivotPosition(ClawPivotSubsystem.ClawPivotPos.kHome);
 
   private PivotElevator c_elevatorPivotDefault = new PivotElevator(s_elevatorPivot);
+  private PivotClaw c_clawPivotDefault = new PivotClaw(s_clawPivot);
+  private OperateElevator c_operateElevatorDefault = new OperateElevator(s_elevator);
 
   XboxController j_driverController =
       new XboxController(OperatorConstants.kDriverControllerPort);
@@ -105,12 +110,15 @@ public class RobotContainer {
         s_elevatorPivot));
     */
     s_elevatorPivot.setDefaultCommand(c_elevatorPivotDefault);
+
     s_clawPivot.setDefaultCommand(
       new RunCommand(
         () ->
           s_clawPivot.setTargetOutput(
             -j_mechController.getRightY()),
         s_clawPivot));
+
+    //s_clawPivot.setDefaultCommand(c_clawPivotDefault);   
 
     s_elevator.setDefaultCommand(    
       new RunCommand(
@@ -119,6 +127,8 @@ public class RobotContainer {
             j_mechController.getLeftTriggerAxis(),
             -j_mechController.getRightTriggerAxis()),
         s_elevator)); 
+
+    //s_elevator.setDefaultCommand(c_operateElevatorDefault);
   }
 
   /**
@@ -166,10 +176,17 @@ public class RobotContainer {
         .onTrue(new OperateClaw(s_claw, ClawSubsystem.clawPosition.kClosed));
 
     /** Elevator Pivot: A-Home B-Extend */
+    
     new JoystickButton(j_mechController, Button.kA.value)
         .onTrue(new ElevatorPivotSetPos(ElevatorPivotSubsystem.ElevatorPivotPos.kHome));
-        new JoystickButton(j_mechController, Button.kB.value)
+    new JoystickButton(j_mechController, Button.kB.value)
         .onTrue(new ElevatorPivotSetPos(ElevatorPivotSubsystem.ElevatorPivotPos.kExtend));
+    /**
+    new JoystickButton(j_mechController, Button.kX.value)
+        .onTrue(new ElevatorSetPos(ElevatorSubsystem.ElevatorPos.kHome));
+    new JoystickButton(j_mechController, Button.kY.value)
+        .onTrue(new ElevatorSetPos(ElevatorSubsystem.ElevatorPos.kExtend));    
+    */
   }
 
   /**

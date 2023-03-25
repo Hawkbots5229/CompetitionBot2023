@@ -19,9 +19,9 @@ public class AutonomousShiftGears extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new AutonomousDriveDelay(s_robotDrive, 1),
+      new AutonomousDriveDelay(s_robotDrive, 0.5),
       new ShiftGears(s_robotDrive, gearPos),
-      new AutonomousDriveDistance(s_robotDrive, 5, -0.1)
+      new AutonomousDriveDistance(s_robotDrive, 5, -0.2)
     );
   }
 }
