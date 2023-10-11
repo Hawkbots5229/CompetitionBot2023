@@ -74,8 +74,8 @@ public class DriveSubsystem extends SubsystemBase {
     ds_gearBox = new DoubleSolenoid(62, PneumaticsModuleType.REVPH, DriveConstants.kPneumaticForwardChannel, DriveConstants.kPneumaticReverseChannel);
     dd_drive = new DifferentialDrive(mcg_left, mcg_right);
     setMaxOutput(DriveConstants.kMaxOutput);
-    gearPos = "High";
-    shiftHighGear();
+    //gearPos = "High";
+    shiftLowGear();
 
     dd_drive.setExpiration(0.1);
   }
@@ -291,15 +291,12 @@ public class DriveSubsystem extends SubsystemBase {
    */
   public double getAngle() {
 
-    return g_navX.getAngle();
-
-    
+    return g_navX.getAngle();   
   }
 
   public double getPitch() {
 
-    return g_navX.getPitch();
-    
+    return g_navX.getPitch(); 
   }
 
   @Override
@@ -309,6 +306,7 @@ public class DriveSubsystem extends SubsystemBase {
     //System.out.println(phCompressor.isEnabled());
     SmartDashboard.putString("Gear Pos", gearPos);
     SmartDashboard.putNumber("Pitch", getPitch());
+    SmartDashboard.putNumber("Position", getRobotPosition());
   }
 
   @Override

@@ -2,50 +2,49 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.Autonomous.Command;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.ClawPivotSubsystem;
 
-public class AutonomousDelay extends CommandBase {
-  private final Timer tmr = new Timer();
-  private final double delay;
-  private final DriveSubsystem s_robotDrive;
+public class AutonomousPivotClaw extends CommandBase {
 
-  /** Creates a new AutonomousDelay. */
-  public AutonomousDelay(DriveSubsystem s_robotDrive, double delay) {
+  private final ClawPivotSubsystem s_clawPivot;
+  private final double speed;
+  private final double angle;  
 
-    this.s_robotDrive = s_robotDrive;
-    this.delay = delay;
+  /** Creates a new AutonomousPivotClaw. */
+  public AutonomousPivotClaw(ClawPivotSubsystem s_clawPivot, double speed, double angle) {
+
+    this.s_clawPivot = s_clawPivot;
+    this.speed = speed;
+    this.angle = angle;
 
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(s_robotDrive);
+    addRequirements(s_clawPivot);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-
-    tmr.reset();
-    tmr.start();
+    s_clawPivot.resetEncoders();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    s_robotDrive.stopMotors();
+    s_clawPivot.setTargetOutput(speed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    tmr.stop();
+    s_clawPivot.stopMotor();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return tmr.get() > delay;
+    return s_clawPivot.getClawPivotPos() >= angle;
   }
 }

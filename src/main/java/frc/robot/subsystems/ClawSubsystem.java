@@ -15,8 +15,8 @@ public class ClawSubsystem extends SubsystemBase {
   public enum clawPosition {kOpen, kClosed};
   private String clawPos;
   
-  private final DoubleSolenoid ds_left = new DoubleSolenoid(PneumaticsModuleType.REVPH, ClawConstants.kPneumaticLeftForwardChannel, ClawConstants.kPneumaticLeftReverseChannel);
-  private final DoubleSolenoid ds_right = new DoubleSolenoid(PneumaticsModuleType.REVPH, ClawConstants.kPneumaticRightForwardChannel, ClawConstants.kPneumaticRightReverseChannel);
+  private final DoubleSolenoid ds_left = new DoubleSolenoid(62,PneumaticsModuleType.REVPH, ClawConstants.kPneumaticLeftForwardChannel, ClawConstants.kPneumaticLeftReverseChannel);
+  //private final DoubleSolenoid ds_right = new DoubleSolenoid(PneumaticsModuleType.REVPH, ClawConstants.kPneumaticRightForwardChannel, ClawConstants.kPneumaticRightReverseChannel);
 
   /** Creates a new ClawSubsystem. */
   public ClawSubsystem() {
@@ -26,13 +26,13 @@ public class ClawSubsystem extends SubsystemBase {
   public void open() {
     clawPos = "Opened";
     ds_left.set(DoubleSolenoid.Value.kReverse);
-    ds_right.set(DoubleSolenoid.Value.kReverse);
+    //ds_right.set(DoubleSolenoid.Value.kReverse);
   }
 
   public void close() {
     clawPos = "Closed";
     ds_left.set(DoubleSolenoid.Value.kForward);
-    ds_right.set(DoubleSolenoid.Value.kForward);
+    //ds_right.set(DoubleSolenoid.Value.kForward);
   }
 
   @Override
